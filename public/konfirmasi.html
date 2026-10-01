@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konfirmasi Pesanan — Webinyuu</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="./assets/css/output.css">
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased">
+
+<main class="w-full min-h-screen flex items-center justify-center py-space-xl">
+  <div class="max-w-[500px] w-full mx-auto px-margin flex flex-col gap-space-lg text-center">
+
+    <div class="w-16 h-16 mx-auto rounded-full bg-secondary-container flex items-center justify-center text-primary-container">
+      <span class="material-symbols-outlined text-[32px]">check_circle</span>
+    </div>
+    <h1 class="text-headline-lg text-primary">Pesanan Berhasil Dibuat!</h1>
+
+    <div class="bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-sm text-left">
+      <div class="flex justify-between text-body-md"><span class="text-on-surface-variant">Nomor Order</span><span id="r-order-number" class="font-bold text-primary"></span></div>
+      <div class="flex justify-between text-body-md"><span class="text-on-surface-variant">Paket</span><span id="r-paket" class="font-bold text-primary"></span></div>
+      <div class="flex justify-between text-body-md"><span class="text-on-surface-variant">Total Paket</span><span id="r-total" class="font-bold text-primary"></span></div>
+      <div class="h-[1px] bg-surface-container"></div>
+      <div class="flex justify-between text-headline-sm"><span class="text-primary">DP yang harus dibayar</span><span id="r-dp" class="font-bold text-primary"></span></div>
+    </div>
+
+    <div class="bg-surface-container-low rounded-2xl p-space-lg text-left">
+      <p class="text-body-md text-on-surface-variant">Silakan lakukan pembayaran DP, lalu kirim bukti transfer melalui WhatsApp ke admin yang menangani pesananmu<span id="r-admin-wrap" class="hidden"> (<span id="r-admin" class="font-bold text-primary"></span>)</span>. Admin akan memverifikasi dan pengerjaan langsung dimulai.</p>
+      <p id="r-deadline" class="hidden mt-space-sm text-body-md font-bold text-error"></p>
+    </div>
+
+    <a id="wa-link" class="hidden inline-flex items-center justify-center gap-space-xs bg-[#25D366] text-white text-label-md px-space-lg py-3.5 rounded-xl shadow-md hover:brightness-95 transition-all" href="#" target="_blank">
+      <span class="material-symbols-outlined text-[20px]">chat</span>
+      Kirim Bukti Transfer via WhatsApp
+    </a>
+
+    <p id="wa-fallback" class="hidden text-body-md text-on-surface-variant">Kontak admin belum bisa dimuat. Buka halaman pelacakan di bawah untuk menghubungi admin.</p>
+
+    <a class="text-label-md text-primary underline underline-offset-4" id="tracking-link" href="#">Lacak status pesanan kamu di sini</a>
+  </div>
+</main>
+
+<script type="module">
+  import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from './config/env.js';
+
+  const params = new URLSearchParams(window.location.search);
+  const $ = (id) => document.getElementById(id);
+  const orderNumber = params.get('order_number');
+  const token = params.get('tracking_token');
+
+  $('r-order-number').textContent = orderNumber || '-';
+  $('r-paket').textContent = params.get('paket') || '-';
+  $('r-total').textContent = 'Rp' + Number(params.get('total') || 0).toLocaleString('id-ID');
+  $('r-dp').textContent = 'Rp' + Number(params.get('dp') || 0).toLocaleString('id-ID');
+  $('tracking-link').href = `/pesanan/lacak.html?token=${token}`;
+
+  // Nomor WA admin diambil dari server (admin yang otomatis ditugaskan ke order ini).
+  async function loadAdmin() {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/get-order-by-token`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`, apikey: SUPABASE_PUBLISHABLE_KEY },
+        body: JSON.stringify({ tracking_token: token }),
+      });
+      const { order } = await res.json();
+      if (!res.ok || !order?.admin_phone) throw new Error('admin kosong');
+
+      const msg = encodeURIComponent(`Halo ${order.admin_name || 'Admin Webinyuu'}, saya sudah transfer DP untuk order ${orderNumber}. Berikut saya kirimkan bukti transfer.`);
+      $('wa-link').href = `https://wa.me/${order.admin_phone}?text=${msg}`;
+      $('wa-link').classList.remove('hidden');
+      if (order.admin_name) { $('r-admin').textContent = order.admin_name; $('r-admin-wrap').classList.remove('hidden'); }
+
+      if (order.payment_deadline) {
+        const d = new Date(order.payment_deadline).toLocaleString('id-ID', { dateStyle: 'long', timeStyle: 'short' });
+        $('r-deadline').textContent = `Bayar DP sebelum ${d}. Jika belum dibayar, pesanan otomatis dibatalkan.`;
+        $('r-deadline').classList.remove('hidden');
+      }
+    } catch (err) {
+      console.error(err);
+      $('wa-fallback').classList.remove('hidden');
+    }
+  }
+  loadAdmin();
+</script>
+</body>
+</html>

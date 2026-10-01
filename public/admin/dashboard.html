@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dashboard — Admin Webinyuu</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../assets/js/tailwind.config.js"></script>
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased">
+
+<div class="flex min-h-screen w-full">
+
+  <!-- SIDEBAR (komponen shared — edit di /partials/admin-sidebar.js) -->
+  <script>window.AD_PAGE = 'dashboard';</script>
+  <script src="../partials/admin-sidebar.js"></script>
+
+  <!-- MAIN -->
+  <main class="flex-1 min-h-screen min-w-0 bg-surface">
+    <!-- HEADER (komponen shared — edit di /partials/admin-header.js) -->
+    <script>
+      window.AD_HEADER = {
+        title: 'Dashboard',
+        subtitle: 'Ringkasan order yang kamu tangani dan apa yang perlu dikerjakan hari ini.'
+      };
+    </script>
+    <script src="../partials/admin-header.js"></script>
+
+    <div class="p-margin flex flex-col gap-space-lg">
+      <div id="state-error" class="hidden bg-error/10 text-error rounded-xl px-space-md py-3 text-body-md"></div>
+      <div id="state-loading" class="text-center text-body-md text-on-surface-variant py-space-xl">Memuat dashboard...</div>
+
+      <div id="dash" class="hidden flex flex-col gap-space-lg">
+        <div id="stat-cards" class="grid grid-cols-2 lg:grid-cols-4 gap-space-md"></div>
+
+        <section class="flex flex-col gap-space-sm">
+          <h2 class="text-headline-sm text-primary">Perlu Tindakan Sekarang</h2>
+          <div id="todo-empty" class="hidden bg-surface-container-lowest rounded-2xl p-space-lg text-body-md text-on-surface-variant shadow-sm">Tidak ada order yang menunggu tindakanmu. 🎉</div>
+          <div id="todo-list" class="flex flex-col gap-space-sm"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script type="module" src="../js/modules/adminDashboard.js"></script>
+</body>
+</html>

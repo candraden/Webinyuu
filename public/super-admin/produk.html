@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Kelola Produk &amp; Paket — Super Admin Webinyuu</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../assets/js/tailwind.config.js"></script>
+<style>#produk-tbody td:last-child { text-align: left; }</style>
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased">
+
+<div class="flex min-h-screen w-full">
+
+  <!-- SIDEBAR (komponen shared — edit di /partials/sidebar.js) -->
+  <script>window.SA_PAGE = 'produk';</script>
+  <script src="../partials/sidebar.js"></script>
+
+  <!-- MAIN -->
+  <main class="flex-1 min-h-screen min-w-0 bg-surface">
+    <!-- HEADER (komponen shared — edit di /partials/header.js) -->
+    <script>
+      window.SA_HEADER = {
+        title: 'Kelola Produk &amp; Paket',
+        subtitle: 'CRUD paket beserta batas asset &amp; jumlah item per paket.',
+        actionsHtml:
+          '<button id="btn-add-produk" class="inline-flex items-center gap-space-xs bg-secondary-container text-primary-container text-label-md px-space-md sm:px-space-lg py-3 rounded-xl shadow-sm hover:brightness-95 transition-all" type="button">' +
+          '<span class="material-symbols-outlined text-[20px]">add</span>' +
+          '<span class="hidden sm:inline">Tambah Paket</span>' +
+          '</button>'
+      };
+    </script>
+    <script src="../partials/header.js"></script>
+
+    <div class="p-margin flex flex-col gap-space-md">
+      <div id="state-loading" class="text-center text-body-md text-on-surface-variant py-space-xl">Memuat produk...</div>
+      <div id="state-empty" class="hidden text-center text-body-md text-on-surface-variant py-space-xl">Belum ada paket. Klik "Tambah Paket" untuk membuat yang pertama.</div>
+      <div id="state-error" class="hidden text-center text-body-md text-error py-space-xl"></div>
+
+      <div id="produk-table-wrap" class="hidden bg-surface-container-lowest rounded-2xl shadow-sm overflow-x-auto -mx-margin sm:mx-0">
+        <table class="w-full text-body-md min-w-[720px]">
+          <thead>
+            <tr class="text-left text-label-md text-on-surface-variant border-b border-outline-variant/30">
+              <th class="px-space-md py-space-sm">Paket</th>
+              <th class="px-space-md py-space-sm">Kategori</th>
+              <th class="px-space-md py-space-sm">Harga</th>
+              <th class="px-space-md py-space-sm">Revisi</th>
+              <th class="px-space-md py-space-sm">Status</th>
+              <th class="px-space-md py-space-sm text-left">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="produk-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL FORM PRODUK -->
+<div id="modal-produk" class="hidden fixed inset-0 z-50 bg-tertiary/40 backdrop-blur-sm flex items-center justify-center sm:p-margin">
+  <form id="form-produk" class="w-full h-full sm:h-auto sm:max-w-[720px] sm:max-h-[90vh] overflow-y-auto bg-surface-container-lowest rounded-none sm:rounded-2xl shadow-xl p-space-md sm:p-space-lg flex flex-col gap-space-lg">
+    <div class="flex items-center justify-between sticky top-0 bg-surface-container-lowest pb-space-xs -mx-space-md sm:mx-0 px-space-md sm:px-0 pt-space-xs sm:pt-0">
+      <h2 id="modal-produk-title" class="text-headline-sm text-primary">Tambah Paket</h2>
+      <button id="btn-close-produk" class="text-on-surface-variant hover:text-on-surface" type="button">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <input type="hidden" id="produk-id">
+
+    <!-- INFO DASAR -->
+    <section class="flex flex-col gap-space-md">
+      <h3 class="text-label-md text-secondary uppercase tracking-wider">Informasi Dasar</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-name">Nama Paket *</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-name" type="text" required>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-slug">Slug *</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-slug" type="text" required>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-category">Kategori</label>
+          <select class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container bg-surface-container-lowest" id="produk-category">
+            <option value="">Tanpa kategori</option>
+          </select>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-sort">Urutan Tampil</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-sort" type="number" value="0">
+        </div>
+      </div>
+      <label class="flex items-center gap-space-xs text-body-md">
+        <input class="w-5 h-5 rounded" id="produk-active" type="checkbox" checked>
+        Aktif (tampil di katalog publik &amp; bisa dipesan)
+      </label>
+    </section>
+
+    <!-- HARGA & REVISI -->
+    <section class="flex flex-col gap-space-md">
+      <h3 class="text-label-md text-secondary uppercase tracking-wider">Harga &amp; Revisi</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-space-md">
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-price">Harga (Rp) *</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-price" type="number" min="0" required>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-promo-price">Harga Promo</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-promo-price" type="number" min="0">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-revision-limit">Jatah Revisi</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-revision-limit" type="number" min="0" value="0">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-duration">Estimasi (hari)</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-duration" type="number" min="0">
+        </div>
+      </div>
+    </section>
+
+    <!-- DESKRIPSI -->
+    <section class="flex flex-col gap-space-md">
+      <h3 class="text-label-md text-secondary uppercase tracking-wider">Deskripsi</h3>
+      <div class="flex flex-col gap-1">
+        <label class="text-label-md text-primary" for="produk-desc-short">Deskripsi Singkat</label>
+        <input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-desc-short" type="text">
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-label-md text-primary" for="produk-desc-full">Deskripsi Lengkap</label>
+        <textarea class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-desc-full" rows="3"></textarea>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-label-md text-primary" for="produk-terms">Syarat &amp; Ketentuan</label>
+        <textarea class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-terms" rows="2"></textarea>
+      </div>
+    </section>
+
+    <!-- KONTEN KATALOG (list, 1 baris = 1 item) -->
+    <section class="flex flex-col gap-space-md">
+      <h3 class="text-label-md text-secondary uppercase tracking-wider">Konten Katalog</h3>
+      <p class="text-caption text-on-surface-variant -mt-space-sm">Untuk field di bawah, tulis 1 baris untuk 1 item.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-benefits">Benefit</label>
+          <textarea class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-benefits" rows="4" placeholder="1 landing page responsif&#10;Domain .id gratis 1 tahun"></textarea>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-features">Fitur / Scope</label>
+          <textarea class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-features" rows="4"></textarea>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-included">Termasuk (Included)</label>
+          <textarea class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-included" rows="4"></textarea>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-excluded">Tidak Termasuk (Excluded)</label>
+          <textarea class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-excluded" rows="4"></textarea>
+        </div>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-label-md text-primary" for="produk-gallery">URL Galeri Gambar</label>
+        <textarea class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-gallery" rows="3" placeholder="https://.../contoh1.png"></textarea>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-thumbnail">URL Thumbnail</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-thumbnail" type="text">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-brief-url">URL Template Brief</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-brief-url" type="text">
+        </div>
+      </div>
+    </section>
+
+    <!-- BATAS ASSET -->
+    <section class="flex flex-col gap-space-md">
+      <h3 class="text-label-md text-secondary uppercase tracking-wider">Batas Asset per Tipe</h3>
+      <p class="text-caption text-on-surface-variant -mt-space-sm">Batas ini dibaca real-time oleh form pemesanan (validasi upload). Kosongkan min/max = 0 kalau tipe asset ini tidak dipakai paket ini.</p>
+      <div class="overflow-x-auto rounded-xl border border-outline-variant/40">
+        <table class="w-full text-body-md min-w-[640px]">
+          <thead>
+            <tr class="text-left text-label-md text-on-surface-variant bg-surface-container">
+              <th class="px-space-sm py-space-sm">Tipe Asset</th>
+              <th class="px-space-sm py-space-sm w-20">Min</th>
+              <th class="px-space-sm py-space-sm w-20">Max</th>
+              <th class="px-space-sm py-space-sm w-28">Maks Ukuran (MB)</th>
+              <th class="px-space-sm py-space-sm w-28">Maks Durasi (detik)</th>
+              <th class="px-space-sm py-space-sm">Format Diizinkan</th>
+            </tr>
+          </thead>
+          <tbody id="asset-limits-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- BATAS ITEM -->
+    <section class="flex flex-col gap-space-md">
+      <h3 class="text-label-md text-secondary uppercase tracking-wider">Batas Produk/Layanan &amp; Foto</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-max-items">Maks Jumlah Produk/Layanan</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-max-items" type="number" min="0" placeholder="contoh: 5">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-min-photos">Min Foto / Item</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-min-photos" type="number" min="0" value="1">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary" for="produk-max-photos">Max Foto / Item</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="produk-max-photos" type="number" min="0" value="2">
+        </div>
+      </div>
+      <p class="text-caption text-on-surface-variant">Kosongkan "Maks Jumlah Produk/Layanan" kalau paket ini tidak punya batas jumlah item (misal landing page 1 produk saja).</p>
+    </section>
+
+    <div id="produk-form-error" class="hidden bg-error/10 text-error text-body-md rounded-xl px-space-md py-3"></div>
+
+    <div class="flex items-center justify-end gap-space-sm pt-space-xs border-t border-outline-variant/30 sticky bottom-0 bg-surface-container-lowest pb-space-xs sm:pb-0">
+      <button id="btn-cancel-produk" class="inline-flex items-center justify-center bg-surface-container text-primary text-label-md px-space-lg py-3 rounded-xl" type="button">Batal</button>
+      <button id="btn-save-produk" class="inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all" type="submit">Simpan Paket</button>
+    </div>
+  </form>
+</div>
+
+<script type="module" src="../js/modules/superAdminCatalog.js" data-page="produk"></script>
+</body>
+</html>

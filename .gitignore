@@ -1,0 +1,17 @@
+# Dependensi
+node_modules/
+
+# Rahasia — JANGAN PERNAH di-commit
+.env
+.env.*
+*credentials*
+*Credentials*
+*.pem
+
+# Supabase CLI (state lokal & link project)
+supabase/.temp/
+supabase/.branches/
+
+# OS / editor
+.DS_Store
+Thumbs.db

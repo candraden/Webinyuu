@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detail Paket — Webinyuu</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/output.css">
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased">
+
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30">
+  <div class="h-20 max-w-[1200px] mx-auto px-margin lg:px-margin-desktop flex items-center justify-between gap-space-md">
+    <a href="/index.html" class="flex items-center">
+      <img alt="Webinyuu" class="h-12 w-auto object-contain" src="../assets/img/logo/webinyuu-vertikal.png">
+    </a>
+    <nav class="hidden lg:flex items-center gap-space-lg">
+      <a class="text-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="/index.html">Beranda</a>
+      <a class="text-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="/index.html#paket-harga">Produk &amp; Paket</a>
+      <a class="text-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="/pesanan/lacak.html">Cek Status Order</a>
+    </nav>
+    <a id="cta-header" class="inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-space-sm rounded-xl shadow-sm hover:brightness-95 transition-all" href="#">
+      Pesan Sekarang
+    </a>
+  </div>
+</header>
+
+<main class="w-full pt-20">
+
+  <div id="state-loading" class="max-w-[1200px] mx-auto px-margin lg:px-margin-desktop py-space-xl text-center text-body-md text-on-surface-variant">
+    Memuat detail paket...
+  </div>
+  <div id="state-notfound" class="hidden max-w-[1200px] mx-auto px-margin lg:px-margin-desktop py-space-xl text-center">
+    <p class="text-headline-md text-primary mb-space-xs">Paket tidak ditemukan</p>
+    <p class="text-body-md text-on-surface-variant mb-space-md">Paket yang kamu cari mungkin sudah tidak tersedia.</p>
+    <a class="inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl" href="/index.html#paket-harga">Lihat Semua Paket</a>
+  </div>
+
+  <div id="detail-content" class="hidden reveal">
+    <!-- BREADCRUMB + HERO -->
+    <section class="relative w-full overflow-hidden bg-surface py-space-lg lg:py-space-xl">
+      <div class="max-w-[1200px] mx-auto px-margin lg:px-margin-desktop">
+        <nav class="flex items-center gap-space-xs text-caption text-on-surface-variant mb-space-lg">
+          <a class="hover:text-primary transition-colors" href="/index.html">Beranda</a>
+          <span class="material-symbols-outlined text-[14px] text-outline-variant">chevron_right</span>
+          <a class="hover:text-primary transition-colors" href="/index.html#paket-harga">Paket</a>
+          <span class="material-symbols-outlined text-[14px] text-outline-variant">chevron_right</span>
+          <span id="breadcrumb-name" class="font-semibold text-primary"></span>
+        </nav>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+          <div class="lg:col-span-7 flex flex-col gap-space-md">
+            <h1 id="product-name" class="text-headline-xl text-primary tracking-tight"></h1>
+            <p id="product-desc-short" class="text-body-lg text-on-surface-variant"></p>
+
+            <div class="bg-surface-container-lowest p-space-lg rounded-2xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+              <div class="flex items-baseline gap-2">
+                <span id="product-price" class="text-headline-xl text-primary font-bold"></span>
+                <span class="text-caption text-on-surface-variant">/ sekali bayar</span>
+              </div>
+              <div id="product-duration" class="hidden inline-flex items-center gap-1.5 bg-surface-container px-3 py-1.5 rounded-full">
+                <span class="material-symbols-outlined text-[16px] text-secondary">schedule</span>
+                <span class="text-caption font-semibold"></span>
+              </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-space-sm pt-space-xs">
+              <a id="cta-pesan" class="inline-flex items-center justify-center gap-space-xs bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all" href="#">
+                <span class="material-symbols-outlined text-[20px]">shopping_cart_checkout</span>
+                Pesan Paket Ini
+              </a>
+              <a id="cta-brief" class="hidden inline-flex items-center justify-center gap-space-xs bg-surface-container-lowest text-primary text-label-md px-space-lg py-3 rounded-xl shadow-sm hover:bg-surface-container transition-all" href="#" target="_blank">
+                <span class="material-symbols-outlined text-[20px]">download</span>
+                Template Brief
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5">
+            <img id="product-thumbnail" alt="" class="hidden w-full max-w-[420px] mx-auto rounded-3xl shadow-xl" src="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFIT / FITUR -->
+    <section id="section-benefits" class="hidden reveal w-full bg-surface-container-low py-space-xl">
+      <div class="max-w-[1200px] mx-auto px-margin lg:px-margin-desktop flex flex-col gap-space-lg">
+        <h2 class="text-headline-lg text-primary tracking-tight">Apa Saja yang Kamu Dapatkan?</h2>
+        <div id="benefits-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md"></div>
+      </div>
+    </section>
+
+    <!-- TABS: TERMASUK / BELUM TERMASUK / KETENTUAN -->
+    <section class="reveal w-full bg-surface py-space-xl">
+      <div class="max-w-[1200px] mx-auto px-margin lg:px-margin-desktop">
+        <div class="bg-surface-container-lowest rounded-3xl p-space-lg lg:p-space-xl shadow-md">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md mb-space-lg">
+            <h2 class="text-headline-lg text-primary font-bold">Detail &amp; Spesifikasi</h2>
+            <div class="inline-flex p-1.5 bg-surface-container rounded-xl gap-1">
+              <button class="tab-btn px-space-md py-2 rounded-lg text-label-md bg-surface-container-lowest text-primary shadow-sm font-bold" data-tab="termasuk">Termasuk</button>
+              <button class="tab-btn px-space-md py-2 rounded-lg text-label-md text-on-surface-variant" data-tab="belum">Belum Termasuk</button>
+              <button class="tab-btn px-space-md py-2 rounded-lg text-label-md text-on-surface-variant" data-tab="ketentuan">Ketentuan</button>
+            </div>
+          </div>
+
+          <div id="tab-termasuk" class="tab-panel grid grid-cols-1 md:grid-cols-2 gap-space-md"></div>
+          <div id="tab-belum" class="tab-panel hidden grid grid-cols-1 md:grid-cols-2 gap-space-md"></div>
+          <div id="tab-ketentuan" class="tab-panel hidden">
+            <p id="terms-text" class="text-body-md text-on-surface-variant whitespace-pre-line"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<footer class="w-full bg-primary-container py-space-xl">
+  <div class="max-w-[1200px] mx-auto px-margin lg:px-margin-desktop flex flex-col items-center gap-space-sm">
+    <img alt="Webinyuu" class="h-12 w-auto object-contain" src="../assets/img/logo/webinyuu-horizontal.png" style="filter: brightness(0) invert(1);">
+    <p class="text-caption text-on-primary-container">&copy; 2026 Webinyuu. Semua hak dilindungi.</p>
+  </div>
+</footer>
+
+<script type="module" src="../js/modules/productDetail.js"></script>
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm', 'font-bold');
+        b.classList.add('text-on-surface-variant');
+      });
+      btn.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm', 'font-bold');
+      btn.classList.remove('text-on-surface-variant');
+
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
+    });
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

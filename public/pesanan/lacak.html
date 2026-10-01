@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lacak Pesanan — Webinyuu</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/output.css">
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased">
+
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30">
+  <div class="h-20 max-w-[700px] mx-auto px-margin flex items-center justify-between gap-space-md">
+    <a href="/index.html" class="flex items-center">
+      <img alt="Webinyuu" class="h-12 w-auto object-contain" src="../assets/img/logo/webinyuu-vertikal.png">
+    </a>
+    <a class="text-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="/index.html">Kembali ke Beranda</a>
+  </div>
+</header>
+
+<main class="w-full pt-32 pb-space-xl">
+  <div class="max-w-[700px] mx-auto px-margin">
+
+    <!-- STATE: LOADING -->
+    <div id="state-loading" class="text-center text-body-md text-on-surface-variant py-space-xl">
+      Memuat data pesanan...
+    </div>
+
+    <!-- STATE: TOKEN BELUM ADA / MASUKKAN MANUAL -->
+    <div id="state-invalid" class="hidden flex flex-col gap-space-md py-space-xl">
+      <div class="text-center flex flex-col gap-space-xs">
+        <p class="text-headline-md text-primary">Lacak Status Pesanan</p>
+        <p class="text-body-md text-on-surface-variant">Masukkan kode tracking yang kamu terima setelah pemesanan.</p>
+      </div>
+      <form id="token-form" class="flex flex-col sm:flex-row gap-space-sm bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm">
+        <input id="token-input" type="text" required placeholder="Kode tracking pesanan"
+          class="flex-1 border border-outline-variant rounded-xl px-space-md py-3 text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container">
+        <button type="submit" class="inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all">
+          Cek Status
+        </button>
+      </form>
+    </div>
+
+    <!-- STATE: TIDAK DITEMUKAN -->
+    <div id="state-notfound" class="hidden text-center py-space-xl flex flex-col gap-space-md items-center">
+      <p class="text-headline-md text-primary mb-space-xs">Pesanan tidak ditemukan</p>
+      <p class="text-body-md text-on-surface-variant mb-space-md">Kode tracking tidak valid atau sudah tidak berlaku. Cek lagi link/kode yang kamu punya.</p>
+      <a class="inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl" href="/pesanan/lacak.html">Coba Kode Lain</a>
+    </div>
+
+    <!-- STATE: KONTEN ORDER -->
+    <div id="state-content" class="hidden flex flex-col gap-space-lg">
+
+      <div class="flex flex-col gap-space-xs">
+        <span class="text-caption text-secondary uppercase font-bold tracking-wider">Status Pesanan</span>
+        <div class="flex items-center justify-between gap-space-sm flex-wrap">
+          <h1 id="order-number" class="text-headline-lg text-primary tracking-tight"></h1>
+          <span id="status-badge" class="inline-flex items-center px-space-md py-1.5 rounded-full text-label-md font-bold"></span>
+        </div>
+        <p id="product-name" class="text-body-md text-on-surface-variant"></p>
+      </div>
+
+      <div class="bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm">
+        <p id="status-description" class="text-body-md text-on-surface"></p>
+      </div>
+
+      <div class="bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-sm">
+        <div class="flex items-center justify-between">
+          <span class="text-headline-sm text-primary">Ringkasan Pembayaran</span>
+          <span id="payment-badge" class="inline-flex items-center px-space-sm py-0.5 rounded-full text-caption font-bold"></span>
+        </div>
+        <div class="h-[1px] bg-surface-container my-1"></div>
+        <div class="flex justify-between text-body-md">
+          <span class="text-on-surface-variant">Total Paket</span>
+          <span id="total-amount" class="font-bold text-primary"></span>
+        </div>
+        <div class="flex justify-between text-body-md">
+          <span class="text-on-surface-variant">Sudah Dibayar</span>
+          <span id="paid-amount" class="font-bold text-primary"></span>
+        </div>
+        <div class="flex justify-between text-headline-sm">
+          <span class="text-primary">Sisa Tagihan</span>
+          <span id="remaining-amount" class="font-bold text-primary"></span>
+        </div>
+      </div>
+
+      <div id="contact-box" class="hidden bg-surface-container-low rounded-2xl p-space-lg flex flex-col gap-space-sm">
+        <p id="deadline-text" class="hidden text-body-md font-bold text-error"></p>
+        <p class="text-body-md text-on-surface-variant">Admin yang menangani pesananmu: <span id="admin-name" class="font-bold text-primary"></span></p>
+        <a id="admin-wa-link" class="inline-flex items-center justify-center gap-space-xs bg-[#25D366] text-white text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all" href="#" target="_blank" rel="noopener">
+          <span class="material-symbols-outlined text-[20px]">chat</span>
+          Hubungi Admin via WhatsApp
+        </a>
+      </div>
+
+      <div id="revision-box" class="hidden bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex items-center justify-between">
+        <span class="text-body-md text-on-surface-variant">Jatah Revisi</span>
+        <span id="revision-text" class="font-bold text-primary"></span>
+      </div>
+
+      <div id="maintenance-box" class="hidden bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-md">
+        <div>
+          <h3 class="text-headline-sm text-primary">Garansi Perbaikan Bug</h3>
+          <p id="maint-period" class="text-body-md text-on-surface-variant"></p>
+        </div>
+        <div id="maint-form" class="flex flex-col gap-space-sm">
+          <label class="text-label-md text-primary" for="maint-text">Ada yang tidak sesuai atau error di websitemu?</label>
+          <textarea id="maint-text" rows="3" maxlength="1000" class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" placeholder="Contoh: tombol WhatsApp tidak bisa diklik di HP"></textarea>
+          <p class="text-caption text-on-surface-variant">Ini untuk memperbaiki kesalahan dari hasil yang sudah disepakati. Permintaan perubahan atau tambahan baru dihitung terpisah.</p>
+          <p id="maint-error" class="hidden text-caption text-error"></p>
+          <button id="maint-submit" type="button" class="self-start bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all">Kirim Laporan</button>
+        </div>
+        <ul id="maint-list" class="flex flex-col gap-space-xs"></ul>
+      </div>
+
+      <div id="result-box" class="hidden bg-surface-container-low rounded-2xl p-space-lg text-center flex flex-col gap-space-sm">
+        <p class="text-body-md text-on-surface-variant">Landing page kamu sudah selesai dan bisa diakses di:</p>
+        <a id="result-link" class="inline-flex items-center justify-center gap-space-xs bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all" href="#" target="_blank">
+          Lihat Hasil
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<script type="module" src="../js/modules/tracking.js"></script>
+</body>
+</html>

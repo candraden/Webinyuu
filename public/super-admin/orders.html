@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Order & Penugasan — Super Admin Webinyuu</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../assets/js/tailwind.config.js"></script>
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased">
+
+<div class="flex min-h-screen w-full">
+
+  <!-- SIDEBAR (komponen shared — edit di /partials/sidebar.js) -->
+  <script>window.SA_PAGE = 'orders';</script>
+  <script src="../partials/sidebar.js"></script>
+
+  <!-- MAIN -->
+  <main class="flex-1 min-h-screen min-w-0 bg-surface">
+    <!-- HEADER (komponen shared — edit di /partials/header.js) -->
+    <script>
+      window.SA_HEADER = {
+        title: 'Order &amp; Penugasan',
+        subtitle: 'Pantau semua order dan pindahkan penanganannya ke admin lain.',
+        actionsHtml: ''
+      };
+    </script>
+    <script src="../partials/header.js"></script>
+
+    <div class="p-margin flex flex-col gap-space-md">
+      <div id="flash" class="hidden rounded-xl px-space-md py-3 text-body-md"></div>
+      <div class="flex flex-col sm:flex-row gap-space-sm">
+        <input id="search" type="search" placeholder="Cari nomor order / nama / bisnis" class="flex-1 border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container">
+        <select id="filter-admin" class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-secondary-container">
+          <option value="">Semua admin</option>
+          <option value="none">Belum ditugaskan</option>
+        </select>
+      </div>
+      <div id="state-loading" class="text-center text-body-md text-on-surface-variant py-space-xl">Memuat order...</div>
+      <div id="state-error" class="hidden text-center text-body-md text-error py-space-xl"></div>
+      <div id="state-empty" class="hidden text-center text-body-md text-on-surface-variant py-space-xl">Tidak ada order.</div>
+      <div id="table-wrap" class="hidden bg-surface-container-lowest rounded-2xl shadow-sm overflow-x-auto -mx-margin sm:mx-0">
+        <table class="w-full text-body-md min-w-[760px]">
+          <thead><tr class="text-left text-label-md text-on-surface-variant border-b border-outline-variant/30">
+            <th class="px-space-md py-space-sm">Order</th><th class="px-space-md py-space-sm">Customer</th><th class="px-space-md py-space-sm">Status</th><th class="px-space-md py-space-sm">Admin yang menangani</th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script type="module" src="../js/modules/superAdminOrders.js"></script>
+</body>
+</html>

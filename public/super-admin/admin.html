@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Kelola Admin — Super Admin Webinyuu</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../assets/js/tailwind.config.js"></script>
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased">
+
+<div class="flex min-h-screen w-full">
+  <script>window.SA_PAGE = 'admin';</script>
+  <script src="../partials/sidebar.js"></script>
+  <main class="flex-1 min-h-screen min-w-0 bg-surface">
+    <script>
+      window.SA_HEADER = {
+        title: 'Kelola Admin',
+        subtitle: 'Buat, ubah, dan nonaktifkan akun Admin & Super Admin.',
+        actionsHtml: '<button id="btn-add-admin" class="inline-flex items-center gap-space-xs bg-secondary-container text-primary-container text-label-md px-space-md sm:px-space-lg py-3 rounded-xl shadow-sm hover:brightness-95 transition-all" type="button"><span class="material-symbols-outlined text-[20px]">add</span><span class="hidden sm:inline">Tambah Admin</span></button>'
+      };
+    </script>
+    <script src="../partials/header.js"></script>
+    <div class="p-margin flex flex-col gap-space-md">
+      <div id="flash" class="hidden rounded-xl px-space-md py-3 text-body-md"></div>
+      <div id="state-loading" class="text-center text-body-md text-on-surface-variant py-space-xl">Memuat admin...</div>
+      <div id="state-error" class="hidden text-center text-body-md text-error py-space-xl"></div>
+      <div id="admin-table-wrap" class="hidden bg-surface-container-lowest rounded-2xl shadow-sm overflow-x-auto -mx-margin sm:mx-0">
+        <table class="w-full text-body-md min-w-[760px]">
+          <thead><tr class="text-left text-label-md text-on-surface-variant border-b border-outline-variant/30">
+            <th class="px-space-md py-space-sm">Nama</th><th class="px-space-md py-space-sm">Email</th><th class="px-space-md py-space-sm">Nomor HP</th><th class="px-space-md py-space-sm">Role</th><th class="px-space-md py-space-sm">Status</th><th class="px-space-md py-space-sm text-left">Aksi</th>
+          </tr></thead>
+          <tbody id="admin-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="modal-admin" class="hidden fixed inset-0 z-50 bg-tertiary/40 backdrop-blur-sm flex items-center justify-center sm:p-margin">
+  <form id="form-admin" class="w-full h-full sm:h-auto sm:max-w-[480px] sm:max-h-[90vh] overflow-y-auto bg-surface-container-lowest rounded-none sm:rounded-2xl shadow-xl p-space-md sm:p-space-lg flex flex-col gap-space-md">
+    <h2 id="modal-admin-title" class="text-headline-sm text-primary"></h2>
+    <div data-mode="create edit" class="flex flex-col gap-1"><label class="text-label-md text-primary" for="admin-name">Nama Lengkap *</label><input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="admin-name" type="text"></div>
+    <div data-mode="create edit" class="flex flex-col gap-1"><label class="text-label-md text-primary" for="admin-email">Email *</label><input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="admin-email" type="email" autocomplete="off"></div>
+    <div data-mode="create edit" class="flex flex-col gap-1"><label class="text-label-md text-primary" for="admin-phone">Nomor HP / WhatsApp <span id="admin-phone-req">*</span></label><input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="admin-phone" type="tel" inputmode="tel" placeholder="081234567890" autocomplete="off"><p class="text-caption text-on-surface-variant">Dipakai di invoice: customer yang ditangani admin ini menghubungi nomor ini.</p></div>
+    <div data-mode="create reset" class="flex flex-col gap-1"><label class="text-label-md text-primary" for="admin-password">Password *</label><div class="relative"><input class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container pr-12 w-full" id="admin-password" type="password" minlength="8" autocomplete="new-password"><button id="btn-toggle-password" type="button" aria-label="Tampilkan password" aria-pressed="false" class="absolute inset-y-0 right-0 px-space-md flex items-center text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[22px]">visibility</span></button></div></div>
+    <p data-mode="create reset" class="text-caption text-on-surface-variant -mt-space-xs">Minimal 8 karakter. Sampaikan ke admin secara langsung; mereka bisa langsung login.</p>
+    <div data-mode="create edit" class="flex flex-col gap-1"><label class="text-label-md text-primary" for="admin-role">Role *</label>
+      <select class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="admin-role"><option value="admin">Admin</option><option value="super_admin">Super Admin</option></select></div>
+    <div id="admin-form-error" class="hidden bg-error/10 text-error text-body-md rounded-xl px-space-md py-3"></div>
+    <div class="flex items-center justify-end gap-space-sm pt-space-xs">
+      <button id="btn-cancel-admin" class="bg-surface-container text-primary text-label-md px-space-lg py-3 rounded-xl" type="button">Batal</button>
+      <button id="btn-save-admin" class="bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 disabled:opacity-60" type="submit">Simpan</button>
+    </div>
+  </form>
+</div>
+
+<script type="module" src="../js/modules/superAdminAdmins.js"></script>
+</body>
+</html>

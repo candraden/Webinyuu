@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Pemesanan — Webinyuu</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="./assets/css/output.css">
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased">
+
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30">
+  <div class="h-20 max-w-[700px] mx-auto px-margin flex items-center justify-between gap-space-md">
+    <a href="/index.html" class="flex items-center">
+      <img alt="Webinyuu" class="h-12 w-auto object-contain" src="./assets/img/logo/webinyuu-vertikal.png">
+    </a>
+    <a class="text-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="/index.html">Batal, Kembali</a>
+  </div>
+</header>
+
+<main class="w-full pt-32 pb-space-xl">
+  <div class="max-w-[700px] mx-auto px-margin">
+
+    <div id="state-loading" class="text-center text-body-md text-on-surface-variant py-space-xl">Memuat data paket...</div>
+
+    <div id="state-invalid" class="hidden text-center py-space-xl">
+      <p class="text-headline-md text-primary mb-space-xs">Paket belum dipilih</p>
+      <p class="text-body-md text-on-surface-variant mb-space-md">Silakan pilih paket dulu dari halaman utama.</p>
+      <a class="inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl" href="/index.html#paket-harga">Lihat Paket</a>
+    </div>
+
+    <div id="state-wizard" class="hidden flex flex-col gap-space-lg">
+
+      <!-- PROGRESS -->
+      <div class="flex items-center justify-between">
+        <div id="progress-steps" class="flex items-center gap-space-xs w-full"></div>
+      </div>
+
+      <div class="bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex items-center justify-between">
+        <div>
+          <p id="paket-nama" class="text-headline-sm text-primary"></p>
+          <p class="text-caption text-on-surface-variant">DP 50% di awal</p>
+        </div>
+        <div class="text-right">
+          <p id="paket-harga" class="text-headline-md text-primary font-bold"></p>
+          <p id="paket-dp" class="text-caption text-secondary font-semibold"></p>
+        </div>
+      </div>
+
+      <!-- STEP 1: DATA PEMESAN -->
+      <div class="wizard-step bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-md" data-step="1">
+        <h2 class="text-headline-sm text-primary">1. Data Pemesan</h2>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary">Nama Lengkap *</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="customer_name" type="text" required>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary">Nama Usaha / Bisnis *</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="business_name" type="text" required>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary">Nomor WhatsApp (aktif) *</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="whatsapp_number" placeholder="62819819289" type="tel" required>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-label-md text-primary">Email (opsional)</label>
+          <input class="border border-outline-variant rounded-xl px-space-md py-3 text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" id="email" type="email">
+        </div>
+      </div>
+
+      <!-- STEP 2: BRIEF -->
+      <div class="wizard-step hidden bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-md" data-step="2">
+        <h2 class="text-headline-sm text-primary">2. Upload Brief</h2>
+        <p class="text-body-md text-on-surface-variant">Upload dokumen Brief yang sudah kamu isi (format PDF/DOC/DOCX).</p>
+        <input accept=".pdf,.doc,.docx" class="border border-dashed border-outline-variant rounded-xl px-space-md py-4 text-body-md" id="brief_file" type="file">
+        <p id="brief_file_name" class="text-caption text-secondary"></p>
+      </div>
+
+      <!-- STEP 3: ASSET (dinamis) -->
+      <div class="wizard-step hidden bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-lg" data-step="3">
+        <h2 class="text-headline-sm text-primary">3. Upload Asset</h2>
+        <div id="asset-uploaders" class="flex flex-col gap-space-lg"></div>
+      </div>
+
+      <!-- STEP 4: RINGKASAN -->
+      <div class="wizard-step hidden bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-md" data-step="4">
+        <h2 class="text-headline-sm text-primary">4. Ringkasan &amp; Submit</h2>
+
+        <div class="flex flex-col gap-space-sm">
+          <h3 class="text-label-md text-primary">Layanan Tambahan (opsional)</h3>
+
+          <label class="flex items-start gap-space-sm cursor-pointer">
+            <input type="checkbox" id="addon-domain" class="mt-1 w-5 h-5 shrink-0">
+            <span class="text-body-md">Pakai alamat website sendiri, misalnya <b>namausaha.com</b> <span class="font-bold text-primary">+Rp25.000</span> biaya pengaturan. Kalau belum punya, kami bantu carikan dan daftarkan atas namamu. Harga beli domainnya dibayar terpisah.</span>
+          </label>
+          <div id="domain-fields" class="hidden flex flex-col gap-space-sm pl-8">
+            <label class="flex items-center gap-space-sm"><input type="radio" name="domain-case" value="has" checked> Saya sudah punya domain</label>
+            <label class="flex items-center gap-space-sm"><input type="radio" name="domain-case" value="needs"> Saya belum punya, tolong dibantu</label>
+            <input id="domain-name" type="text" maxlength="120" class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" placeholder="Nama domain yang dimiliki">
+          </div>
+
+          <label class="flex items-start gap-space-sm cursor-pointer">
+            <input type="checkbox" id="addon-source" class="mt-1 w-5 h-5 shrink-0">
+            <span class="text-body-md">Saya mau menerima <b>file website (source code)</b> <span class="font-bold text-primary">+50% dari harga paket</span>. Diserahkan setelah pembayaran lunas.</span>
+          </label>
+        </div>
+
+        <div id="ringkasan-box" class="flex flex-col gap-space-xs text-body-md"></div>
+        <div id="price-box" class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-xs text-body-md"></div>
+
+        <label class="flex items-start gap-space-sm cursor-pointer">
+          <input type="checkbox" id="agree-terms" class="mt-1 w-5 h-5 shrink-0">
+          <span class="text-body-md">Saya sudah memeriksa data dan materi di atas. DP 50% harus dibayar dalam 24 jam, jika tidak pesanan dibatalkan otomatis. DP tidak dikembalikan jika saya membatalkan setelah membayar.</span>
+        </label>
+        <div id="upload-progress" class="hidden text-body-md text-on-surface-variant"></div>
+      </div>
+
+      <div id="form-error" class="hidden bg-error/10 text-error text-body-md rounded-xl px-space-md py-3"></div>
+
+      <!-- NAV BUTTONS -->
+      <div class="flex items-center justify-between gap-space-md">
+        <button id="btn-back" class="hidden inline-flex items-center justify-center bg-surface-container text-primary text-label-md px-space-lg py-3 rounded-xl" type="button">Kembali</button>
+        <button id="btn-next" class="ml-auto inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all" type="button">Lanjut</button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script type="module" src="./js/modules/orderForm.js"></script>
+</body>
+</html>

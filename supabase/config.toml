@@ -1,0 +1,62 @@
+
+[functions.create-order]
+enabled = true
+verify_jwt = false
+import_map = "./functions/create-order/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/create-order/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/create-order/*.html" ]
+
+[functions.manage-order-assets]
+enabled = true
+verify_jwt = false
+import_map = "./functions/manage-order-assets/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/manage-order-assets/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/manage-order-assets/*.html" ]
+
+# --- Fungsi PUBLIK: dipanggil browser dengan publishable key (tanpa login). ---
+
+[functions.get-order-by-token]
+enabled = true
+verify_jwt = false
+
+[functions.calculate-addon-price]
+enabled = true
+verify_jwt = false
+
+[functions.submit-maintenance-request]
+enabled = true
+verify_jwt = false
+
+# --- Fungsi ADMIN: wajib JWT login. Peran & kepemilikan order dicek lagi di dalam fungsi (requireAdmin). ---
+
+[functions.manage-admins]
+enabled = true
+verify_jwt = true
+
+[functions.verify-payment]
+enabled = true
+verify_jwt = true
+
+[functions.update-order-status]
+enabled = true
+verify_jwt = true
+
+[functions.admin-signed-url]
+enabled = true
+verify_jwt = true
+
+[functions.reassign-order]
+enabled = true
+verify_jwt = true
+
+[functions.manage-addons]
+enabled = true
+verify_jwt = true
