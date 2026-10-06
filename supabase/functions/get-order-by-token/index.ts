@@ -57,6 +57,7 @@ Deno.serve(async (req) => {
         revision_used,
         revision_limit,
         result_url,
+        preview_url,
         created_at,
         payment_deadline_at,
         published_at,
@@ -86,13 +87,23 @@ Deno.serve(async (req) => {
       revision_used: order.revision_used,
       revision_limit: order.revision_limit,
       result_url: order.result_url,
+      // Link preview hanya relevan saat status Preview Siap.
+      preview_url: order.order_status === 'PREVIEW' ? order.preview_url : null,
       // Admin yang menangani (dipakai invoice/tracking untuk kontak WhatsApp).
       admin_name: one<{ full_name: string; phone: string }>(order.admins)?.full_name ?? null,
       admin_phone: one<{ full_name: string; phone: string }>(order.admins)?.phone ?? null,
       // Batas bayar DP (24 jam sejak dibuat; diperpanjang jika order diaktifkan kembali).
       payment_deadline: order.payment_deadline_at,
       maintenance: null as unknown,
+      pending_revision: null as unknown,
     };
+
+    // Revisi dari customer yang masih menunggu diproses admin.
+    if (order.order_status === 'PREVIEW') {
+      const { data: pend } = await supabaseAdmin.from('revision_requests').select('description, created_at')
+        .eq('order_id', order.id).eq('status', 'pending').order('created_at', { ascending: false }).limit(1).maybeSingle();
+      safeOrder.pending_revision = pend ?? null;
+    }
 
     // Garansi perbaikan bug 7 hari setelah website diserahkan.
     if (order.order_status === 'COMPLETED') {

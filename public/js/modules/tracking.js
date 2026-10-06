@@ -113,6 +113,65 @@ function renderContact(order) {
   }
 }
 
+function renderPreview(order) {
+  const box = document.getElementById('preview-box');
+  if (!box) return;
+  if (order.order_status !== 'PREVIEW' || !order.preview_url) {
+    box.classList.add('hidden');
+    return;
+  }
+  box.classList.remove('hidden');
+  document.getElementById('preview-link').href = order.preview_url;
+}
+
+function renderRevisionRequest(order) {
+  const form = document.getElementById('rev-request-box');
+  const pending = document.getElementById('rev-pending-box');
+  if (!form || !pending) return;
+  const isPreview = order.order_status === 'PREVIEW';
+  const req = isPreview ? order.pending_revision : null;
+
+  pending.classList.toggle('hidden', !req);
+  form.classList.toggle('hidden', !isPreview || !!req);
+
+  if (req) {
+    document.getElementById('rev-pending-text').textContent = req.description;
+    const msg = encodeURIComponent(`Halo ${order.admin_name || 'Admin'}, saya sudah mengirim revisi untuk order ${order.order_number} lewat halaman lacak. Mohon dicek ya.`);
+    const wa = document.getElementById('rev-pending-wa');
+    if (order.admin_phone) { wa.href = `https://wa.me/${order.admin_phone}?text=${msg}`; wa.classList.remove('hidden'); }
+    else wa.classList.add('hidden');
+  }
+  if (isPreview && !req) {
+    const left = (order.revision_limit || 0) - (order.revision_used || 0);
+    document.getElementById('rev-quota-note').textContent = left > 0
+      ? `Jatah revisi tersisa ${left} kali.`
+      : 'Jatah revisi paket sudah habis. Revisi tambahan dikenakan Rp5.000 per batch dan akan ditagih admin.';
+  }
+}
+
+async function submitRevision() {
+  const text = document.getElementById('rev-text');
+  const err = document.getElementById('rev-error');
+  const btn = document.getElementById('rev-submit');
+  err.classList.add('hidden');
+  btn.disabled = true;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/submit-revision-request`, {
+      method: 'POST', headers: AUTH_HEADERS,
+      body: JSON.stringify({ tracking_token: currentToken, description: text.value }),
+    });
+    const d = await res.json();
+    if (!res.ok) throw new Error(d.error || 'Gagal mengirim revisi.');
+    text.value = '';
+    await loadOrder(currentToken);
+  } catch (e) {
+    err.textContent = e.message;
+    err.classList.remove('hidden');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
 function renderResult(order) {
   const box = document.getElementById('result-box');
   if (order.order_status !== 'COMPLETED' || !order.result_url) {
@@ -146,6 +205,8 @@ function renderOrder(order) {
   renderContact(order);
   renderMaintenance(order);
   renderRevision(order);
+  renderPreview(order);
+  renderRevisionRequest(order);
   renderResult(order);
 
   showState('state-content');
@@ -194,3 +255,4 @@ document.getElementById('token-form').addEventListener('submit', (e) => {
 loadOrder(getTokenFromUrl());
 
 document.getElementById('maint-submit')?.addEventListener('click', submitMaintenance);
+document.getElementById('rev-submit')?.addEventListener('click', submitRevision);

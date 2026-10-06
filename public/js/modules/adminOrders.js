@@ -44,7 +44,7 @@ async function loadOrders() {
 
   el('orders-list').innerHTML = data.map(o => {
     const st = getStatusInfo(o.order_status), ps = getPaymentStatusInfo(o.payment_status);
-    return `<a href="/admin/order-detail.html?id=${encodeURIComponent(o.id)}" class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+    return `<a href="/admin/order-detail?id=${encodeURIComponent(o.id)}" class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
       <div class="min-w-0">
         <div class="flex items-center gap-space-sm flex-wrap">
           <span class="text-label-md font-bold text-primary">${esc(o.order_number)}</span>

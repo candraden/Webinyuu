@@ -43,10 +43,10 @@ function renderCard(product) {
         </ul>
       </div>
       <div class="pt-space-xl flex flex-col gap-space-sm">
-        <a class="w-full inline-flex items-center justify-center border border-primary/30 text-primary text-label-md py-3 rounded-xl hover:bg-surface-container transition-all" href="/produk/detail.html?slug=${product.slug}" onclick="sessionStorage.setItem('selected_slug', '${product.slug}')">
+        <a class="w-full inline-flex items-center justify-center border border-primary/30 text-primary text-label-md py-3 rounded-xl hover:bg-surface-container transition-all" href="/produk/detail?slug=${product.slug}" onclick="sessionStorage.setItem('selected_slug', '${product.slug}')">
           Lihat Detail
         </a>
-        <a class="w-full inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md py-3 rounded-xl hover:brightness-95 transition-all" href="/pesan.html?paket=${product.slug}" onclick="sessionStorage.setItem('selected_paket', '${product.slug}')">
+        <a class="w-full inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md py-3 rounded-xl hover:brightness-95 transition-all" href="/pesan?paket=${product.slug}" onclick="sessionStorage.setItem('selected_paket', '${product.slug}')">
           Pesan Sekarang
         </a>
       </div>

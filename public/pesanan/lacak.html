@@ -116,6 +116,31 @@
         <ul id="maint-list" class="flex flex-col gap-space-xs"></ul>
       </div>
 
+      <div id="preview-box" class="hidden bg-surface-container-low rounded-2xl p-space-lg text-center flex flex-col gap-space-sm">
+        <p class="text-body-md text-on-surface-variant">Preview landing page kamu sudah siap. Cek dulu. Kalau ada yang ingin diubah, kirim revisi lewat form di bawah. Kalau sudah sesuai, kabari admin lewat WhatsApp.</p>
+        <a id="preview-link" class="inline-flex items-center justify-center gap-space-xs bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all" href="#" target="_blank" rel="noopener">
+          Buka Preview
+        </a>
+      </div>
+
+      <div id="rev-request-box" class="hidden bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-sm">
+        <h3 class="text-headline-sm text-primary">Kirim Revisi</h3>
+        <p id="rev-quota-note" class="text-body-md text-on-surface-variant"></p>
+        <textarea id="rev-text" rows="4" maxlength="1000" class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" placeholder="Tulis semua perubahan yang kamu inginkan dalam satu pesan. Contoh: ganti warna tombol jadi hijau, ubah teks judul jadi ..."></textarea>
+        <p class="text-caption text-on-surface-variant">Semua perubahan yang dikirim dalam satu pesan dihitung 1 revisi, selama masih dalam lingkup paket.</p>
+        <p id="rev-error" class="hidden text-caption text-error"></p>
+        <button id="rev-submit" type="button" class="self-start bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all">Kirim Revisi</button>
+      </div>
+
+      <div id="rev-pending-box" class="hidden bg-secondary-container/40 rounded-2xl p-space-lg flex flex-col gap-space-sm">
+        <h3 class="text-headline-sm text-primary">Revisi terkirim, menunggu admin</h3>
+        <p id="rev-pending-text" class="text-body-md whitespace-pre-line"></p>
+        <a id="rev-pending-wa" class="self-start inline-flex items-center gap-space-xs bg-[#25D366] text-white text-label-md px-space-md py-2.5 rounded-xl shadow-md hover:brightness-95 transition-all" href="#" target="_blank" rel="noopener">
+          <span class="material-symbols-outlined text-[20px]">chat</span>
+          Kabari Admin via WhatsApp
+        </a>
+      </div>
+
       <div id="result-box" class="hidden bg-surface-container-low rounded-2xl p-space-lg text-center flex flex-col gap-space-sm">
         <p class="text-body-md text-on-surface-variant">Landing page kamu sudah selesai dan bisa diakses di:</p>
         <a id="result-link" class="inline-flex items-center justify-center gap-space-xs bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all" href="#" target="_blank">

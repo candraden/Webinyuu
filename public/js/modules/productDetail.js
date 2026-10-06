@@ -72,11 +72,11 @@ async function loadDetail() {
   document.getElementById('product-price').textContent = formatRupiah(product.price);
 
   const ctaPesan = document.getElementById('cta-pesan');
-  ctaPesan.href = `/pesan.html?paket=${product.slug}`;
+  ctaPesan.href = `/pesan?paket=${product.slug}`;
   ctaPesan.addEventListener('click', () => sessionStorage.setItem('selected_paket', product.slug));
 
   const ctaHeader = document.getElementById('cta-header');
-  ctaHeader.href = `/pesan.html?paket=${product.slug}`;
+  ctaHeader.href = `/pesan?paket=${product.slug}`;
   ctaHeader.addEventListener('click', () => sessionStorage.setItem('selected_paket', product.slug));
 
   if (product.estimated_duration_days) {

@@ -56,8 +56,7 @@
   $('r-paket').textContent = params.get('paket') || '-';
   $('r-total').textContent = 'Rp' + Number(params.get('total') || 0).toLocaleString('id-ID');
   $('r-dp').textContent = 'Rp' + Number(params.get('dp') || 0).toLocaleString('id-ID');
-  $('tracking-link').href = `/pesanan/lacak.html?token=${token}`;
-
+  $('tracking-link').href = `/pesanan/lacak?token=${token}`;
   // Nomor WA admin diambil dari server (admin yang otomatis ditugaskan ke order ini).
   async function loadAdmin() {
     try {

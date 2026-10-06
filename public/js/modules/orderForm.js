@@ -466,7 +466,7 @@ async function submitOrder() {
       dp: orderData.dp_amount,
       paket: currentProduct.name,
     });
-    window.location.href = `/konfirmasi.html?${params.toString()}`;
+    window.location.href = `/konfirmasi?${params.toString()}`;
   } catch (err) {
     console.error(err);
     errorEl.textContent = err.message || 'Terjadi kesalahan. Coba lagi.';

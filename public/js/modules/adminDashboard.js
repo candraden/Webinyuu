@@ -53,7 +53,7 @@ const TODO_NOTE = {
   if (maintN > 0) cards.push({ label: 'Laporan Maintenance', n: maintN, icon: 'build', tone: 'bg-error/10 text-error', hint: 'Laporan masalah dari customer, buka detail order', statuses: ['COMPLETED'] });
 
   el('stat-cards').innerHTML = cards.map(c => `
-    <a href="/admin/orders.html?status=${c.statuses.join(',')}" title="${esc(c.hint || '')}" class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-sm">
+    <a href="/admin/orders?status=${c.statuses.join(',')}" title="${esc(c.hint || '')}" class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-sm">
       <span class="w-10 h-10 rounded-xl ${c.tone} flex items-center justify-center"><span class="material-symbols-outlined text-[22px]">${c.icon}</span></span>
       <span class="text-headline-lg text-primary font-bold leading-none">${c.n}</span>
       <span class="text-label-md text-on-surface-variant">${esc(c.label)}</span>
@@ -66,7 +66,7 @@ const TODO_NOTE = {
   el('todo-empty').classList.toggle('hidden', todo.length > 0);
   el('todo-list').innerHTML = todo.map(o => {
     const st = getStatusInfo(o.order_status);
-    return `<a href="/admin/order-detail.html?id=${encodeURIComponent(o.id)}" class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+    return `<a href="/admin/order-detail?id=${encodeURIComponent(o.id)}" class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
       <div class="min-w-0">
         <div class="flex items-center gap-space-sm flex-wrap">
           <span class="text-label-md font-bold text-primary">${esc(o.order_number)}</span>
