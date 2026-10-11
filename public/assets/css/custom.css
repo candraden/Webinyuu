@@ -1,0 +1,79 @@
+/* =====================================================
+   custom.css  - CSS tambahan Webinyuu (di luar Tailwind)
+   Bagian: 1) Logo  2) Mode gelap  3) HP/Android  4) Menu & tombol
+   ===================================================== */
+
+  /* ===== UKURAN LOGO HEADER =====
+     Mau ubah ukuran logo? Cukup ganti angka di bawah ini.
+     --logo-height  : tinggi logo di komputer/laptop (sekarang 70px)
+     --logo-height-hp : tinggi logo di layar HP (sekarang 48px)
+     Catatan: tinggi header 80px, jadi jangan lebih dari sekitar 70px supaya tidak terpotong. */
+  :root { --logo-height: 70px; --logo-height-hp: 48px; }
+  #logo-img { height: var(--logo-height); width: auto; }
+  /* ===== MODE GELAP ===== */
+  html.dark { color-scheme: dark; }
+  html.dark body, html.dark .bg-surface { background-color: #0a0a0a !important; }
+  /* Bagian selang-seling (mis. Pilihan Layanan): sedikit lebih terang dari latar, tipis saja.
+     Mau lebih samar? mendekati #0a0a0a. Mau lebih terlihat? naikkan, mis. #121212 */
+  html.dark .bg-surface-container-low { background-color: #0e0e0e !important; }
+  html.dark .bg-surface-container-lowest, html.dark .bg-white { background-color: #181818 !important; }
+  html.dark .bg-surface-container { background-color: #242424 !important; }
+  html.dark header { background-color: rgba(10, 10, 10, .9) !important; border-color: rgba(255, 255, 255, .08) !important; }
+  html.dark .hero-glow { display: none !important; }
+  html.dark .text-on-surface, html.dark .nav-link:hover { color: #f5f5f5 !important; }
+  html.dark .text-on-surface-variant { color: #a8a8a8 !important; }
+  html.dark .text-primary, html.dark .text-primary-container { color: #f2f2f2 !important; }
+  html.dark .text-secondary { color: #b6f23c !important; }
+  html.dark .nav-link.text-primary { color: #8fb0ff !important; }
+  /* Tombol hijau tetap bertulisan biru tua supaya terbaca */
+  html.dark .bg-secondary-container, html.dark .bg-secondary-container.text-primary-container { color: #0b1a3a !important; }
+  html.dark .shadow-sm, html.dark .shadow-md, html.dark .shadow-xl { box-shadow: 0 4px 18px rgba(0, 0, 0, .45) !important; }
+  /* ===== TAMPILAN HP / ANDROID ===== */
+  html, body { overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+  img { max-width: 100%; height: auto; }
+  a, button { -webkit-tap-highlight-color: transparent; }
+  .menu-btn { display: none; }
+  #mobile-menu { display: none; }
+  @media (max-width: 1023px) {
+    .menu-btn { display: inline-flex; }
+    #mobile-menu {
+      position: fixed; top: 80px; left: 0; right: 0; z-index: 40;
+      padding: 8px 16px 20px; max-height: calc(100vh - 80px); overflow-y: auto;
+      border-bottom: 1px solid rgba(128, 128, 128, .25);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, .12);
+    }
+    #mobile-menu.open { display: block; }
+    #mobile-menu .nav-link {
+      display: flex; align-items: flex-start; padding: 14px 4px;
+      border-bottom: 1px solid rgba(128, 128, 128, .18);
+    }
+    #mobile-menu .mobile-cta { margin-top: 16px; width: 100%; padding-top: 12px; padding-bottom: 12px; }
+  }
+  @media (max-width: 639px) {
+    .header-cta { display: none !important; }
+    header .h-20 { gap: 8px; }
+    #logo-img { height: var(--logo-height-hp); }
+  }
+  /* Tombol ganti mode */
+  #theme-toggle { width: 44px; height: 44px; cursor: pointer; border: 0; }
+
+  /* Reservasi lebar teks tebal supaya menu tidak bergeser saat berganti aktif */
+  .nav-link { display: inline-flex; flex-direction: column; align-items: center; font-size: 16px; line-height: 24px; }
+  /* Efek zoom saat kursor di atas tombol (termasuk tombol "Lihat Detail" di kartu paket) */
+  .btn-zoom, #paket-grid a, #paket-grid button {
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  }
+  /* Zoom hanya untuk perangkat dengan kursor, supaya tidak "nyangkut" saat disentuh di HP */
+  @media (hover: hover) {
+    .btn-zoom:hover, #paket-grid a:hover, #paket-grid button:hover {
+      transform: scale(1.06);
+    }
+  }
+  .btn-zoom:active, #paket-grid a:active, #paket-grid button:active {
+    transform: scale(0.98);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-zoom, #paket-grid a, #paket-grid button { transition: none; }
+    .btn-zoom:hover, #paket-grid a:hover, #paket-grid button:hover { transform: none; }
+  }
+  .nav-link::after { content: attr(data-text); font-weight: 700; height: 0; overflow: hidden; visibility: hidden; }

@@ -1,0 +1,191 @@
+/* =====================================================
+   pesan.css - CSS khusus halaman Form Pemesanan (pesan.html)
+   Dipakai bersama custom.css (logo, mode gelap, zoom tombol).
+   Bagian: 1) Header  2) Kartu  3) Isian form  4) Pilihan/centang
+           5) Progress langkah  6) Tombol  7) Ringkasan & harga  8) Mode gelap
+           9) Nomor WhatsApp + kode negara  10) TAMPILAN DESKTOP  11) TAMPILAN HP
+   ===================================================== */
+
+:root {
+  --form-radius: 14px;        /* kebulatan sudut kolom isian */
+  --form-focus: #a3e635;      /* warna cincin saat kolom diklik (hijau) */
+}
+
+/* ---------- 1) HEADER ---------- */
+.back-link { font-size: 16px; line-height: 24px; transition: color .15s ease; }
+
+/* ---------- 2) KARTU ---------- */
+.form-card, .paket-card {
+  border: 1px solid rgba(128, 128, 128, .14);
+  box-shadow: 0 6px 24px rgba(15, 23, 42, .06) !important;
+}
+.paket-card { border-left: 4px solid var(--form-focus); }
+
+/* ---------- 3) ISIAN FORM ---------- */
+.form-label { font-size: 15px; font-weight: 600; letter-spacing: .01em; }
+.form-input, .form-file, select, textarea {
+  font-size: 16px;            /* 16px mencegah layar HP otomatis zoom saat mengetik */
+  width: 100%;
+  border-radius: var(--form-radius);
+  border-color: rgba(128, 128, 128, .35);
+  background-color: #fff;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.form-input:hover, .form-file:hover { border-color: rgba(100, 140, 20, .65); }
+.form-input:focus {
+  border-color: var(--form-focus);
+  box-shadow: 0 0 0 4px rgba(163, 230, 53, .28);
+  outline: none;
+}
+.form-input::placeholder { color: #9aa0a6; }
+.form-file { cursor: pointer; background-color: rgba(163, 230, 53, .06); border-style: dashed; border-width: 2px; }
+.form-file::file-selector-button {
+  margin-right: 14px; padding: 8px 16px; border: 0; border-radius: 10px;
+  background: #a3e635; color: #0b1a3a; font-weight: 600; cursor: pointer;
+  transition: filter .15s ease;
+}
+.form-file::file-selector-button:hover { filter: brightness(.95); }
+
+/* ---------- 4) PILIHAN & CENTANG ---------- */
+.addon-option {
+  padding: 14px 16px; border-radius: var(--form-radius);
+  border: 1px solid rgba(128, 128, 128, .25);
+  transition: border-color .15s ease, background-color .15s ease;
+}
+.addon-option:hover { border-color: rgba(100, 140, 20, .65); background-color: rgba(163, 230, 53, .06); }
+.addon-option:has(input:checked) { border-color: var(--form-focus); background-color: rgba(163, 230, 53, .12); }
+.radio-option { cursor: pointer; padding: 4px 0; }
+input[type="checkbox"], input[type="radio"] { accent-color: #65a30d; cursor: pointer; }
+
+/* ---------- 5) PROGRESS LANGKAH (diisi oleh JS orderForm.js) ---------- */
+#progress-steps { gap: 8px; }
+#progress-steps > * { transition: background-color .25s ease, color .25s ease, transform .25s ease; }
+#progress-steps > *:first-child:last-child { width: 100%; }
+
+/* ---------- 6) TOMBOL ---------- */
+#btn-next, #btn-back { min-height: 48px; font-size: 16px; font-weight: 600; min-width: 120px; cursor: pointer; border: 0; }
+#btn-next:disabled, #btn-back:disabled { opacity: .55; cursor: not-allowed; transform: none !important; }
+
+/* ---------- 7) RINGKASAN & HARGA (diisi oleh JS) ---------- */
+#ringkasan-box { padding: 4px 2px; }
+#ringkasan-box > * { padding: 6px 0; border-bottom: 1px dashed rgba(128, 128, 128, .25); }
+#ringkasan-box > *:last-child { border-bottom: 0; }
+#price-box { border: 1px solid rgba(128, 128, 128, .2); }
+#price-box > * { display: flex; justify-content: space-between; gap: 12px; }
+#asset-uploaders > * { padding-bottom: 4px; }
+.agree-box { margin-top: 4px; }
+#form-error { border: 1px solid rgba(220, 38, 38, .35); }
+
+/* ---------- 8) MODE GELAP ---------- */
+html.dark .form-card, html.dark .paket-card {
+  border-color: rgba(255, 255, 255, .08);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .5) !important;
+}
+html.dark .form-input, html.dark .form-file, html.dark select, html.dark textarea {
+  background-color: #111111; color: #f5f5f5; border-color: rgba(255, 255, 255, .18);
+}
+html.dark .form-file { background-color: rgba(163, 230, 53, .05); }
+html.dark .form-input::placeholder { color: #6e6e6e; }
+html.dark .form-input:focus { box-shadow: 0 0 0 4px rgba(163, 230, 53, .22); }
+html.dark .addon-option { border-color: rgba(255, 255, 255, .14); }
+html.dark .addon-option:has(input:checked) { background-color: rgba(163, 230, 53, .1); }
+html.dark #price-box { background-color: #111111 !important; border-color: rgba(255, 255, 255, .1); }
+html.dark #ringkasan-box > * { border-bottom-color: rgba(255, 255, 255, .12); }
+html.dark #btn-back { background-color: #242424 !important; color: #f5f5f5 !important; }
+html.dark .back-link:hover { color: #f5f5f5; }
+html.dark .text-error { color: #f87171 !important; }
+
+/* ---------- 9) NOMOR WHATSAPP + KODE NEGARA ---------- */
+.phone-field {
+  position: relative; display: flex; align-items: stretch;
+  border: 1px solid rgba(128, 128, 128, .35); border-radius: var(--form-radius);
+  background: #fff; transition: border-color .15s ease, box-shadow .15s ease;
+}
+.phone-field:hover { border-color: rgba(100, 140, 20, .65); }
+.phone-field:focus-within { border-color: var(--form-focus); box-shadow: 0 0 0 4px rgba(163, 230, 53, .28); }
+.cc-btn {
+  display: flex; align-items: center; gap: 8px; padding: 0 10px 0 14px; border: 0;
+  border-right: 1px solid rgba(128, 128, 128, .25); background: transparent; color: inherit;
+  border-radius: var(--form-radius) 0 0 var(--form-radius); cursor: pointer; font-size: 16px; white-space: nowrap;
+}
+.cc-btn:hover { background: rgba(163, 230, 53, .1); }
+.cc-flag-box { display: inline-flex; align-items: center; }
+.cc-flag { width: 24px; height: 18px; object-fit: cover; border-radius: 3px; box-shadow: 0 0 0 1px rgba(0, 0, 0, .15); flex-shrink: 0; }
+.cc-flag-fallback { display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; background: #e5e7eb; color: #374151; }
+.cc-dial { font-weight: 600; }
+.cc-chevron { font-size: 20px; opacity: .7; }
+.phone-input {
+  flex: 1; min-width: 0; border: 0; outline: none; background: transparent; color: inherit;
+  padding: 12px 14px; font-size: 16px; border-radius: 0 var(--form-radius) var(--form-radius) 0;
+}
+.phone-input::placeholder { color: #9aa0a6; }
+.cc-backdrop { display: none; }
+.cc-panel {
+  display: none; position: absolute; top: calc(100% + 6px); left: 0; z-index: 60;
+  width: min(380px, 100%); background: #fff; color: #111;
+  border: 1px solid rgba(128, 128, 128, .25); border-radius: 14px; box-shadow: 0 16px 40px rgba(0, 0, 0, .18); overflow: hidden;
+}
+.cc-panel.is-open { display: block; }
+.cc-search {
+  width: 100%; border: 0; border-bottom: 1px solid rgba(128, 128, 128, .22); outline: none;
+  background: transparent; color: inherit; padding: 13px 14px; font-size: 16px;
+}
+.cc-list { max-height: 260px; overflow-y: auto; margin: 0; padding: 4px; list-style: none; }
+.cc-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; cursor: pointer; font-size: 15px; }
+.cc-item:hover, .cc-item.is-active { background: rgba(163, 230, 53, .2); }
+.cc-item.is-current .cc-name { font-weight: 700; }
+.cc-name { flex: 1; }
+.cc-code { color: #6b7280; font-variant-numeric: tabular-nums; }
+.cc-empty { padding: 14px; color: #6b7280; font-size: 14px; }
+
+html.dark .phone-field { background: #111111; border-color: rgba(255, 255, 255, .18); }
+html.dark .cc-btn { border-right-color: rgba(255, 255, 255, .15); }
+html.dark .cc-panel { background: #181818; color: #f5f5f5; border-color: rgba(255, 255, 255, .12); box-shadow: 0 16px 40px rgba(0, 0, 0, .6); }
+html.dark .cc-code, html.dark .cc-empty { color: #9ca3af; }
+html.dark .cc-flag-fallback { background: #333; color: #ddd; }
+html.dark .cc-flag { box-shadow: 0 0 0 1px rgba(255, 255, 255, .15); }
+
+/* ---------- 10) TAMPILAN DESKTOP (layar lebar, >= 768px) ---------- */
+.page-wrap { width: 100%; max-width: 700px; }
+.back-icon { display: none; }
+@media (min-width: 768px) {
+  .page-wrap { max-width: 920px; }
+  /* Langkah 1: isian dibuat 2 kolom (nama | usaha, WhatsApp | email) */
+  .wizard-step[data-step="1"]:not(.hidden) { display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; row-gap: 20px; }
+  .wizard-step[data-step="1"] > h2 { grid-column: 1 / -1; }
+  .form-card { padding: 32px !important; }
+  .paket-card { padding: 28px 32px !important; }
+  .nav-bar { justify-content: flex-end; }
+  #btn-next, #btn-back { min-width: 160px; flex: none; }
+  #btn-back { margin-right: auto; }
+}
+
+/* ---------- 11) TAMPILAN HP / ANDROID (< 768px) ---------- */
+@media (max-width: 767px) {
+  .back-text { display: none; }
+  .back-icon { display: inline-block; font-size: 26px; }
+  .back-link { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; }
+  .form-card, .paket-card { padding: 18px !important; border-radius: 18px; }
+  .form-card > h2 { font-size: 18px; }
+  .paket-card { gap: 12px; }
+  main { padding-bottom: 96px !important; }
+  /* Tombol Kembali / Lanjut menempel di bawah layar, mudah dijangkau ibu jari */
+  .nav-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 45;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, .94); backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(128, 128, 128, .2);
+  }
+  #btn-next, #btn-back { flex: 1; min-height: 50px; }
+  #btn-next { margin-left: 0; }
+  /* Pilihan kode negara muncul sebagai lembar dari bawah */
+  .cc-backdrop.is-open { display: block; position: fixed; inset: 0; z-index: 70; background: rgba(0, 0, 0, .45); }
+  .cc-panel {
+    position: fixed; top: auto; left: 0; right: 0; bottom: 0; z-index: 80; width: 100%;
+    border-radius: 20px 20px 0 0; border-bottom: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .cc-list { max-height: 55vh; }
+  .cc-item { padding: 12px 10px; font-size: 16px; }
+}
+html.dark .nav-bar { background: rgba(10, 10, 10, .94); border-top-color: rgba(255, 255, 255, .1); }
