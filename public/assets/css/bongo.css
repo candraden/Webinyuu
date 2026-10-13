@@ -1,0 +1,52 @@
+/* ============================================================
+   BONGO CAT di footer (animasi kucing mengetik, tanpa library GSAP)
+   Ukuran: ubah --bongo-w. Warna garis: ubah variabel --bc-* di bawah.
+   Latar kucing (--bc-bg) otomatis disamakan dengan warna footer oleh js/bongo.js.
+   ============================================================ */
+.bongo { --bongo-w: 180px;     /* lebar kucing di desktop (di HP otomatis mengecil) */
+  --bc-bg: #172554; --bc-green: #a5ea9b; --bc-pink: #ff61d8; --bc-blue: #569cfa; --bc-orange: #ffcc81; --bc-cyan: #7ed1e2;
+  width: min(var(--bongo-w), 70%); margin: 0 auto; padding-top: clamp(20px, 5vw, 36px); pointer-events: none; }
+footer.has-bongo { position: relative; overflow: hidden; }
+.bongo-svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+#bongo-cat { fill: var(--bc-bg); stroke-linecap: round; stroke-linejoin: round; stroke-width: 4; }
+#bongo-cat .laptop-cover, #bongo-cat .headphone .band { fill: none; }
+#bongo-cat .paw, #bongo-cat .head { stroke: var(--bc-orange); }
+#bongo-cat .laptop-keyboard { stroke-width: 2; }
+#bongo-cat .terminal-code { stroke-width: 5; }
+#bongo-cat .music .note, #bongo-cat .laptop-base, #bongo-cat .laptop-cover, #bongo-cat .paw .pads { stroke: var(--bc-pink); }
+#bongo-cat .table line, #bongo-cat .headphone .band, #bongo-cat .headphone .speaker path:nth-child(3) { stroke: var(--bc-green); }
+#bongo-cat .terminal-frame, #bongo-cat .laptop-keyboard, #bongo-cat .headphone .speaker path:nth-child(2) { stroke: var(--bc-blue); }
+#bongo-cat .terminal-code, #bongo-cat .headphone .speaker path:first-child { stroke: var(--bc-cyan); }
+
+/* kaki mengetik bergantian (kiri-atas + kanan-bawah, lalu sebaliknya) */
+#bongo-cat .paw-left .up, #bongo-cat .paw-right .down { animation: bc-a .38s steps(1, end) infinite; }
+#bongo-cat .paw-left .down, #bongo-cat .paw-right .up { animation: bc-b .38s steps(1, end) infinite; }
+@keyframes bc-a { 0% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes bc-b { 0% { opacity: 0; } 50% { opacity: 1; } }
+
+/* baris kode di layar laptop "diketik" */
+#bongo-cat .terminal-code line { stroke-dasharray: 1; stroke-dashoffset: 1;
+  animation: bc-type 2.8s linear infinite; animation-delay: calc(var(--i, 0) * .1s); }
+@keyframes bc-type { 0% { stroke-dashoffset: 1; } 4% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; } }
+
+/* not musik melayang naik (warna/arah diacak oleh js/bongo.js) */
+#bongo-cat .music .note { transform-box: fill-box; transform-origin: center; opacity: 0;
+  animation: bc-note var(--dur, 4s) linear infinite; animation-delay: var(--d, 0s); }
+@keyframes bc-note {
+  0%   { opacity: 1; transform: translate(0, 0) scale(0) rotate(var(--r, 0deg)); }
+  100% { opacity: 0; transform: translate(var(--dx, 50px), -210px) scale(1) rotate(calc(var(--r, 0deg) + var(--dr, 25deg))); }
+}
+
+.bongo.is-paused *, .bongo.is-paused { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) {
+  #bongo-cat * { animation: none !important; }
+  #bongo-cat .terminal-code line { stroke-dashoffset: 0; }
+  #bongo-cat .paw .up { opacity: 0; }
+}
+
+/* Footer (area biru) dibuat lebih ringkas. Ubah angka padding di bawah untuk mengatur tingginya. */
+footer.has-bongo { padding-top: 8px !important; padding-bottom: 20px !important; }
+footer.has-bongo > div { gap: 8px !important; }
+footer.has-bongo .bongo { padding-top: clamp(14px, 3vw, 24px); }
+footer.has-bongo img[alt="Webinyuu"] { height: 36px; }
