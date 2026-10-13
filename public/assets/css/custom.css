@@ -292,10 +292,8 @@ html.dark #theme-toggle #theme-icon::before, html.dark #theme-toggle #theme-icon
   #cara-kerja .grid p, #layanan .grid p { font-size: 12px; line-height: 1.5; }
 }
 
-//* =====================================================
-   custom.css  - CSS tambahan Webinyuu (di luar Tailwind)
-   Bagian: 1) Logo  2) Mode gelap  3) HP/Android  4) Menu & tombol
-   ===================================================== */
+
+
 
   /* ===== UKURAN LOGO HEADER =====
      Mau ubah ukuran logo? Cukup ganti angka di bawah ini.

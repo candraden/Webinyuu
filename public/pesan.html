@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="./assets/css/output.css">
 <link rel="stylesheet" href="./assets/css/custom.css">
   <link rel="stylesheet" href="./assets/css/theme-toggle.css">
+<link rel="stylesheet" href="./assets/css/pacman.css">
 <link rel="stylesheet" href="./assets/css/pesan.css">
 <script>
   // Terapkan mode gelap lebih awal supaya tidak berkedip saat halaman dimuat
@@ -37,7 +38,11 @@
 <main class="w-full pt-32 pb-space-xl">
   <div class="page-wrap mx-auto px-margin">
 
-    <div id="state-loading" class="text-center text-body-md text-on-surface-variant py-space-xl">Memuat data paket...</div>
+    <div id="state-loading" class="text-center text-body-md text-on-surface-variant py-space-xl">
+      <!-- LOADING PAC-MAN (CSS: assets/css/pacman.css) -->
+      <div class="pacman-loader" aria-hidden="true"><div class="chomper"></div></div>
+      Memuat data paket...
+    </div>
 
     <div id="state-invalid" class="hidden text-center py-space-xl">
       <p class="text-headline-md text-primary mb-space-xs">Paket belum dipilih</p>

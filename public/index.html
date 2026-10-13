@@ -11,8 +11,11 @@
 <link rel="stylesheet" href="./assets/css/output.css">
 <link rel="stylesheet" href="./assets/css/custom.css">
   <link rel="stylesheet" href="./assets/css/theme-toggle.css">
+  <link rel="stylesheet" href="./assets/css/menu-burger.css">
+  <link rel="stylesheet" href="./assets/css/pacman.css">
   <link rel="stylesheet" href="./assets/css/peeps.css">
   <link rel="stylesheet" href="./assets/css/bongo.css">
+  <link rel="stylesheet" href="./assets/css/to-top.css">
 <script>
   // Terapkan mode gelap lebih awal supaya tidak berkedip saat halaman dimuat
   try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}
@@ -42,6 +45,7 @@
       </a>
       <button id="menu-toggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu" style="width:44px;height:44px;border:0;cursor:pointer;" class="menu-btn btn-zoom items-center justify-center bg-surface-container text-primary-container rounded-xl shadow-sm">
         <span id="menu-icon" class="material-symbols-outlined text-[24px]">menu</span>
+        <svg class="burger-ring" viewBox="0 0 68 68" aria-hidden="true"><path d="M 34 2 C 16.3 2 2 16.3 2 34 s 14.3 32 32 32 s 32 -14.3 32 -32 S 51.7 2 34 2"/></svg>
       </button>
     </div>
   </div>
@@ -209,6 +213,8 @@
       </div>
 
       <div id="paket-loading" class="text-center text-body-md text-on-surface-variant py-space-xl">
+        <!-- LOADING PAC-MAN (CSS: assets/css/pacman.css) -->
+        <div class="pacman-loader" aria-hidden="true"><div class="chomper"></div></div>
         Memuat paket...
       </div>
       <div id="paket-empty" class="hidden text-center text-body-md text-on-surface-variant py-space-xl">
@@ -233,9 +239,16 @@
   </div>
 </footer>
 
+<!-- TOMBOL KEMBALI KE ATAS (CSS: assets/css/to-top.css, JS: js/to-top.js) -->
+<button id="to-top" class="to-top" type="button" aria-label="Kembali ke atas" title="Kembali ke atas">
+  <svg class="ring" viewBox="-1 -1 102 102" aria-hidden="true"><path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/></svg>
+  <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
 <script type="module" src="./js/modules/catalog.js"></script>
 <script src="./js/peeps.js" defer></script>
 <script src="./js/bongo.js" defer></script>
+<script src="./js/to-top.js" defer></script>
   <script src="./js/main.js"></script>
 </body>
 </html>

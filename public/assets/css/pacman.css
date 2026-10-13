@@ -1,0 +1,49 @@
+/* ============================================================
+   LOADING PAC-MAN di bagian "Memuat paket..." (tulisannya tetap ada di bawahnya)
+   Ukuran: ubah --pm (besar Pac-Man) dan width .pacman-loader. Warna: ubah --pm-color.
+   ============================================================ */
+.pacman-loader {
+  --pm: 40px; --pm-color: #f5c400; --pm-open: 130deg; --pm-bite: .333s; --pm-move: calc(var(--pm-bite) * 20);
+  position: relative; width: min(320px, 80%); height: var(--pm); margin: 0 auto 14px;
+  display: flex; align-items: center;
+}
+/* titik-titik makanan (hilang dimakan dari kiri ke kanan) */
+.pacman-loader::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='70' height='20' viewBox='5 0 70 20'><circle cx='40' cy='10' r='10' fill='%23aeb6c9'/></svg>") center / calc(var(--pm) / 1.5) repeat-x;
+  animation: pm-dots var(--pm-move) linear infinite;
+}
+html.dark .pacman-loader::before {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='70' height='20' viewBox='5 0 70 20'><circle cx='40' cy='10' r='10' fill='%23777'/></svg>");
+}
+.pacman-loader .chomper {
+  position: absolute; top: 0; width: var(--pm); height: var(--pm); box-sizing: border-box;
+  border: calc(var(--pm) / 2) solid transparent; border-left-color: var(--pm-color); border-radius: 50%;
+  animation: pm-move var(--pm-move) linear infinite;
+}
+.pacman-loader .chomper::before, .pacman-loader .chomper::after {
+  content: ""; display: block; position: absolute; left: calc(var(--pm) / -2); top: calc(var(--pm) / -2);
+  width: var(--pm); height: var(--pm); box-sizing: border-box; border: calc(var(--pm) / 2) solid; border-radius: 50%;
+  border-color: var(--pm-color) transparent transparent var(--pm-color);
+  animation-duration: var(--pm-bite); animation-timing-function: ease-out; animation-iteration-count: infinite;
+}
+.pacman-loader .chomper::before { animation-name: pm-top; transform: rotate(45deg); }
+.pacman-loader .chomper::after  { animation-name: pm-bottom; transform: rotate(225deg); }
+
+@keyframes pm-top    { 0%, 25%, 100% { transform: rotate(-20deg); } 35%, 65% { transform: rotate(45deg); } }
+@keyframes pm-bottom { 0%, 25%, 100% { transform: rotate(-72deg); } 35%, 65% { transform: rotate(-137deg); } }
+@keyframes pm-move {
+  0%       { transform: rotateY(0deg);   left: calc(var(--pm) * -1); }
+  49.999%  { transform: rotateY(0deg); }
+  50%      { transform: rotateY(180deg); left: 100%; }
+  70%      { left: calc(var(--pm) * -1); transform: rotateY(180deg); }
+  70.001%  { transform: rotateY(0deg); }
+  100%     { left: calc(var(--pm) * -1); transform: rotateY(0deg); }
+}
+@keyframes pm-dots {
+  0%       { clip-path: inset(0 0 0 0);    opacity: 1; }
+  50%      { clip-path: inset(0 0 0 100%); opacity: 1; }
+  85.9%    { clip-path: inset(0 0 0 100%); opacity: 0; }
+  86%      { clip-path: inset(0 0 0 0);    opacity: 0; }
+  94%, 100%{ clip-path: inset(0 0 0 0);    opacity: 1; }
+}
