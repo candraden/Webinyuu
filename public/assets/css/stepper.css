@@ -1,0 +1,20 @@
+/* Indikator langkah pemesanan (js/stepper.js) */
+.stepper { box-sizing: border-box; width: 100%; max-width: 600px; margin-inline: auto; padding-inline: 26px; position: relative; --stp-on: #86c722; --stp-off: #cfd3dc; --stp-txt: #5b6485; --stp-ink: #1c2a05; }
+html.dark .stepper { --stp-off: #2e2e2e; --stp-txt: #9aa0b4; --stp-ink: #0c0c0c; }
+.stepper svg { display: block; width: 100%; height: auto; overflow: visible; }
+.stp-track { stroke: var(--stp-off); fill: none; }
+.stp-track-dot { fill: var(--stp-off); }
+.stp-on { stroke: var(--stp-on); fill: none; }
+.stp-on-dot { fill: var(--stp-on); }
+.stp-num { font: 700 4.2px 'Plus Jakarta Sans', sans-serif; fill: var(--stp-txt); transition: fill .25s; }
+.stp-num.current { fill: var(--stp-ink); }
+.stp-num.done { opacity: 0; }
+.stp-check { stroke: var(--stp-ink); opacity: 0; transition: opacity .25s; }
+.stp-check.done { opacity: 1; }
+#stp-fill { transition: transform .45s cubic-bezier(.4, 0, .2, 1); }
+.stp-labels { list-style: none; margin: 8px 0 0; padding: 0; position: relative; height: 2.6em; }
+.stp-labels li { position: absolute; top: 0; width: 76px; transform: translateX(-50%); text-align: center; font-size: 11px; line-height: 1.25; font-weight: 600; color: var(--stp-txt); transition: color .25s; }
+.stp-labels li.current { color: #4d7a0f; }
+html.dark .stp-labels li.current { color: #a3e635; }
+@media (min-width: 640px) { .stepper { padding-inline: 40px; } .stp-labels li { font-size: 14px; width: 130px; } .stp-labels { height: 1.6em; } }
+@media (prefers-reduced-motion: reduce) { #stp-fill, .stp-num, .stp-check { transition: none; } }

@@ -189,3 +189,8 @@ html.dark .cc-flag { box-shadow: 0 0 0 1px rgba(255, 255, 255, .15); }
   .cc-item { padding: 12px 10px; font-size: 16px; }
 }
 html.dark .nav-bar { background: rgba(10, 10, 10, .94); border-top-color: rgba(255, 255, 255, .1); }
+
+/* Tombol "Batal" di header tetap tampil di HP (halaman ini tanpa menu hamburger) */
+@media (max-width: 639px) {
+  header .header-cta { display: inline-flex !important; padding: 8px 16px; font-size: 14px; }
+}

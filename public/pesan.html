@@ -8,11 +8,13 @@
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
-<link rel="stylesheet" href="./assets/css/output.css">
-<link rel="stylesheet" href="./assets/css/custom.css">
-  <link rel="stylesheet" href="./assets/css/theme-toggle.css">
-<link rel="stylesheet" href="./assets/css/pacman.css">
-<link rel="stylesheet" href="./assets/css/pesan.css">
+<link rel="stylesheet" href="./assets/css/output.css?v=20261014">
+<link rel="stylesheet" href="./assets/css/custom.css?v=20261014">
+  <link rel="stylesheet" href="./assets/css/theme-toggle.css?v=20261014">
+<link rel="stylesheet" href="./assets/css/pacman.css?v=20261014">
+<link rel="stylesheet" href="./assets/css/pesan.css?v=20261014">
+<link rel="stylesheet" href="./assets/css/stepper.css?v=20261014">
+<link rel="stylesheet" href="./assets/css/phone.css">
 <script>
   // Terapkan mode gelap lebih awal supaya tidak berkedip saat halaman dimuat
   try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}
@@ -23,14 +25,18 @@
 <header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30">
   <div class="h-20 page-wrap mx-auto px-margin flex items-center justify-between gap-space-md">
     <a href="/index.html" class="flex items-center">
-      <!-- LOGO: ukuran diatur di assets/css/custom.css (--logo-height). Logo terang & gelap diganti lewat data-light / data-dark. -->
-      <img id="logo-img" alt="Webinyuu" class="object-contain" data-light="./assets/img/logo/webinyuu-vertikal.png" data-dark="./assets/img/logo/webinyuu-vertikal-1.jpg" src="./assets/img/logo/webinyuu-vertikal.png">
+      <!-- LOGO HEADER: ukuran diatur di bagian "UKURAN LOGO HEADER" di file assets/css/custom.css (--logo-height).
+         Ganti file logo: data-light = logo mode terang, data-dark = logo mode gelap. -->
+      <img id="logo-img" alt="Webinyuu" class="object-contain" data-light="./assets/img/logo/webinyuu-vertikal-1.png" data-dark="./assets/img/logo/webinyuu-vertikal-1.png" src="./assets/img/logo/webinyuu-vertikal-1.png">
     </a>
+   
     <div class="flex items-center gap-space-sm">
-      <a class="back-link text-on-surface-variant hover:text-on-surface" href="/index.html" aria-label="Batal, Kembali"><span class="material-symbols-outlined back-icon">arrow_back</span><span class="back-text">Batal, Kembali</span></a>
       <button id="theme-toggle" type="button" aria-label="Ganti mode gelap" title="Mode gelap" class="btn-zoom inline-flex items-center justify-center bg-surface-container text-primary-container rounded-xl shadow-sm">
         <span id="theme-icon" class="material-symbols-outlined text-[24px]">dark_mode</span>
       </button>
+      <a class="header-cta btn-3d inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-space-sm rounded-xl" href="/index.html">
+        Batal
+      </a>
     </div>
   </div>
 </header>
@@ -47,14 +53,16 @@
     <div id="state-invalid" class="hidden text-center py-space-xl">
       <p class="text-headline-md text-primary mb-space-xs">Paket belum dipilih</p>
       <p class="text-body-md text-on-surface-variant mb-space-md">Silakan pilih paket dulu dari halaman utama.</p>
-      <a class="btn-zoom inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl" href="/index.html#paket-harga">Lihat Paket</a>
+      <a class="btn-3d inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl" href="/index.html#paket-harga">Lihat Paket</a>
     </div>
 
     <div id="state-wizard" class="hidden flex flex-col gap-space-lg">
 
       <!-- PROGRESS -->
       <div class="flex items-center justify-between">
-        <div id="progress-steps" class="flex items-center gap-space-xs w-full"></div>
+        <div id="progress-steps" class="hidden"></div>
+        <!-- STEPPER (CSS: assets/css/stepper.css, JS: js/stepper.js) -->
+        <div id="stepper" class="stepper" role="list" aria-label="Langkah pemesanan"></div>
       </div>
 
       <div class="paket-card bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex items-center justify-between">
@@ -156,16 +164,17 @@
 
       <!-- NAV BUTTONS -->
       <div class="nav-bar flex items-center justify-between gap-space-md">
-        <button id="btn-back" class="btn-zoom hidden inline-flex items-center justify-center bg-surface-container text-primary text-label-md px-space-lg py-3 rounded-xl" type="button">Kembali</button>
-        <button id="btn-next" class="btn-zoom ml-auto inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all" type="button">Lanjut</button>
+        <button id="btn-back" class="btn-3d btn-3d-neutral hidden inline-flex items-center justify-center bg-surface-container text-primary text-label-md px-space-lg py-3 rounded-xl" type="button">Kembali</button>
+        <button id="btn-next" class="btn-3d ml-auto inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl" type="button">Lanjut</button>
       </div>
     </div>
 
   </div>
 </main>
 
-<script src="./js/pesan.js"></script>
-<script src="./js/phone.js"></script>
+<script src="./js/pesan.js?v=20261014"></script>
+<script src="./js/stepper.js?v=20261014"></script>
+<script src="./js/phone.js?v=20261014"></script>
 <script type="module" src="./js/modules/orderForm.js"></script>
 </body>
 </html>
