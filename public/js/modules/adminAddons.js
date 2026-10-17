@@ -30,6 +30,21 @@ const MAINT_NEXT = {
   MAINTENANCE_REQUESTED: ['UNDER_REVIEW'], UNDER_REVIEW: ['APPROVED', 'ADDITIONAL_REQUEST'],
   APPROVED: ['IN_PROGRESS'], IN_PROGRESS: ['RESOLVED'], RESOLVED: [], ADDITIONAL_REQUEST: [],
 };
+const MAINT_WA = {
+  UNDER_REVIEW: 'laporan garansimu sedang kami periksa.',
+  APPROVED: 'laporan garansimu sudah disetujui dan masuk antrean perbaikan.',
+  IN_PROGRESS: 'laporan garansimu sedang kami perbaiki.',
+  RESOLVED: 'laporan garansimu sudah selesai diperbaiki. Silakan dicek.',
+  ADDITIONAL_REQUEST: 'laporan kamu dihitung sebagai permintaan tambahan (berbayar). Kami hubungi lagi untuk rinciannya.',
+};
+function maintWaLink(order, m) {
+  const text = MAINT_WA[m.status];
+  if (!text) return '';
+  const track = `${location.origin}/pesanan/lacak?token=${order.tracking_token}`;
+  const msg = `Halo ${order.customer_name}, kabar untuk order ${order.order_number}: ${text}${m.admin_note ? ' Catatan admin: ' + m.admin_note + '.' : ''} Detail di halaman lacak: ${track}`;
+  const num = String(order.whatsapp_number).replace(/\D/g, '');
+  return `<a target="_blank" rel="noopener" href="https://wa.me/${num}?text=${encodeURIComponent(msg)}" class="self-start inline-flex items-center gap-space-xs bg-[#25D366] text-white text-label-md px-space-md py-2.5 rounded-xl shadow-sm hover:brightness-95">Kabari Customer via WhatsApp</a>`;
+}
 const opts = (list, selected, labels) => list.map(v => `<option value="${v}" ${v === selected ? 'selected' : ''}>${esc(labels?.[v] || v)}</option>`).join('');
 
 export function renderAddonCards({ order, addons, domain, source, upgrades, maint, products }) {
@@ -110,7 +125,7 @@ export function renderAddonCards({ order, addons, domain, source, upgrades, main
       </div>
       <label class="flex items-center gap-space-xs text-body-md"><input type="checkbox" class="mt-severe" ${m.is_severe_downtime ? 'checked' : ''}> Website mati total karena kesalahan Webinyuu (gratis tanpa batas waktu)</label>
       <textarea class="mt-note ${inputCls}" rows="2" maxlength="1000" placeholder="Catatan admin">${esc(m.admin_note || '')}</textarea>
-      <button type="button" class="mt-save self-start ${btnPrimary}">Simpan</button></div>`).join('');
+      <div class="flex flex-wrap gap-space-xs items-center"><button type="button" class="mt-save ${btnPrimary}">Simpan</button>${maintWaLink(order, m)}</div></div>`).join('');
     out.push(card('Maintenance', info + (rows || muted('Belum ada laporan dari customer.'))));
   }
 

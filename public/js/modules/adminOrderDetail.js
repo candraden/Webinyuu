@@ -84,6 +84,7 @@ function render({ order, pays, assets, briefs, revs, hist, addons, domain, sourc
     <div><dt class="text-caption text-on-surface-variant">WhatsApp</dt><dd><a class="text-primary underline underline-offset-4 font-semibold" target="_blank" rel="noopener" href="https://wa.me/${wa}">${esc(order.whatsapp_number)}</a></dd></div>
     <div><dt class="text-caption text-on-surface-variant">Email</dt><dd class="font-semibold">${esc(order.email || '-')}</dd></div>
     <div><dt class="text-caption text-on-surface-variant">Revisi terpakai</dt><dd class="font-semibold">${order.revision_used} / ${order.revision_limit}</dd></div>
+    <div><dt class="text-caption text-on-surface-variant">Link preview</dt><dd class="font-semibold break-all">${order.preview_url ? `<a class="text-primary underline" target="_blank" rel="noopener" href="${esc(order.preview_url)}">${esc(order.preview_url)}</a>` : '-'}</dd></div>
     <div><dt class="text-caption text-on-surface-variant">Link hasil</dt><dd class="font-semibold break-all">${order.result_url ? `<a class="text-primary underline" target="_blank" rel="noopener" href="${esc(order.result_url)}">${esc(order.result_url)}</a>` : '-'}</dd></div>
   </dl>`);
 

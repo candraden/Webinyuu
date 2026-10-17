@@ -60,11 +60,38 @@ function renderMaintenance(order) {
     ? `Perbaikan bug gratis sampai ${until}.`
     : `Masa garansi 7 hari berakhir ${until}. Website yang mati total karena kesalahan kami tetap kami perbaiki gratis; perbaikan kecil di luar masa garansi dikenakan Rp5.000 per perbaikan.`;
 
+  // Notifikasi di halaman: tandai laporan yang statusnya berubah sejak kunjungan terakhir,
+  // dan tampilkan banner saat ada laporan yang sudah selesai diperbaiki.
+  const seenKey = `maint_seen_${currentToken}`;
+  let seen = {};
+  try { seen = JSON.parse(localStorage.getItem(seenKey) || '{}'); } catch { seen = {}; }
+  const keyOf = (r) => String(r.id ?? r.reported_at);
+  const isNew = (r) => (keyOf(r) in seen) && seen[keyOf(r)] !== r.status;
+
+  const oldNotice = document.getElementById('maint-notice');
+  if (oldNotice) oldNotice.remove();
+  const resolved = m.requests.filter(r => r.status === 'RESOLVED');
+  const changed = m.requests.filter(r => r.status !== 'RESOLVED' && isNew(r));
+  if (resolved.length || changed.length) {
+    const notice = document.createElement('div');
+    notice.id = 'maint-notice';
+    notice.className = 'bg-secondary-container rounded-xl px-space-md py-space-sm text-primary-container';
+    notice.innerHTML = resolved.length
+      ? '<p class="text-label-md font-bold">Laporan garansimu sudah selesai diperbaiki.</p><p class="text-body-md">Silakan cek websitemu. Kalau masih ada masalah, kirim laporan baru di bawah.</p>'
+      : '<p class="text-label-md font-bold">Ada pembaruan untuk laporan garansimu.</p><p class="text-body-md">Cek status terbarunya di daftar laporan di bawah.</p>';
+    document.getElementById('maint-list').before(notice);
+  }
+
   document.getElementById('maint-list').innerHTML = m.requests.map(r => `
-    <li class="bg-surface-container-low rounded-xl px-space-md py-space-sm">
+    <li class="${r.status === 'RESOLVED' ? 'bg-secondary-container/40' : 'bg-surface-container-low'} rounded-xl px-space-md py-space-sm">
       <p class="text-body-md">${escHtml(r.description)}</p>
-      <p class="text-caption text-on-surface-variant">${new Date(r.reported_at).toLocaleDateString('id-ID')} · ${escHtml(MAINT_LABEL[r.status] || r.status)}</p>
+      <p class="text-caption text-on-surface-variant">${new Date(r.reported_at).toLocaleDateString('id-ID')} · ${escHtml(MAINT_LABEL[r.status] || r.status)}${isNew(r) || (r.status === 'RESOLVED' && isNew(r)) ? ' <span class="inline-block bg-secondary-container text-primary-container font-bold px-2 rounded-full">Baru</span>' : ''}</p>
+      ${r.admin_note ? `<p class="text-body-md mt-1"><span class="font-bold">Catatan admin:</span> ${escHtml(r.admin_note)}</p>` : ''}
     </li>`).join('');
+
+  const nowSeen = {};
+  m.requests.forEach(r => { nowSeen[keyOf(r)] = r.status; });
+  try { localStorage.setItem(seenKey, JSON.stringify(nowSeen)); } catch { /* abaikan */ }
 }
 
 const escHtml = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
