@@ -14,8 +14,8 @@
   -webkit-tap-highlight-color: transparent;
 }
 .to-top.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
-.to-top svg.ring { position: absolute; inset: 0; width: 100%; height: 100%; }
-.to-top svg.ring path { fill: none; stroke: currentColor; stroke-width: 4; stroke-linecap: round; }
+.to-top svg.tt-ring { position: absolute; inset: 0; width: 100%; height: 100%; }
+.to-top svg.tt-ring path { fill: none; stroke: currentColor; stroke-width: 4; stroke-linecap: round; }
 .to-top svg.arrow { position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; transform: translate(-50%, -50%);
   fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s; }
 @media (hover: hover) {
@@ -26,3 +26,14 @@
 html.dark .to-top { --tt-color: #ffffff; --tt-bg: #1b1b1b; box-shadow: 0 4px 14px rgba(0, 0, 0, .5), inset 0 0 0 2px rgba(255, 255, 255, .15); }
 @media (max-width: 639px) { .to-top { right: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); } }
 @media (prefers-reduced-motion: reduce) { .to-top, .to-top svg.arrow { transition: none; } }
+
+/* Hilangkan kotak fokus bawaan browser di sekeliling tombol */
+.to-top, .to-top:focus, .to-top:focus-visible, .to-top:active { outline: none !important; }
+.to-top::-moz-focus-inner { border: 0; }
+
+/* Jaga-jaga: tidak ada kotak sorot/seleksi/tap di tombol maupun isinya */
+.to-top, .to-top * { -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+.to-top { -webkit-appearance: none; appearance: none; touch-action: manipulation; outline-offset: 0; }
+.to-top svg { pointer-events: none; outline: none; }
+.to-top:focus-visible { box-shadow: 0 4px 14px rgba(0, 0, 0, .18), inset 0 0 0 2px rgba(20, 32, 79, .12); }
+html.dark .to-top:focus-visible { box-shadow: 0 4px 14px rgba(0, 0, 0, .5), inset 0 0 0 2px rgba(255, 255, 255, .15); }

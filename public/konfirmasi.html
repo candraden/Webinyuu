@@ -8,44 +8,135 @@
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
-<link rel="stylesheet" href="./assets/css/output.css">
+<link rel="stylesheet" href="./assets/css/output.css?v=20261014">
+<link rel="stylesheet" href="./assets/css/custom.css?v=20261014">
+  <link rel="stylesheet" href="./assets/css/theme-toggle.css?v=20261014">
+<script>
+  // Terapkan mode gelap lebih awal supaya tidak berkedip saat halaman dimuat
+  try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}
+</script>
+<style>
+/* lebar isi header sama seperti pesan.html */
+.page-wrap { width: 100%; max-width: 700px; }
+@media (min-width: 768px) { .page-wrap { max-width: 920px; } }
+.nota-page { padding: 112px 16px 64px; }
+.nota-wrap { max-width: 440px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; align-items: stretch; }
+.nota-top { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.nota-check { width: 56px; height: 56px; border-radius: 50%; background: #a3e635; color: #14204f; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 6px rgba(163,230,53,.25); animation: nota-pop .5s cubic-bezier(.2,1.4,.4,1) both; }
+.nota-top h1 { font-size: 26px; line-height: 1.25; font-weight: 700; color: #14204f; margin: 0; }
+html.dark .nota-top h1 { color: #f5f5f5; }
+@keyframes nota-pop { from { transform: scale(.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.nota-shadow { filter: drop-shadow(0 10px 24px rgba(20,32,79,.14)); animation: nota-in .55s ease both; }
+html.dark .nota-shadow { filter: drop-shadow(0 10px 24px rgba(0,0,0,.6)); }
+@keyframes nota-in { from { transform: translateY(18px); opacity: 0; } to { transform: none; opacity: 1; } }
+.nota {
+  background: #fff; color: #1b2340; padding: 34px 24px 36px; text-align: left;
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 0 100% / 16px 51% repeat-x,
+                conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) 0 0 / 16px 51% repeat-x;
+          mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 0 100% / 16px 51% repeat-x,
+                conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) 0 0 / 16px 51% repeat-x;
+}
+html.dark .nota { background: #181818; color: #f0f0f0; }
+.nota-head { text-align: center; }
+.nota-brand { font-size: 12px; letter-spacing: .28em; font-weight: 700; color: #5b6485; text-transform: uppercase; }
+html.dark .nota-brand { color: #9aa0b4; }
+.nota-no { font: 700 26px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: .04em; margin: 8px 0 10px; color: #14204f; }
+html.dark .nota-no { color: #fff; }
+.nota-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: #fff4d6; color: #8a5a00; border: 1px dashed #e0b34a; }
+.nota-chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #e0a100; animation: nota-blink 1.4s ease-in-out infinite; }
+html.dark .nota-chip { background: rgba(224,161,0,.14); color: #f5c451; border-color: rgba(245,196,81,.45); }
+@keyframes nota-blink { 50% { opacity: .25; } }
+.nota-sep { border: 0; border-top: 2px dashed rgba(91,100,133,.35); margin: 20px 0; }
+html.dark .nota-sep { border-top-color: rgba(255,255,255,.2); }
+.nota-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 6px 0; font-size: 15px; }
+.nota-row span:first-child { color: #5b6485; }
+html.dark .nota-row span:first-child { color: #9aa0b4; }
+.nota-row span:last-child { font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.nota-dp { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: #eaf9c9; border-radius: 12px; padding: 14px 16px; margin-top: 8px; }
+html.dark .nota-dp { background: rgba(163,230,53,.12); }
+.nota-dp > span:first-child { font-weight: 700; font-size: 15px; line-height: 1.25; }
+.nota-dp > span:last-child { font: 700 22px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: #3b5d0a; white-space: nowrap; }
+html.dark .nota-dp > span:last-child { color: #a3e635; }
+.nota-note { font-size: 14px; line-height: 1.6; color: #4a5272; margin: 0; }
+html.dark .nota-note { color: #b4b9c9; }
+.nota-deadline { margin: 12px 0 0; font-size: 14px; line-height: 1.5; font-weight: 700; color: #b91c1c; background: rgba(220,38,38,.08); border-radius: 10px; padding: 10px 12px; }
+html.dark .nota-deadline { color: #f87171; background: rgba(248,113,113,.1); }
+.nota-barcode { height: 38px; margin: 22px auto 6px; width: 78%; background: repeating-linear-gradient(90deg, #14204f 0 2px, transparent 2px 4px, #14204f 4px 5px, transparent 5px 8px, #14204f 8px 11px, transparent 11px 13px, #14204f 13px 14px, transparent 14px 18px); opacity: .85; }
+html.dark .nota-barcode { background: repeating-linear-gradient(90deg, #f0f0f0 0 2px, transparent 2px 4px, #f0f0f0 4px 5px, transparent 5px 8px, #f0f0f0 8px 11px, transparent 11px 13px, #f0f0f0 13px 14px, transparent 14px 18px); }
+.nota-thanks { text-align: center; font-size: 12px; letter-spacing: .08em; color: #5b6485; }
+html.dark .nota-thanks { color: #9aa0b4; }
+.nota-actions { display: flex; flex-direction: column; gap: 18px; align-items: center; text-align: center; }
+#wa-link { width: 100%; --b3-edge: #0f6b34; --b3-back: #1faa55; --b3-sh: rgba(15,107,52,.3); margin-bottom: 8px; }
+@media (max-width: 480px) { .nota-page { padding-top: 104px; } .nota { padding: 30px 18px 32px; } .nota-no { font-size: 22px; } .nota-dp > span:last-child { font-size: 19px; } }
+@media (prefers-reduced-motion: reduce) { .nota-check, .nota-shadow, .nota-chip::before { animation: none; } }
+.pay-accounts { background: #fff; color: #1b2340; border-radius: 16px; padding: 20px; box-shadow: 0 6px 20px rgba(20,32,79,.08); border: 1px dashed rgba(91,100,133,.35); }
+html.dark .pay-accounts { background: #181818; color: #f0f0f0; border-color: rgba(255,255,255,.2); box-shadow: 0 6px 20px rgba(0,0,0,.5); }
+</style>
 </head>
 <body class="bg-surface font-sans text-on-surface antialiased">
 
-<main class="w-full min-h-screen flex items-center justify-center py-space-xl">
-  <div class="max-w-[500px] w-full mx-auto px-margin flex flex-col gap-space-lg text-center">
-
-    <div class="w-16 h-16 mx-auto rounded-full bg-secondary-container flex items-center justify-center text-primary-container">
-      <span class="material-symbols-outlined text-[32px]">check_circle</span>
-    </div>
-    <h1 class="text-headline-lg text-primary">Pesanan Berhasil Dibuat!</h1>
-
-    <div class="bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-sm text-left">
-      <div class="flex justify-between text-body-md"><span class="text-on-surface-variant">Nomor Order</span><span id="r-order-number" class="font-bold text-primary"></span></div>
-      <div class="flex justify-between text-body-md"><span class="text-on-surface-variant">Paket</span><span id="r-paket" class="font-bold text-primary"></span></div>
-      <div class="flex justify-between text-body-md"><span class="text-on-surface-variant">Total Paket</span><span id="r-total" class="font-bold text-primary"></span></div>
-      <div class="h-[1px] bg-surface-container"></div>
-      <div class="flex justify-between text-headline-sm"><span class="text-primary">DP yang harus dibayar</span><span id="r-dp" class="font-bold text-primary"></span></div>
-    </div>
-
-    <div class="bg-surface-container-low rounded-2xl p-space-lg text-left">
-      <p class="text-body-md text-on-surface-variant">Silakan lakukan pembayaran DP, lalu kirim bukti transfer melalui WhatsApp ke admin yang menangani pesananmu<span id="r-admin-wrap" class="hidden"> (<span id="r-admin" class="font-bold text-primary"></span>)</span>. Admin akan memverifikasi dan pengerjaan langsung dimulai.</p>
-      <p id="r-deadline" class="hidden mt-space-sm text-body-md font-bold text-error"></p>
-    </div>
-
-    <div id="pay-accounts" class="hidden bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-sm text-left"></div>
-
-    <a id="wa-link" class="hidden inline-flex items-center justify-center gap-space-xs bg-[#25D366] text-white text-label-md px-space-lg py-3.5 rounded-xl shadow-md hover:brightness-95 transition-all" href="#" target="_blank">
-      <span class="material-symbols-outlined text-[20px]">chat</span>
-      Kirim Bukti Transfer via WhatsApp
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30">
+  <div class="h-20 flex items-center justify-between gap-space-md" style="width:100%;max-width:none;padding-inline:clamp(16px,2.5vw,32px);">
+    <a href="/index.html" class="flex items-center">
+      <!-- LOGO HEADER: ukuran diatur di bagian "UKURAN LOGO HEADER" di file assets/css/custom.css (--logo-height).
+         Ganti file logo: data-light = logo mode terang, data-dark = logo mode gelap. -->
+      <img id="logo-img" alt="Webinyuu" class="object-contain" data-light="./assets/img/logo/webinyuu-vertikal-1.png" data-dark="./assets/img/logo/webinyuu-vertikal-1.png" src="./assets/img/logo/webinyuu-vertikal-1.png">
     </a>
+   
+    <div class="flex items-center gap-space-sm">
+      <button id="theme-toggle" type="button" aria-label="Ganti mode gelap" title="Mode gelap" class="btn-zoom inline-flex items-center justify-center bg-surface-container text-primary-container rounded-xl shadow-sm">
+        <span id="theme-icon" class="material-symbols-outlined text-[24px]">dark_mode</span>
+      </button>
+      <a class="header-cta btn-3d inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-space-sm rounded-xl" href="/index.html">Beranda</a>
+    </div>
+  </div>
+</header>
 
-    <p id="wa-fallback" class="hidden text-body-md text-on-surface-variant">Kontak admin belum bisa dimuat. Buka halaman pelacakan di bawah untuk menghubungi admin.</p>
+<main class="nota-page w-full">
+  <div class="nota-wrap">
 
-    <a class="text-label-md text-primary underline underline-offset-4" id="tracking-link" href="#">Lacak status pesanan kamu di sini</a>
+    <div class="nota-top">
+      <div class="nota-check"><span class="material-symbols-outlined" style="font-size:32px">check_circle</span></div>
+      <h1>Pesanan Berhasil Dibuat!</h1>
+    </div>
+
+    <!-- NOTA -->
+    <div class="nota-shadow">
+      <div class="nota">
+        <div class="nota-head">
+          <div class="nota-brand">Nota Pemesanan</div>
+          <div id="r-order-number" class="nota-no"></div>
+          <span class="nota-chip">Menunggu pembayaran DP</span>
+        </div>
+        <hr class="nota-sep">
+        <div class="nota-row"><span>Paket</span><span id="r-paket"></span></div>
+        <div class="nota-row"><span>Total Paket</span><span id="r-total"></span></div>
+        <div id="r-sisa-row" class="nota-row hidden"><span>Sisa setelah DP</span><span id="r-sisa"></span></div>
+        <div class="nota-dp"><span>DP yang harus dibayar</span><span id="r-dp"></span></div>
+        <hr class="nota-sep">
+        <p class="nota-note">Silakan lakukan pembayaran DP, lalu kirim bukti transfer melalui WhatsApp ke admin yang menangani pesananmu<span id="r-admin-wrap" class="hidden"> (<span id="r-admin" style="font-weight:700"></span>)</span>. Admin akan memverifikasi dan pengerjaan langsung dimulai.</p>
+        <p id="r-deadline" class="nota-deadline hidden"></p>
+        <div class="nota-barcode" aria-hidden="true"></div>
+        <div class="nota-thanks">TERIMA KASIH TELAH MEMESAN DI WEBINYUU</div>
+      </div>
+    </div>
+
+    <!-- REKENING PEMBAYARAN (diisi oleh js/shared/paymentAccounts.js) -->
+    <div id="pay-accounts" class="pay-accounts hidden flex flex-col gap-space-sm text-left"></div>
+
+    <div class="nota-actions">
+      <a id="wa-link" class="btn-3d hidden inline-flex items-center justify-center gap-space-xs bg-[#25D366] text-white text-label-md px-space-lg py-3.5 rounded-xl" style="background:#25D366" href="#" target="_blank">
+        <span class="material-symbols-outlined text-[20px]">chat</span>
+        Kirim Bukti Transfer via WhatsApp
+      </a>
+      <p id="wa-fallback" class="hidden text-body-md text-on-surface-variant">Kontak admin belum bisa dimuat. Buka halaman pelacakan di bawah untuk menghubungi admin.</p>
+      <a class="text-label-md text-primary underline underline-offset-4" id="tracking-link" href="#">Lacak status pesanan kamu di sini</a>
+    </div>
   </div>
 </main>
 
+<script src="./js/pesan.js"></script>
 <script type="module">
   import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from './config/env.js';
   import { renderPaymentAccounts } from './js/shared/paymentAccounts.js';
@@ -59,6 +150,10 @@
   $('r-paket').textContent = params.get('paket') || '-';
   $('r-total').textContent = 'Rp' + Number(params.get('total') || 0).toLocaleString('id-ID');
   $('r-dp').textContent = 'Rp' + Number(params.get('dp') || 0).toLocaleString('id-ID');
+  (function () {
+    const t = Number(params.get('total') || 0), d = Number(params.get('dp') || 0);
+    if (t > d && d > 0) { $('r-sisa').textContent = 'Rp' + (t - d).toLocaleString('id-ID'); $('r-sisa-row').classList.remove('hidden'); }
+  })();
   $('tracking-link').href = `/pesanan/lacak?token=${token}`;
   // Nomor WA admin diambil dari server (admin yang otomatis ditugaskan ke order ini).
   async function loadAdmin() {

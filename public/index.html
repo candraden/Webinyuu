@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="./assets/css/pacman.css">
   <link rel="stylesheet" href="./assets/css/peeps.css">
   <link rel="stylesheet" href="./assets/css/bongo.css">
-  <link rel="stylesheet" href="./assets/css/to-top.css">
+  <link rel="stylesheet" href="./assets/css/to-top.css?v=20261018b">
 <script>
   // Terapkan mode gelap lebih awal supaya tidak berkedip saat halaman dimuat
   try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}
@@ -24,7 +24,7 @@
 <body class="bg-surface font-sans text-on-surface antialiased">
 
 <header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30">
-  <div class="h-20 max-w-[1200px] mx-auto px-margin lg:px-margin-desktop flex items-center justify-between gap-space-md">
+  <div class="h-20 flex items-center justify-between gap-space-md" style="width:100%;max-width:none;padding-inline:clamp(16px,2.5vw,32px);">
     <a href="/" class="flex items-center">
       <!-- LOGO HEADER: ukuran diatur di bagian "UKURAN LOGO HEADER" di file assets/css/custom.css (--logo-height).
          Ganti file logo: data-light = logo mode terang, data-dark = logo mode gelap. -->
@@ -241,14 +241,14 @@
 
 <!-- TOMBOL KEMBALI KE ATAS (CSS: assets/css/to-top.css, JS: js/to-top.js) -->
 <button id="to-top" class="to-top" type="button" aria-label="Kembali ke atas" title="Kembali ke atas">
-  <svg class="ring" viewBox="-1 -1 102 102" aria-hidden="true"><path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/></svg>
+  <svg class="tt-ring" viewBox="-1 -1 102 102" aria-hidden="true"><path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/></svg>
   <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
 
 <script type="module" src="./js/modules/catalog.js"></script>
 <script src="./js/peeps.js" defer></script>
 <script src="./js/bongo.js" defer></script>
-<script src="./js/to-top.js" defer></script>
+<script src="./js/to-top.js?v=20261018b" defer></script>
   <script src="./js/main.js"></script>
 </body>
 </html>

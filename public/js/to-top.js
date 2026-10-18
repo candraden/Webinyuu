@@ -2,7 +2,7 @@
 (function () {
   var btn = document.getElementById('to-top');
   if (!btn) return;
-  var path = btn.querySelector('.ring path');
+  var path = btn.querySelector('.tt-ring path');
   var len = path.getTotalLength();
   path.style.strokeDasharray = len + ' ' + len;
   var SHOW_AFTER = 120;   // tombol muncul setelah scroll sejauh ini (px)

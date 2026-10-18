@@ -132,8 +132,10 @@ html.dark .text-error { color: #f87171 !important; }
 }
 .cc-list { max-height: 260px; overflow-y: auto; margin: 0; padding: 4px; list-style: none; }
 .cc-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; cursor: pointer; font-size: 15px; }
-.cc-item:hover, .cc-item.is-active { background: rgba(163, 230, 53, .2); }
-.cc-item.is-current .cc-name { font-weight: 700; }
+/* tanpa warna sorot: daftar negara polos (hanya hover mouse yang sedikit abu-abu) */
+.cc-item, .cc-item.is-active, .cc-item.is-current { background: transparent; }
+@media (hover: hover) { .cc-item:hover { background: rgba(128, 128, 128, .12); } }
+.cc-item.is-current .cc-name { font-weight: 600; }
 .cc-name { flex: 1; }
 .cc-code { color: #6b7280; font-variant-numeric: tabular-nums; }
 .cc-empty { padding: 14px; color: #6b7280; font-size: 14px; }

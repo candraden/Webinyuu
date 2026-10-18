@@ -1,0 +1,44 @@
+/* Tombol hapus isi kolom (animasi X -> panah). JS: js/clear-input.js. Terinspirasi Aaron (CodePen ExgvbXy) */
+.ci-wrap { position: relative; --ci-t: 500ms; --ci-c: #4d7a0f; --ci-hover: 134, 199, 34; }
+html.dark .ci-wrap { --ci-c: #a3e635; }
+.ci-wrap > input.form-input { width: 100%; padding-right: 48px !important; transition: color 200ms; }
+.ci-wrap > input:placeholder-shown ~ .ci-bars { opacity: 0; pointer-events: none; }
+.ci-wrap.ci-move > input { color: transparent !important; }
+
+.ci-bars {
+  --alpha: 0; font-size: 18px; cursor: pointer;
+  position: absolute; top: 50%; transform: translateY(-50%);
+  left: calc(100% - 1.4em - 12px);
+  background: rgba(var(--ci-hover), var(--alpha));
+  padding: .7em; border-radius: 50%;
+  transition: all var(--ci-t), opacity 150ms;
+  -webkit-tap-highlight-color: transparent;
+}
+.ci-bars:hover { --alpha: .3; }
+.ci-bar {
+  --left: 50%; --rotate: 0deg;
+  position: absolute; width: .18em; height: 70%; top: 50%; left: var(--left);
+  border-radius: 2em;
+  transform: translate(calc(var(--left) * (-1)), -50%) rotate(var(--rotate));
+  background: var(--ci-c); transition: 400ms;
+}
+.ci-bar.arrow { --rotate: 45deg; }
+.ci-bar.ci-left { --rotate: -45deg; }
+.ci-bar.arrow::before, .ci-bar.arrow::after {
+  content: ""; position: absolute; height: 60%; width: 100%; bottom: 10%;
+  transform-origin: bottom; background-color: var(--ci-c); border-radius: inherit; transition: inherit;
+}
+
+.ci-wrap.ci-shape .ci-bars { --alpha: 0; }
+.ci-wrap.ci-shape .ci-bar.arrow { --rotate: 90deg; }
+.ci-wrap.ci-shape .ci-bar.arrow::before { transform: rotate(45deg); }
+.ci-wrap.ci-shape .ci-bar.arrow::after { transform: rotate(-45deg); }
+.ci-wrap.ci-shape .ci-bar.ci-left {
+  --left: 0; top: 50%; transform: translateY(-50%); height: 90%; width: 90%;
+  background: transparent; z-index: -1; border: .18em solid var(--ci-c); border-radius: 0;
+  border-right: 0; border-top: 0; border-bottom: 0;
+}
+.ci-wrap.ci-move .ci-bars { left: 12px; }
+.ci-wrap.ci-move .ci-bar.ci-left { animation: ci-pop var(--ci-t); }
+@keyframes ci-pop { 20%, 80% { border-radius: 50%; } }
+@media (prefers-reduced-motion: reduce) { .ci-bars, .ci-bar { transition: none; } .ci-wrap.ci-move .ci-bar.ci-left { animation: none; } }
