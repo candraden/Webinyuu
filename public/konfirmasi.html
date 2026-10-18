@@ -33,6 +33,8 @@
       <p id="r-deadline" class="hidden mt-space-sm text-body-md font-bold text-error"></p>
     </div>
 
+    <div id="pay-accounts" class="hidden bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-sm text-left"></div>
+
     <a id="wa-link" class="hidden inline-flex items-center justify-center gap-space-xs bg-[#25D366] text-white text-label-md px-space-lg py-3.5 rounded-xl shadow-md hover:brightness-95 transition-all" href="#" target="_blank">
       <span class="material-symbols-outlined text-[20px]">chat</span>
       Kirim Bukti Transfer via WhatsApp
@@ -46,6 +48,7 @@
 
 <script type="module">
   import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from './config/env.js';
+  import { renderPaymentAccounts } from './js/shared/paymentAccounts.js';
 
   const params = new URLSearchParams(window.location.search);
   const $ = (id) => document.getElementById(id);
@@ -84,6 +87,7 @@
     }
   }
   loadAdmin();
+  renderPaymentAccounts($('pay-accounts'), { amount: Number(params.get('dp') || 0), label: 'DP yang harus ditransfer' });
 </script>
 </body>
 </html>

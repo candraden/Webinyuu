@@ -24,6 +24,7 @@
     { key: 'rekap', href: '/super-admin/rekap.html', icon: 'bar_chart', label: 'Rekap Penjualan' },
     { key: 'orders', href: '/super-admin/orders.html', icon: 'assignment_ind', label: 'Order &amp; Penugasan' },
     { key: 'admin', href: '/super-admin/admin.html', icon: 'manage_accounts', label: 'Kelola Admin' },
+    { key: 'rekening', href: '/super-admin/rekening.html', icon: 'account_balance', label: 'Rekening Pembayaran' },
   ];
 
   var navHtml = navItems

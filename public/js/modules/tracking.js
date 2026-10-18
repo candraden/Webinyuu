@@ -1,6 +1,7 @@
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '../../config/env.js';
 import { formatRupiah } from '../shared/formatCurrency.js';
 import { getStatusInfo, getPaymentStatusInfo } from '../shared/statusBadge.js';
+import { renderPaymentAccounts } from '../shared/paymentAccounts.js';
 
 const GET_ORDER_URL = `${SUPABASE_URL}/functions/v1/get-order-by-token`;
 
@@ -119,6 +120,19 @@ async function submitMaintenance() {
   }
 }
 
+function renderPayAccounts(order) {
+  const box = document.getElementById('pay-accounts-box');
+  if (!box) return;
+  const owing = Number(order.remaining_amount) > 0;
+  const closed = ['CANCELLED', 'COMPLETED_UNRESPONSIVE'].includes(order.order_status);
+  if (!owing || closed) { box.classList.add('hidden'); return; }
+  const isDp = order.order_status === 'WAITING_PAYMENT' && Number(order.dp_amount) > 0;
+  renderPaymentAccounts(box, {
+    amount: isDp ? order.dp_amount : order.remaining_amount,
+    label: isDp ? 'DP yang harus ditransfer' : 'Sisa tagihan',
+  });
+}
+
 function renderContact(order) {
   const box = document.getElementById('contact-box');
   if (!order.admin_phone || order.order_status === 'CANCELLED') {
@@ -229,6 +243,7 @@ function renderOrder(order) {
   paymentBadge.textContent = paymentInfo.label;
   paymentBadge.className = `inline-flex items-center px-space-sm py-0.5 rounded-full text-caption font-bold ${paymentInfo.badgeClass}`;
 
+  renderPayAccounts(order);
   renderContact(order);
   renderMaintenance(order);
   renderRevision(order);
