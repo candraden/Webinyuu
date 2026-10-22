@@ -76,6 +76,7 @@
   // Ikut berubah saat scroll
   const sections = [
     { key: 'cara-kerja', el: document.getElementById('cara-kerja') },
+    { key: 'contoh-produk', el: document.getElementById('contoh-produk') },
     { key: 'paket-harga', el: document.getElementById('paket-harga') }
   ];
   window.addEventListener('scroll', () => {

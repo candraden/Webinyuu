@@ -8,47 +8,85 @@
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/output.css">
+<link rel="stylesheet" href="../assets/css/output.css?v=20261014">
+<link rel="stylesheet" href="../assets/css/custom.css?v=20261014">
+<link rel="stylesheet" href="../assets/css/pacman.css?v=20261014">
+<script>
+  // Terapkan mode gelap lebih awal supaya tidak berkedip saat halaman dimuat
+  try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}
+</script>
+<style>
+/* kartu: sama gaya dengan nota di konfirmasi.html */
+.lc-card { background: #fff; color: #1b2340; border-radius: 16px; border: 1px solid rgba(91,100,133,.18); box-shadow: 0 6px 20px rgba(20,32,79,.08); }
+html.dark .lc-card { background: #181818; color: #f0f0f0; border-color: rgba(255,255,255,.12); box-shadow: 0 6px 20px rgba(0,0,0,.5); }
+.lc-card .text-primary, .lc-card h3 { color: inherit; }
+html.dark .lc-card .text-on-surface-variant { color: #9aa0b4; }
+.lc-soft { background: rgba(163,230,53,.14); border-radius: 16px; border: 1px dashed rgba(91,100,133,.35); }
+html.dark .lc-soft { background: rgba(163,230,53,.08); border-color: rgba(255,255,255,.2); }
+.lc-input { background: #fff; color: #1b2340; border: 1.5px solid rgba(91,100,133,.4); transition: border-color .2s, box-shadow .2s; }
+.lc-input:focus { outline: none; border-color: #86c722; box-shadow: 0 0 0 3px rgba(163,230,53,.35); }
+html.dark .lc-input { background: #222; color: #f0f0f0; border-color: rgba(255,255,255,.2); }
+.lc-title { color: #14204f; }
+html.dark .lc-title { color: #f5f5f5; }
+.lc-page { padding: 112px clamp(16px,2.5vw,32px) 64px; }
+.lc-wrap { width: 100%; max-width: 700px; margin: 0 auto; }
+@media (min-width: 768px) { .lc-wrap { max-width: 760px; } }
+.btn-3d.lc-btn { font-weight: 700; padding: 12px 22px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border-radius: 12px; }
+</style>
 </head>
 <body class="bg-surface font-sans text-on-surface antialiased">
 
 <header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30">
-  <div class="h-20 max-w-[700px] mx-auto px-margin flex items-center justify-between gap-space-md">
+  <div class="h-20 flex items-center justify-between gap-space-md" style="width:100%;max-width:none;padding-inline:clamp(16px,2.5vw,32px);">
     <a href="/index.html" class="flex items-center">
-      <img alt="Webinyuu" class="h-12 w-auto object-contain" src="../assets/img/logo/webinyuu-vertikal.png">
+      <!-- LOGO HEADER: ukuran diatur di bagian "UKURAN LOGO HEADER" di file assets/css/custom.css (--logo-height).
+         Ganti file logo: data-light = logo mode terang, data-dark = logo mode gelap. -->
+      <img id="logo-img" alt="Webinyuu" class="object-contain" data-light="../assets/img/logo/webinyuu-vertikal-1.png" data-dark="../assets/img/logo/webinyuu-vertikal-1.png" src="../assets/img/logo/webinyuu-vertikal-1.png">
     </a>
-    <a class="text-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="/index.html">Kembali ke Beranda</a>
+   
+    <div class="flex items-center gap-space-sm">
+      <button id="theme-toggle" type="button" aria-label="Ganti mode gelap" title="Mode gelap" class="btn-zoom inline-flex items-center justify-center bg-surface-container text-primary-container rounded-xl shadow-sm">
+        <span id="theme-icon" class="material-symbols-outlined text-[24px]">dark_mode</span>
+      </button>
+      <a class="header-cta btn-3d inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-space-sm rounded-xl" href="/index.html">Beranda</a>
+    </div>
   </div>
 </header>
 
-<main class="w-full pt-32 pb-space-xl">
-  <div class="max-w-[700px] mx-auto px-margin">
+<main class="lc-page w-full">
+  <div class="lc-wrap">
 
     <!-- STATE: LOADING -->
     <div id="state-loading" class="text-center text-body-md text-on-surface-variant py-space-xl">
+      <!-- LOADING PAC-MAN (CSS: assets/css/pacman.css) -->
+      <div class="pacman-loader" aria-hidden="true"><div class="chomper"></div></div>
       Memuat data pesanan...
     </div>
 
     <!-- STATE: TOKEN BELUM ADA / MASUKKAN MANUAL -->
     <div id="state-invalid" class="hidden flex flex-col gap-space-md py-space-xl">
       <div class="text-center flex flex-col gap-space-xs">
-        <p class="text-headline-md text-primary">Lacak Status Pesanan</p>
+        <p class="text-headline-md lc-title">Lacak Status Pesanan</p>
         <p class="text-body-md text-on-surface-variant">Masukkan kode tracking yang kamu terima setelah pemesanan.</p>
       </div>
-      <form id="token-form" class="flex flex-col sm:flex-row gap-space-sm bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm">
+      <form id="token-form" class="flex flex-col sm:flex-row gap-space-sm lc-card p-space-lg">
         <input id="token-input" type="text" required placeholder="Kode tracking pesanan"
-          class="flex-1 border border-outline-variant rounded-xl px-space-md py-3 text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container">
-        <button type="submit" class="inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all">
+          class="flex-1 lc-input rounded-xl px-space-md py-3 text-body-md">
+        <button type="submit" class="inline-flex items-center justify-center btn-3d lc-btn bg-secondary-container text-primary-container text-label-md">
           Cek Status
         </button>
       </form>
+      <div id="my-orders" class="hidden flex flex-col gap-space-sm">
+        <p class="text-label-md text-primary">Pesanan kamu di perangkat ini</p>
+        <ul id="my-orders-list" class="flex flex-col gap-space-sm"></ul>
+      </div>
     </div>
 
     <!-- STATE: TIDAK DITEMUKAN -->
     <div id="state-notfound" class="hidden text-center py-space-xl flex flex-col gap-space-md items-center">
       <p class="text-headline-md text-primary mb-space-xs">Pesanan tidak ditemukan</p>
       <p class="text-body-md text-on-surface-variant mb-space-md">Kode tracking tidak valid atau sudah tidak berlaku. Cek lagi link/kode yang kamu punya.</p>
-      <a class="inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl" href="/pesanan/lacak.html">Coba Kode Lain</a>
+      <a class="inline-flex items-center justify-center btn-3d lc-btn bg-secondary-container text-primary-container text-label-md" href="/pesanan/lacak.html">Coba Kode Lain</a>
     </div>
 
     <!-- STATE: KONTEN ORDER -->
@@ -57,17 +95,17 @@
       <div class="flex flex-col gap-space-xs">
         <span class="text-caption text-secondary uppercase font-bold tracking-wider">Status Pesanan</span>
         <div class="flex items-center justify-between gap-space-sm flex-wrap">
-          <h1 id="order-number" class="text-headline-lg text-primary tracking-tight"></h1>
+          <h1 id="order-number" class="text-headline-lg lc-title tracking-tight"></h1>
           <span id="status-badge" class="inline-flex items-center px-space-md py-1.5 rounded-full text-label-md font-bold"></span>
         </div>
         <p id="product-name" class="text-body-md text-on-surface-variant"></p>
       </div>
 
-      <div class="bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm">
+      <div class="lc-card p-space-lg">
         <p id="status-description" class="text-body-md text-on-surface"></p>
       </div>
 
-      <div class="bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-sm">
+      <div class="lc-card p-space-lg flex flex-col gap-space-sm">
         <div class="flex items-center justify-between">
           <span class="text-headline-sm text-primary">Ringkasan Pembayaran</span>
           <span id="payment-badge" class="inline-flex items-center px-space-sm py-0.5 rounded-full text-caption font-bold"></span>
@@ -87,65 +125,65 @@
         </div>
       </div>
 
-      <div id="pay-accounts-box" class="hidden bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-sm"></div>
+      <div id="pay-accounts-box" class="hidden lc-card p-space-lg flex flex-col gap-space-sm"></div>
 
-      <div id="contact-box" class="hidden bg-surface-container-low rounded-2xl p-space-lg flex flex-col gap-space-sm">
+      <div id="contact-box" class="hidden lc-soft p-space-lg flex flex-col gap-space-sm">
         <p id="deadline-text" class="hidden text-body-md font-bold text-error"></p>
         <p class="text-body-md text-on-surface-variant">Admin yang menangani pesananmu: <span id="admin-name" class="font-bold text-primary"></span></p>
-        <a id="admin-wa-link" class="inline-flex items-center justify-center gap-space-xs bg-[#25D366] text-white text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all" href="#" target="_blank" rel="noopener">
+        <a id="admin-wa-link" class="inline-flex items-center justify-center gap-space-xs btn-3d lc-btn bg-[#25D366] text-white text-label-md" style="background:#25D366" href="#" target="_blank" rel="noopener">
           <span class="material-symbols-outlined text-[20px]">chat</span>
           Hubungi Admin via WhatsApp
         </a>
       </div>
 
-      <div id="revision-box" class="hidden bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex items-center justify-between">
+      <div id="revision-box" class="hidden lc-card p-space-lg flex items-center justify-between">
         <span class="text-body-md text-on-surface-variant">Jatah Revisi</span>
         <span id="revision-text" class="font-bold text-primary"></span>
       </div>
 
-      <div id="maintenance-box" class="hidden bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-md">
+      <div id="maintenance-box" class="hidden lc-card p-space-lg flex flex-col gap-space-md">
         <div>
           <h3 class="text-headline-sm text-primary">Garansi Perbaikan Bug</h3>
           <p id="maint-period" class="text-body-md text-on-surface-variant"></p>
         </div>
         <div id="maint-form" class="flex flex-col gap-space-sm">
           <label class="text-label-md text-primary" for="maint-text">Ada yang tidak sesuai atau error di websitemu?</label>
-          <textarea id="maint-text" rows="3" maxlength="1000" class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" placeholder="Contoh: tombol WhatsApp tidak bisa diklik di HP"></textarea>
+          <textarea id="maint-text" rows="3" maxlength="1000" class="lc-input rounded-xl px-space-md py-3 text-base sm:text-body-md" placeholder="Contoh: tombol WhatsApp tidak bisa diklik di HP"></textarea>
           <p class="text-caption text-on-surface-variant">Ini untuk memperbaiki kesalahan dari hasil yang sudah disepakati. Permintaan perubahan atau tambahan baru dihitung terpisah.</p>
           <p id="maint-error" class="hidden text-caption text-error"></p>
-          <button id="maint-submit" type="button" class="self-start bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all">Kirim Laporan</button>
+          <button id="maint-submit" type="button" class="self-start btn-3d lc-btn bg-secondary-container text-primary-container text-label-md">Kirim Laporan</button>
         </div>
         <ul id="maint-list" class="flex flex-col gap-space-xs"></ul>
       </div>
 
-      <div id="preview-box" class="hidden bg-surface-container-low rounded-2xl p-space-lg text-center flex flex-col gap-space-sm">
+      <div id="preview-box" class="hidden lc-soft p-space-lg text-center flex flex-col gap-space-sm">
         <p class="text-body-md text-on-surface-variant">Preview landing page kamu sudah siap. Cek dulu. Kalau ada yang ingin diubah, kirim revisi lewat form di bawah. Kalau sudah sesuai, kabari admin lewat WhatsApp.</p>
-        <a id="preview-link" class="inline-flex items-center justify-center gap-space-xs bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all" href="#" target="_blank" rel="noopener">
+        <a id="preview-link" class="inline-flex items-center justify-center gap-space-xs btn-3d lc-btn bg-secondary-container text-primary-container text-label-md" href="#" target="_blank" rel="noopener">
           Buka Preview
         </a>
       </div>
 
-      <div id="rev-request-box" class="hidden bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-sm">
+      <div id="rev-request-box" class="hidden lc-card p-space-lg flex flex-col gap-space-sm">
         <h3 class="text-headline-sm text-primary">Kirim Revisi</h3>
         <p id="rev-quota-note" class="text-body-md text-on-surface-variant"></p>
-        <textarea id="rev-text" rows="4" maxlength="1000" class="border border-outline-variant rounded-xl px-space-md py-3 text-base sm:text-body-md focus:outline-none focus:ring-2 focus:ring-secondary-container" placeholder="Tulis semua perubahan yang kamu inginkan dalam satu pesan. Contoh: ganti warna tombol jadi hijau, ubah teks judul jadi ..."></textarea>
+        <textarea id="rev-text" rows="4" maxlength="1000" class="lc-input rounded-xl px-space-md py-3 text-base sm:text-body-md" placeholder="Tulis semua perubahan yang kamu inginkan dalam satu pesan. Contoh: ganti warna tombol jadi hijau, ubah teks judul jadi ..."></textarea>
         <p class="text-caption text-on-surface-variant">Semua perubahan yang dikirim dalam satu pesan dihitung 1 revisi, selama masih dalam lingkup paket.</p>
         <p id="rev-error" class="hidden text-caption text-error"></p>
-        <button id="rev-submit" type="button" class="self-start bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all">Kirim Revisi</button>
+        <button id="rev-submit" type="button" class="self-start btn-3d lc-btn bg-secondary-container text-primary-container text-label-md">Kirim Revisi</button>
       </div>
 
-      <div id="rev-pending-box" class="hidden bg-secondary-container/40 rounded-2xl p-space-lg flex flex-col gap-space-sm">
+      <div id="rev-pending-box" class="hidden lc-soft p-space-lg flex flex-col gap-space-sm">
         <h3 class="text-headline-sm text-primary">Revisi terkirim, menunggu admin</h3>
         <p id="rev-pending-text" class="text-body-md whitespace-pre-line"></p>
-        <a id="rev-pending-wa" class="self-start inline-flex items-center gap-space-xs bg-[#25D366] text-white text-label-md px-space-md py-2.5 rounded-xl shadow-md hover:brightness-95 transition-all" href="#" target="_blank" rel="noopener">
+        <a id="rev-pending-wa" class="self-start inline-flex items-center gap-space-xs btn-3d lc-btn bg-[#25D366] text-white text-label-md" style="background:#25D366" href="#" target="_blank" rel="noopener">
           <span class="material-symbols-outlined text-[20px]">chat</span>
           Kabari Admin via WhatsApp
         </a>
       </div>
 
-      <div id="result-box" class="hidden bg-surface-container-low rounded-2xl p-space-lg text-center flex flex-col gap-space-sm">
+      <div id="result-box" class="hidden lc-soft p-space-lg text-center flex flex-col gap-space-sm">
         <p class="text-body-md text-on-surface-variant">Landing page kamu sudah selesai dan bisa diakses di:</p>
-        <a id="result-link" class="inline-flex items-center justify-center gap-space-xs bg-secondary-container text-primary-container text-label-md px-space-lg py-3 rounded-xl shadow-md hover:brightness-95 transition-all" href="#" target="_blank">
+        <a id="result-link" class="inline-flex items-center justify-center gap-space-xs btn-3d lc-btn bg-secondary-container text-primary-container text-label-md" href="#" target="_blank">
           Lihat Hasil
         </a>
       </div>
@@ -155,6 +193,7 @@
   </div>
 </main>
 
-<script type="module" src="../js/modules/tracking.js"></script>
+<script src="../js/pesan.js"></script>
+<script type="module" src="../js/modules/tracking.js?v=20261022"></script>
 </body>
 </html>

@@ -1,0 +1,113 @@
+/* Kastil berjalan (latar) */
+
+.castle-bg .cb-container { padding-top: 62.5%; position: absolute; width: 100%; bottom: 0; left: 0; }
+
+img,
+.mound-group,
+.houses-group,
+.flbottom-group,
+.blbottom-group,
+.brleg,
+.frleg,
+.blleg,
+.castle-bg .flleg { position: absolute; transform-style: preserve-3d; }
+
+.castle-bg .castle-container { position: absolute; left: 100%; bottom: 0%; }
+.castle-bg .castle { position: absolute; top: 0; left: 0; width: 600px; height: 750px; perspective: 1000px; transform-origin: 50% 70%; transform: translate(-50%, -70%) rotateZ(9deg); }
+.castle-bg .brleg { left: 400px; top: 625px; transform-origin: 10px -10px; transform: rotateZ(0deg); }
+.castle-bg .brfoot { left: -18px; top: 82px; transform-origin: 56% 44%; transform: rotateZ(0deg); }
+.castle-bg .brbottom {  }
+.castle-bg .frleg { left: 240px; top: 653px; transform-origin: 8px -10px; transform: rotateZ(0deg); }
+.castle-bg .frfoot { left: -18px; top: 51px; transform-origin: 56% 44%; transform: rotateZ(0deg); }
+.castle-bg .frbottom {  }
+.castle-bg .chimney3 { left: 400px; top: 30px; transform-origin: 45% 120%; transform: rotateZ(0deg); }
+.castle-bg .houses-group { left: 305px; top: 130px; transform-origin: -50px 300px; transform: rotateZ(1deg); }
+.castle-bg .point6 { left: 84px; top: 19px; transform-origin: 40% 120%; transform: rotateZ(0deg); }
+.castle-bg .point5 { left: 70px; top: -23px; transform-origin: -40% 200%; transform: rotateZ(0deg); }
+.castle-bg .point4 { left: 40px; top: -17px; transform-origin: 0% 100%; transform: rotateZ(0deg); }
+.castle-bg .houses {  }
+.castle-bg .treehouse { left: 220px; top: 10px; transform-origin: 50% 150%; transform: rotateZ(0deg); }
+.castle-bg .chimney2 { left: 430px; top: 120px; transform-origin: 0% 90%; transform: rotateZ(0deg); }
+.castle-bg .chimney1 { left: 420px; top: 90px; transform-origin: -10% 90%; transform: rotateZ(0deg); }
+.castle-bg .wing { left: 420px; top: 370px; transform-origin: 0% 50%; transform: rotateZ(0deg); }
+.castle-bg .antenna { left: -100px; top: 90px; transform-origin: 100% 65%; transform: rotateZ(0deg); }
+.castle-bg .mound-group { left: 115px; top: 110px; transform-origin: 110px 220px; transform: rotateZ(0deg); }
+.castle-bg .point3 { left: 125px; top: -13px; transform-origin: 50% 400%; transform: rotateZ(0deg); }
+.castle-bg .point2 { left: 50px; top: -22px; transform-origin: 120% 200%; transform: rotateZ(0deg); }
+.castle-bg .point1 { left: 4px; top: 55px; transform-origin: 150% 150%; transform: rotateZ(0deg); }
+.castle-bg .mound {  }
+.castle-bg .wind { left: 400px; top: 260px; transform-origin: 0% 90%; transform: rotateZ(0deg); }
+.castle-bg .cannon { left: 30px; top: 460px; transform-origin: 100% 60%; transform: rotateZ(0deg); }
+.castle-bg .main { left: 80px; top: 230px; transform-origin: 50% 50%; transform: rotateZ(0deg); }
+.castle-bg .blleg { left: 410px; top: 615px; transform-origin: 10px 15px; transform: rotateZ(0deg); }
+.castle-bg .blbottom-group { left: 0px; top: 60px; transform-origin: 10px 0px; transform: rotateZ(0deg); }
+.castle-bg .blfoot { left: -19px; top: 68px; transform-origin: 56% 44%; transform: rotateZ(0deg); }
+.castle-bg .blbottom {  }
+.castle-bg .bltop {  }
+.castle-bg .blcover { left: 360px; top: 573px; }
+.castle-bg .knob { left: 214px; top: 524px; transform-origin: 30% 63%; transform: rotateZ(0deg); }
+.castle-bg .tele { left: 90px; top: 430px; transform-origin: 90% 50%; transform: rotateZ(0deg); }
+.castle-bg .telecover { left: 161px; top: 399px; }
+.castle-bg .flleg { left: 250px; top: 615px; transform-origin: 10px 15px; transform: rotateZ(0deg); }
+.castle-bg .flbottom-group { left: 0px; top: 60px; transform-origin: 10px 0px; transform: rotateZ(0deg); }
+.castle-bg .flfoot { left: -19px; top: 68px; transform-origin: 56% 44%; transform: rotateZ(0deg); }
+.castle-bg .flbottom {  }
+.castle-bg .fltop {  }
+.castle-bg .flcover { left: 244px; top: 567px; }
+
+.castle-bg .foreground { position: absolute; bottom: 0; left: 0; width: 100%; }
+.castle-bg .background { position: absolute; bottom: 25.5%; left: 0; width: 100%; }
+
+.castle-bg .cloud-bg { bottom: 17%; width: 80%; right: 100%;}
+.castle-bg .cloud-bg2 { bottom: 17%; width: 80%; right: 100%; }
+
+.castle-bg .cloud-shadow1 { bottom: 43%; right: 100%; width: 80%; transform: rotate(5deg); }
+.castle-bg .cloud1 { bottom: 30%; right: 100%; width: 80%; }
+.castle-bg .cloud-shadow2 { bottom: 12%; left: 36%; width: 80%; transform: rotate(5deg); }
+.castle-bg .cloud-shadow3 { bottom: 31%; left: -30%; width: 80%; transform: rotate(5deg); }
+.castle-bg .cloud2 { bottom: 46%; left: -29%; width: 80%; }
+.castle-bg .cloud3 { bottom: 38%; left: 17%; width: 80%; }
+.castle-bg .cloud4 { bottom: 18%; left: -18%; width: 80%; }
+.castle-bg .cloud5 { bottom: 8%; left: 40%; width: 80%; }
+
+
+
+/* ===== Halaman login ===== */
+html, body { margin: 0; min-height: 100%; }
+body { background: #2294b3; font-family: "Plus Jakarta Sans", "Source Sans Pro", sans-serif; }
+.castle-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: #2294b3; }
+.castle-bg .load-gate { position: absolute; inset: 0; background: #fff; font-family: sans-serif; text-transform: uppercase; font-size: 10px; letter-spacing: .2em; padding: 20px; }
+.lg-page { position: relative; z-index: 1; min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 24px 16px; box-sizing: border-box; }
+
+/* ===== Form beruang ===== */
+.bear-form { position: relative; display: block; width: 100%; max-width: 400px; background: #fff; margin: 0; padding: 2.25em; box-sizing: border-box; border: solid 1px #ddd; border-radius: .75em; box-shadow: 0 18px 50px rgba(0,0,0,.28); }
+.bear-form .svgContainer { position: relative; width: 200px; height: 200px; margin: 0 auto 1em; border-radius: 50%; pointer-events: none; }
+.bear-form .svgContainer div { position: relative; width: 100%; height: 0; overflow: hidden; border-radius: 50%; padding-bottom: 100%; }
+.bear-form .mySVG { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
+.bear-form .svgContainer:after { content: ""; position: absolute; top: 0; left: 0; z-index: 10; width: inherit; height: inherit; box-sizing: border-box; border: solid 2.5px #217093; border-radius: 50%; }
+.bear-form .lg-error { margin: 0 0 1.25em; font-size: 14px; }
+.bear-form .inputGroup { margin: 0 0 1.5em; padding: 0; position: relative; }
+.bear-form .inputGroup:last-of-type { margin-bottom: 0; }
+.bear-form label { margin: 0 0 10px; display: block; font-size: 1.1em; color: #217093; font-weight: 700; font-family: inherit; }
+.bear-form input[type="email"], .bear-form input[type="text"], .bear-form input[type="password"] {
+  display: block; margin: 0; padding: 0 1em; background-color: #f3fafd; border: solid 2px #217093; border-radius: 8px; -webkit-appearance: none; appearance: none; box-sizing: border-box; width: 100%; height: 56px; font-size: 1.2em; color: #353538; font-weight: 600; font-family: inherit; transition: box-shadow .2s linear, border-color .25s ease-out; }
+.bear-form input[type="email"]:focus, .bear-form input[type="text"]:focus, .bear-form input[type="password"]:focus { outline: none; box-shadow: 0 2px 10px rgba(0,0,0,.1); border-color: #4eb8dd; }
+.bear-form button { display: block; margin: 0; padding: 0; background-color: #4eb8dd; border: none; border-radius: 8px; box-sizing: border-box; box-shadow: none; width: 100%; height: 56px; font-size: 1.2em; color: #fff; font-weight: 700; font-family: inherit; cursor: pointer; transition: background-color .2s ease-out, opacity .2s; }
+.bear-form button:hover, .bear-form button:active { background-color: #217093; }
+.bear-form button:disabled { opacity: .6; cursor: default; }
+.bear-form #showPasswordToggle { display: block; padding: 0 0 0 1.45em; position: absolute; top: .25em; right: 0; font-size: .9em; margin: 0; cursor: pointer; }
+.bear-form #showPasswordToggle input { position: absolute; z-index: -1; opacity: 0; }
+.bear-form #showPasswordToggle .indicator { position: absolute; top: 0; left: 0; height: .85em; width: .85em; background-color: #f3fafd; border: solid 2px #217093; border-radius: 3px; }
+.bear-form #showPasswordToggle .indicator:after { content: ""; position: absolute; left: .25em; top: .025em; width: .2em; height: .5em; border: solid #217093; border-width: 0 3px 3px 0; transform: rotate(45deg); visibility: hidden; }
+.bear-form #showPasswordToggle input:checked ~ .indicator:after { visibility: visible; }
+.bear-form #showPasswordToggle input:focus ~ .indicator, .bear-form #showPasswordToggle input:hover ~ .indicator { border-color: #4eb8dd; }
+.bear-form .lg-back { display: block; margin-top: 1.25em; text-align: center; font-size: 14px; color: #5b6485; text-decoration: none; }
+.bear-form .lg-back:hover { color: #217093; }
+@media (max-width: 480px) { .bear-form { padding: 1.5em; } }
+
+/* mode gelap */
+html.dark .bear-form { background: #1c1c1c; border-color: #333; }
+html.dark .bear-form label, html.dark .bear-form .lg-back { color: #8fd0ea; }
+html.dark .bear-form input[type="email"], html.dark .bear-form input[type="text"], html.dark .bear-form input[type="password"] { background: #262626; color: #f1f1f1; border-color: #4eb8dd; }
+html.dark .bear-form #showPasswordToggle .indicator { background: #262626; border-color: #4eb8dd; }
+html.dark .bear-form #showPasswordToggle .indicator:after { border-color: #8fd0ea; }

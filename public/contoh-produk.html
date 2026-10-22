@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contoh Produk — Webinyuu</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="./assets/css/output.css?v=20261014">
+<link rel="stylesheet" href="./assets/css/custom.css?v=20261014">
+<script>
+  // Terapkan mode gelap lebih awal supaya tidak berkedip saat halaman dimuat
+  try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}
+</script>
+<style>
+.cpx-page { padding: 104px clamp(16px,2.5vw,32px) 56px; max-width: 1180px; margin: 0 auto; }
+.cpx-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.cpx-kicker { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #4d7a0f; }
+html.dark .cpx-kicker { color: #a3e635; }
+.cpx-top h1 { margin: 4px 0 2px; font-size: clamp(24px,4vw,36px); line-height: 1.15; font-weight: 700; color: #14204f; }
+html.dark .cpx-top h1 { color: #f5f5f5; }
+.cpx-sub { margin: 0; font-size: 14px; color: #5b6485; }
+html.dark .cpx-sub { color: #9aa0b4; }
+.cpx-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.cpx-tab { border: 1px solid rgba(91,100,133,.35); background: transparent; color: inherit; font: 600 14px/1 inherit; padding: 10px 16px; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.cpx-tab:hover { background: rgba(163,230,53,.18); }
+.cpx-tab[aria-selected="true"] { background: #a3e635; color: #14204f; border-color: #86c722; }
+.cpx-frame { border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 18px 50px rgba(20,32,79,.2); border: 1px solid rgba(91,100,133,.25); }
+html.dark .cpx-frame { background: #181818; box-shadow: 0 18px 50px rgba(0,0,0,.6); border-color: rgba(255,255,255,.14); }
+.cpx-bar { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #eef1f6; border-bottom: 1px solid rgba(91,100,133,.2); }
+html.dark .cpx-bar { background: #242424; border-bottom-color: rgba(255,255,255,.1); }
+.cpx-dots { display: flex; gap: 6px; flex-shrink: 0; }
+.cpx-dots i { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
+.cpx-dots i:nth-child(2) { background: #febc2e; } .cpx-dots i:nth-child(3) { background: #28c840; }
+.cpx-url { flex: 1; min-width: 0; font: 13px/1 ui-monospace, Menlo, Consolas, monospace; padding: 8px 12px; border-radius: 8px; background: #fff; color: #5b6485; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html.dark .cpx-url { background: #111; color: #9aa0b4; }
+.cpx-view { position: relative; height: clamp(420px, 74vh, 820px); background: #f4f5f8; }
+html.dark .cpx-view { background: #101010; }
+.cpx-view iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #fff; }
+.cpx-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #5b6485; }
+.cpx-actions { display: flex; flex-wrap: wrap; gap: 14px 18px; align-items: center; justify-content: space-between; margin-top: 22px; }
+.cpx-note { margin: 0; font-size: 13px; color: #5b6485; max-width: 560px; line-height: 1.5; }
+html.dark .cpx-note { color: #9aa0b4; }
+.cpx-btns { display: flex; flex-wrap: wrap; gap: 14px; }
+.cpx-btns .btn-3d { padding: 12px 22px; font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; border-radius: 12px; text-decoration: none; }
+@media (max-width: 639px) { .cpx-view { height: 70vh; } .cpx-btns { width: 100%; } .cpx-btns .btn-3d { flex: 1; justify-content: center; } }
+</style>
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased">
+
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30">
+  <div class="h-20 flex items-center justify-between gap-space-md" style="width:100%;max-width:none;padding-inline:clamp(16px,2.5vw,32px);">
+    <a href="/index.html" class="flex items-center">
+      <!-- LOGO HEADER: ukuran diatur di bagian "UKURAN LOGO HEADER" di file assets/css/custom.css (--logo-height).
+         Ganti file logo: data-light = logo mode terang, data-dark = logo mode gelap. -->
+      <img id="logo-img" alt="Webinyuu" class="object-contain" data-light="./assets/img/logo/webinyuu-vertikal-1.png" data-dark="./assets/img/logo/webinyuu-vertikal-1.png" src="./assets/img/logo/webinyuu-vertikal-1.png">
+    </a>
+   
+    <div class="flex items-center gap-space-sm">
+      <button id="theme-toggle" type="button" aria-label="Ganti mode gelap" title="Mode gelap" class="btn-zoom inline-flex items-center justify-center bg-surface-container text-primary-container rounded-xl shadow-sm">
+        <span id="theme-icon" class="material-symbols-outlined text-[24px]">dark_mode</span>
+      </button>
+      <a class="header-cta btn-3d inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md px-space-lg py-space-sm rounded-xl" href="/index.html#contoh-produk">Kembali</a>
+    </div>
+  </div>
+</header>
+
+<main class="cpx-page">
+  <div class="cpx-top">
+    <div>
+      <div class="cpx-kicker">Contoh Produk</div>
+      <h1 id="cpx-title">Memuat...</h1>
+      <p class="cpx-sub" id="cpx-sub"></p>
+    </div>
+  </div>
+
+  <div class="cpx-tabs" id="cpx-tabs" role="tablist" aria-label="Pilih contoh"></div>
+
+  <div class="cpx-frame">
+    <div class="cpx-bar">
+      <div class="cpx-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="cpx-url" id="cpx-url"></div>
+    </div>
+    <div class="cpx-view">
+      <div class="cpx-loading" id="cpx-loading">Memuat contoh...</div>
+      <iframe id="cpx-frame" title="Tampilan contoh produk" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-popups" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <div class="cpx-actions">
+    <p class="cpx-note">Ini tampilan asli situs contoh. Kalau tampilan tidak muncul atau terpotong, buka langsung di tab baru.</p>
+    <div class="cpx-btns">
+      <a id="cpx-open" class="btn-3d btn-3d-neutral bg-surface-container text-primary" href="#" target="_blank" rel="noopener noreferrer">Buka situs asli</a>
+      <a class="btn-3d bg-secondary-container text-primary-container" href="/index.html#paket-harga">Pesan Sekarang</a>
+    </div>
+  </div>
+</main>
+
+<script src="./js/pesan.js"></script>
+<script>
+// Daftar contoh (samakan dengan daftar SITES di index.html). Tambah contoh baru: cukup tambah satu baris.
+(function () {
+  var SITES = [
+  { key: 'kafelink', title: 'Kafe Link', subtitle: 'Kafe \u00b7 link in bio', url: 'https://kafelink.vercel.app/' },
+  { key: 'hall-unilam', title: 'Hall Unilam', subtitle: 'Landing page hall', url: 'https://landing-page-hall-unilam-odq4.vercel.app/index.html' },
+  { key: 'kopi-soda-paaji', title: 'Kopi Soda Paaji', subtitle: 'Kopi \u00b7 link in bio', url: 'https://kopisodapaaji.netlify.app/' }
+];
+  var $ = function (id) { return document.getElementById(id); };
+  var key = new URLSearchParams(location.search).get('site');
+  var cur = SITES.findIndex(function (s) { return s.key === key; }); if (cur < 0) cur = 0;
+
+  SITES.forEach(function (s, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'cpx-tab'; b.setAttribute('role', 'tab'); b.textContent = s.title;
+    b.addEventListener('click', function () { show(i, true); });
+    $('cpx-tabs').appendChild(b);
+  });
+  function show(i, push) {
+    cur = i; var s = SITES[i];
+    document.title = s.title + ' — Contoh Produk — Webinyuu';
+    $('cpx-title').textContent = s.title; $('cpx-sub').textContent = s.subtitle;
+    $('cpx-url').textContent = s.url; $('cpx-open').href = s.url;
+    $('cpx-loading').style.display = 'flex';
+    var f = $('cpx-frame'); f.onload = function () { $('cpx-loading').style.display = 'none'; }; f.src = s.url;
+    Array.prototype.forEach.call($('cpx-tabs').children, function (b, j) { b.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
+    if (push && history.replaceState) history.replaceState(null, '', '?site=' + encodeURIComponent(s.key));
+  }
+  show(cur, false);
+})();
+</script>
+</body>
+</html>

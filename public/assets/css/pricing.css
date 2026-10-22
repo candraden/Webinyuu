@@ -1,0 +1,45 @@
+/* ============================================================
+   KARTU PAKET GAYA "PRICING TABLE" (header gelap miring + pita harga berwarna)
+   Dipakai oleh js/modules/catalog.js (kelas .pt3-*).
+   Warna aksen per kartu: ubah --acc di tiga baris nth-child di bawah.
+   ============================================================ */
+#paket-grid .pt3 {
+  --acc: #28b6f6; --acc-ink: #fff;
+  --pt-bg: #ffffff; --pt-text: rgba(20, 32, 79, .78); --pt-line: rgba(0, 0, 0, .1); --pt-head: #212121;
+  position: relative; display: flex; flex-direction: column; overflow: hidden;
+  background: var(--pt-bg); color: var(--pt-text);
+  border-radius: 0 18px 0 18px; box-shadow: 0 0 25px rgba(0, 0, 0, .1);
+  transition: transform .25s ease-in-out, box-shadow .25s ease-in-out;
+}
+#paket-grid > .pt3:nth-child(3n + 2), #paket-grid .pt3:nth-child(3n + 2) { --acc: #ff9f00; }
+#paket-grid > .pt3:nth-child(3n + 3), #paket-grid .pt3:nth-child(3n + 3) { --acc: #c3185c; }
+html.dark #paket-grid .pt3 { --pt-bg: #181818; --pt-text: rgba(255, 255, 255, .8); --pt-line: rgba(255, 255, 255, .12); --pt-head: #0b0b0b; box-shadow: 0 0 25px rgba(0, 0, 0, .5); }
+@media (hover: hover) { #paket-grid .pt3:hover { transform: scale(1.04); z-index: 2; box-shadow: 0 10px 40px rgba(0, 0, 0, .22); } }
+
+/* header gelap: tepi bawah miring naik ke kanan */
+.pt3-head {
+  position: relative; z-index: 3; background: var(--pt-head); color: #fff;
+  padding: 22px 22px 70px; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 44px), 0 100%);
+}
+.pt3-name { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.pt3-desc { margin: 8px 0 0; font-size: 12.5px; line-height: 1.5; opacity: .7; }
+
+/* pita harga: berwarna, tepi bawah miring turun ke kanan, menyelip di bawah header */
+.pt3-price {
+  position: relative; z-index: 2; margin-top: -44px; padding: 58px 22px 46px; text-align: right;
+  background: var(--acc); color: var(--acc-ink);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 30px));
+}
+.pt3-amount { font-size: 30px; line-height: 1.1; font-weight: 800; }
+.pt3-per { display: block; font-size: 12px; opacity: .9; margin-top: 2px; }
+
+/* isi */
+.pt3-body { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; justify-content: space-between; margin-top: -30px; padding: 40px 20px 20px; gap: 20px; }
+.pt3-list { list-style: none; margin: 0; padding: 0; }
+.pt3-list li { display: flex; align-items: center; gap: 10px; padding: 10px 6px; font-size: 14px; border-bottom: 1px solid var(--pt-line); }
+.pt3-list li:last-child { border-bottom: 0; }
+.pt3-ico { font-size: 18px; color: var(--acc); flex-shrink: 0; }
+.pt3-actions { display: flex; flex-direction: column; gap: 14px; padding: 0 4px 8px; }
+
+@media (max-width: 639px) { .pt3-amount { font-size: 26px; } }
+@media (prefers-reduced-motion: reduce) { #paket-grid .pt3 { transition: none; } #paket-grid .pt3:hover { transform: none; } }

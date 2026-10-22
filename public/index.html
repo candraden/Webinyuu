@@ -10,9 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
 <link rel="stylesheet" href="./assets/css/output.css">
 <link rel="stylesheet" href="./assets/css/custom.css">
-  <link rel="stylesheet" href="./assets/css/theme-toggle.css">
   <link rel="stylesheet" href="./assets/css/menu-burger.css">
   <link rel="stylesheet" href="./assets/css/pacman.css">
+  <link rel="stylesheet" href="./assets/css/pricing.css?v=20261020">
   <link rel="stylesheet" href="./assets/css/peeps.css">
   <link rel="stylesheet" href="./assets/css/bongo.css">
   <link rel="stylesheet" href="./assets/css/to-top.css?v=20261018b">
@@ -20,6 +20,53 @@
   // Terapkan mode gelap lebih awal supaya tidak berkedip saat halaman dimuat
   try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}
 </script>
+<style id="contoh-produk-css">
+/* ===== CONTOH PRODUK (carousel 3D, terinspirasi CodePen shshaw) ===== */
+#contoh-produk { position: relative; overflow: hidden; scroll-margin-top: 80px; }
+#contoh-produk > .max-w-\[1200px\] { position: relative; z-index: 1; }
+/* latar berubah mengikuti warna situs yang sedang tampil di tengah */
+.cp-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.cp-bg i { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease; }
+.cp-bg i.on { opacity: 1; }
+.cp-bg i iframe { position: absolute; left: 0; top: 0; width: 390px; border: 0; transform-origin: 0 0; pointer-events: none; filter: blur(14px) saturate(1.15); background: transparent; }
+.cp-bg::after { content: ""; position: absolute; inset: 0; background: rgba(248,249,252,.5); }
+html.dark .cp-bg::after { background: rgba(10,10,10,.58); }
+.cp-stage { --w: clamp(210px, 24vw, 290px); position: relative; display: flex; justify-content: center; align-items: center; padding: 24px 0 8px; min-height: calc(var(--w) * 1.62 + 48px); }
+.cp-slides { display: grid; width: var(--w); }
+.cp-slide { grid-area: 1 / -1; cursor: pointer; }
+.cp-card {
+  position: relative; width: var(--w); height: calc(var(--w) * 1.62); border-radius: 26px; overflow: hidden;
+  background: #fff; border: 6px solid #14204f; box-shadow: 0 18px 40px rgba(20,32,79,.25);
+  opacity: .7; transform-style: preserve-3d;
+  transform: perspective(1000px) translateX(calc(100% * var(--offset, 0))) rotateY(calc(-45deg * var(--dir, 0)));
+  transition: transform .5s ease-in-out, opacity .5s;
+}
+html.dark .cp-card { border-color: #2c2c2c; box-shadow: 0 18px 40px rgba(0,0,0,.6); background: #181818; }
+.cp-slide.no-anim .cp-card { transition: none; }
+.cp-slide[data-active] { z-index: 2; }
+.cp-slide[data-active] .cp-card { --x: calc(var(--px, .5) - .5); --y: calc(var(--py, .5) - .5); opacity: 1; transform: perspective(1000px); }
+@media (hover: hover) {
+  .cp-slide[data-active] .cp-card:hover { transition: none; transform: perspective(1000px) rotateY(calc(var(--x) * 30deg)) rotateX(calc(var(--y) * -30deg)); }
+}
+.cp-screen { position: absolute; inset: 0; background: #f4f5f8; overflow: hidden; }
+.cp-screen iframe { position: absolute; top: 0; left: 0; width: 390px; border: 0; transform-origin: 0 0; pointer-events: none; background: #fff; }
+.cp-shot-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px; font-size: 13px; color: #5b6485; z-index: 0; }
+.cp-screen iframe { z-index: 1; }
+.cp-caption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; padding: 38px 14px 14px; color: #fff; background: linear-gradient(to top, rgba(10,14,35,.92), rgba(10,14,35,0)); pointer-events: none; }
+.cp-caption b { display: block; font-size: 15px; line-height: 1.2; }
+.cp-caption span { display: block; font-size: 12px; opacity: .8; margin-top: 2px; }
+.cp-caption i { display: inline-block; margin-top: 8px; font-style: normal; font-size: 12px; font-weight: 700; color: #14204f; background: #a3e635; padding: 5px 11px; border-radius: 999px; opacity: 0; transition: opacity .3s; }
+.cp-slide[data-active] .cp-caption i { opacity: 1; }
+.cp-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 46px; height: 46px; border-radius: 50%; border: 0; cursor: pointer; font-size: 30px; line-height: 1; color: #14204f; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,.18); -webkit-tap-highlight-color: transparent; }
+html.dark .cp-arrow { background: #1b1b1b; color: #fff; }
+.cp-prev { left: clamp(0px, 4vw, 60px); } .cp-next { right: clamp(0px, 4vw, 60px); }
+.cp-arrow:hover { background: #b6f542; color: #14204f; }
+.cp-dots { display: flex; justify-content: center; gap: 8px; }
+.cp-dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(91,100,133,.35); transition: all .3s; }
+.cp-dots span.on { width: 22px; border-radius: 999px; background: #86c722; }
+@media (max-width: 639px) { .cp-stage { --w: min(62vw, 250px); } .cp-arrow { width: 40px; height: 40px; font-size: 26px; } .cp-prev { left: 0; } .cp-next { right: 0; } }
+@media (prefers-reduced-motion: reduce) { .cp-card { transition: none; } }
+</style>
 </head>
 <body class="bg-surface font-sans text-on-surface antialiased">
 
@@ -33,6 +80,7 @@
     <nav class="hidden lg:flex items-center gap-space-lg">
       <a data-nav="beranda" data-text="Beranda" class="nav-link text-body-md text-primary font-bold" href="#">Beranda</a>
       <a data-nav="cara-kerja" data-text="Cara Kerja" class="nav-link text-body-md text-on-surface-variant hover:text-on-surface" href="#cara-kerja">Cara Kerja</a>
+      <a data-nav="contoh-produk" data-text="Contoh Produk" class="nav-link text-body-md text-on-surface-variant hover:text-on-surface" href="#contoh-produk">Contoh Produk</a>
       <a data-nav="paket-harga" data-text="Produk &amp; Paket" class="nav-link text-body-md text-on-surface-variant hover:text-on-surface" href="#paket-harga">Produk &amp; Paket</a>
       <a class="text-body-md text-on-surface-variant hover:text-on-surface transition-colors" style="font-size:16px;line-height:24px;" href="/pesanan/lacak.html">Cek Status Order</a>
     </nav>
@@ -54,6 +102,7 @@
   <nav id="mobile-menu" class="bg-surface" aria-label="Menu utama">
     <a data-nav="beranda" data-text="Beranda" class="nav-link text-body-md text-primary font-bold" href="#">Beranda</a>
     <a data-nav="cara-kerja" data-text="Cara Kerja" class="nav-link text-body-md text-on-surface-variant" href="#cara-kerja">Cara Kerja</a>
+    <a data-nav="contoh-produk" data-text="Contoh Produk" class="nav-link text-body-md text-on-surface-variant" href="#contoh-produk">Contoh Produk</a>
     <a data-nav="paket-harga" data-text="Produk &amp; Paket" class="nav-link text-body-md text-on-surface-variant" href="#paket-harga">Produk &amp; Paket</a>
     <a class="nav-link text-body-md text-on-surface-variant" data-text="Cek Status Order" href="/pesanan/lacak.html">Cek Status Order</a>
     <a class="mobile-cta btn-3d inline-flex items-center justify-center bg-secondary-container text-primary-container text-label-md rounded-xl" href="#paket-harga">Pesan Sekarang</a>
@@ -169,6 +218,24 @@
     </div>
   </section>
 
+  <!-- CONTOH PRODUK: carousel 3D, isinya tampilan asli situs contoh (iframe). Klik kartu -> contoh-produk.html -->
+  <section class="reveal w-full bg-surface py-space-xl lg:py-20" id="contoh-produk">
+    <div class="cp-bg" id="cp-bg" aria-hidden="true"></div>
+    <div class="max-w-[1200px] mx-auto px-margin lg:px-margin-desktop flex flex-col gap-space-lg">
+      <div class="flex flex-col gap-space-xs">
+        <span class="text-label-sm text-secondary uppercase tracking-wider">Contoh Produk</span>
+        <h2 class="text-headline-lg text-primary">Lihat Hasil Nyata</h2>
+        <p class="text-body-md text-on-surface-variant">Beberapa contoh landing page yang sudah jadi. Geser, lalu klik kartu untuk melihat versi lengkapnya.</p>
+      </div>
+      <div class="cp-stage" id="cp-stage">
+        <button type="button" class="cp-arrow cp-prev" id="cp-prev" aria-label="Contoh sebelumnya">&#8249;</button>
+        <div class="cp-slides" id="cp-slides"></div>
+        <button type="button" class="cp-arrow cp-next" id="cp-next" aria-label="Contoh berikutnya">&#8250;</button>
+      </div>
+      <div class="cp-dots" id="cp-dots" aria-hidden="true"></div>
+    </div>
+  </section>
+
   <!-- KATEGORI FORMAT -->
   <section class="reveal w-full bg-surface-container-low py-space-xl lg:py-20" id="layanan">
     <div class="max-w-[1200px] mx-auto px-margin lg:px-margin-desktop flex flex-col gap-space-xl">
@@ -245,10 +312,160 @@
   <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
 
-<script type="module" src="./js/modules/catalog.js"></script>
+<script type="module" src="./js/modules/catalog.js?v=20261020"></script>
 <script src="./js/peeps.js" defer></script>
 <script src="./js/bongo.js" defer></script>
 <script src="./js/to-top.js?v=20261018b" defer></script>
-  <script src="./js/main.js"></script>
+  <script src="./js/main.js?v=20261021"></script>
+<script id="pt3-upgrade">
+// Jaga-jaga: kalau catalog.js masih versi lama (cache/belum diganti), kartu paket diubah ke gaya baru (pricing.css) di sini.
+(function () {
+  var grid = document.getElementById('paket-grid');
+  if (!grid) return;
+  var OLD = ['card-hover', 'bg-surface-container-lowest', 'rounded-2xl', 'p-space-lg', 'shadow-sm', 'flex', 'flex-col', 'justify-between'];
+  function txt(el) { return el ? el.textContent.trim() : ''; }
+  function upgrade(card) {
+    if (card.classList.contains('pt3') || card.querySelector('.pt3-head')) return;
+    var spans = card.querySelectorAll(':scope > div > span, :scope > div > div span');
+    var name = txt(card.querySelector(':scope > div > span'));
+    var priceBox = card.querySelector(':scope > div > div.flex');
+    var amount = txt(priceBox && priceBox.children[0]), per = txt(priceBox && priceBox.children[1]);
+    var desc = txt(card.querySelector(':scope > div > p'));
+    var items = Array.prototype.map.call(card.querySelectorAll('ul > li'), function (li) { return txt(li.querySelector('span:last-child')); });
+    var links = card.querySelectorAll('a');
+    if (!name || !amount || links.length < 2) return;
+    var esc = function (s) { return s.replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); };
+    var check = '<span class="material-symbols-outlined pt3-ico">check_circle</span>';
+    var a1 = links[0].cloneNode(true), a2 = links[1].cloneNode(true);
+    card.classList.remove.apply(card.classList, OLD);
+    card.classList.add('pt3');
+    card.innerHTML =
+      '<div class="pt3-head"><h4 class="pt3-name">' + esc(name) + '</h4>' + (desc ? '<p class="pt3-desc">' + esc(desc) + '</p>' : '') + '</div>' +
+      '<div class="pt3-price"><span class="pt3-amount">' + esc(amount) + '</span><span class="pt3-per">' + esc(per) + '</span></div>' +
+      '<div class="pt3-body"><ul class="pt3-list">' + items.map(function (t) { return '<li>' + check + '<span>' + esc(t) + '</span></li>'; }).join('') + '</ul><div class="pt3-actions"></div></div>';
+    var box = card.querySelector('.pt3-actions'); box.appendChild(a1); box.appendChild(a2);
+  }
+  function run() { Array.prototype.forEach.call(grid.children, upgrade); }
+  run();
+  new MutationObserver(run).observe(grid, { childList: true });
+})();
+</script>
+<script id="contoh-produk-js">
+// Carousel contoh produk. Ganti/ tambah situs contoh cukup edit daftar SITES di bawah.
+(function () {
+  var SITES = [
+  // bg: [warna utama, warna pendukung] = warna latar section saat contoh ini ada di tengah. Silakan ubah.
+  { key: 'kafelink', title: 'Kafe Link', subtitle: 'Kafe · link in bio', url: 'https://kafelink.vercel.app/', bg: ['#d98a3d', '#4a2c18'] },
+  { key: 'hall-unilam', title: 'Hall Unilam', subtitle: 'Landing page hall', url: 'https://landing-page-hall-unilam-odq4.vercel.app/index.html', bg: ['#3566c9', '#f2b632'] },
+  { key: 'kopi-soda-paaji', title: 'Kopi Soda Paaji', subtitle: 'Kopi · link in bio', url: 'https://kopisodapaaji.netlify.app/', bg: ['#9a6540', '#e3b784'] }
+];
+  var root = document.getElementById('cp-slides');
+  if (!root) return;
+  var dots = document.getElementById('cp-dots'), n = SITES.length, idx = 0, slides = [], prev = [];
+  var bgBox = document.getElementById('cp-bg'), bgs = [];
+  SITES.forEach(function (s) {
+    var c = s.bg || ['#86c722', '#14204f'], i = document.createElement('i');
+    i.style.background =
+      'radial-gradient(60% 75% at 50% 58%, ' + c[0] + '99, transparent 75%),' +
+      'radial-gradient(45% 55% at 10% 15%, ' + c[1] + '77, transparent 72%),' +
+      'radial-gradient(45% 55% at 92% 20%, ' + c[1] + '77, transparent 72%)';
+    var bf = document.createElement('iframe');
+    bf.setAttribute('data-src', s.url); bf.setAttribute('tabindex', '-1'); bf.setAttribute('aria-hidden', 'true');
+    bf.setAttribute('referrerpolicy', 'no-referrer'); bf.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+    i.appendChild(bf);
+    if (bgBox) bgBox.appendChild(i); bgs.push(i);
+  });
+  var VIEW_W = 390;   // lebar layar HP yang ditampilkan di dalam kartu (px)
+
+  SITES.forEach(function (s, i) {
+    var el = document.createElement('div');
+    el.className = 'cp-slide';
+    el.innerHTML = '<div class="cp-card"><div class="cp-screen"><div class="cp-shot-fallback">Memuat ' + s.title + '...</div>' +
+      '<iframe title="Contoh: ' + s.title + '" data-src="' + s.url + '" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin" tabindex="-1"></iframe></div>' +
+      '<div class="cp-caption"><b>' + s.title + '</b><span>' + s.subtitle + '</span><i>Lihat contoh &rsaquo;</i></div></div>';
+    el.addEventListener('click', function () {
+      var off = offsetOf(i);
+      if (off === 0) location.href = 'contoh-produk.html?site=' + encodeURIComponent(s.key);
+      else go(off);
+    });
+    root.appendChild(el); slides.push(el); prev.push(null);
+    var d = document.createElement('span'); dots.appendChild(d);
+  });
+
+  function offsetOf(i) {
+    var d = i - idx, half = Math.floor(n / 2);
+    if (d > half) d -= n; else if (d < -half) d += n;
+    return d;
+  }
+  function update() {
+    slides.forEach(function (el, i) {
+      var off = offsetOf(i);
+      if (prev[i] !== null && Math.abs(off - prev[i]) > 1) {       // lompatan dari ujung ke ujung: tanpa animasi
+        el.classList.add('no-anim');
+        requestAnimationFrame(function () { requestAnimationFrame(function () { el.classList.remove('no-anim'); }); });
+      }
+      prev[i] = off;
+      el.style.setProperty('--offset', off);
+      el.style.setProperty('--dir', off === 0 ? 0 : off > 0 ? 1 : -1);
+      if (off === 0) el.setAttribute('data-active', ''); else el.removeAttribute('data-active');
+    });
+    Array.prototype.forEach.call(dots.children, function (d, i) { d.className = i === idx ? 'on' : ''; });
+    bgs.forEach(function (b, i) { b.classList.toggle('on', i === idx); });
+  }
+  function go(delta) { idx = ((idx + delta) % n + n) % n; update(); }
+  document.getElementById('cp-prev').addEventListener('click', function () { go(-1); });
+  document.getElementById('cp-next').addEventListener('click', function () { go(1); });
+  document.getElementById('cp-stage').addEventListener('keydown', function (e) { if (e.key === 'ArrowLeft') go(-1); if (e.key === 'ArrowRight') go(1); });
+
+  // geser di HP
+  var sx = null, stage = document.getElementById('cp-stage');
+  stage.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    if (sx === null) return;
+    var dx = e.changedTouches[0].clientX - sx; sx = null;
+    if (Math.abs(dx) > 45) go(dx < 0 ? 1 : -1);
+  });
+
+  // efek miring mengikuti mouse pada kartu aktif
+  slides.forEach(function (el) {
+    el.addEventListener('mousemove', function (e) {
+      if (!el.hasAttribute('data-active')) return;
+      var r = el.firstChild.getBoundingClientRect();
+      el.style.setProperty('--px', (e.clientX - r.left) / r.width);
+      el.style.setProperty('--py', (e.clientY - r.top) / r.height);
+    });
+  });
+
+  // skala tampilan HP agar pas di kartu
+  function fit() {
+    slides.forEach(function (el) {
+      var screen = el.querySelector('.cp-screen'), f = el.querySelector('iframe');
+      var w = screen.clientWidth, h = screen.clientHeight; if (!w) return;
+      var s = w / VIEW_W;
+      f.style.height = (h / s) + 'px';
+      f.style.transform = 'scale(' + s + ')';
+    });
+  }
+  function fitBg() {
+    var sec = document.getElementById('contoh-produk'), W = sec.clientWidth, H = sec.clientHeight; if (!W) return;
+    var k = W / VIEW_W;
+    bgs.forEach(function (b) { var f = b.firstChild; f.style.height = (H / k) + 'px'; f.style.transform = 'scale(' + k + ')'; });
+  }
+  window.addEventListener('resize', function () { fit(); fitBg(); });
+
+  // muat situs hanya saat bagian ini mendekati layar (hemat kuota)
+  var loaded = false;
+  function load() {
+    if (loaded) return; loaded = true;
+    slides.forEach(function (el) { var f = el.querySelector('iframe'); f.src = f.getAttribute('data-src'); });
+    bgs.forEach(function (b) { var f = b.firstChild; f.src = f.getAttribute('data-src'); });
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { load(); o.disconnect(); } }, { rootMargin: '400px' }).observe(document.getElementById('contoh-produk'));
+  } else load();
+
+  update(); fit(); fitBg(); setTimeout(function () { fit(); fitBg(); }, 300);
+})();
+</script>
 </body>
 </html>

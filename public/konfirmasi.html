@@ -10,7 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
 <link rel="stylesheet" href="./assets/css/output.css?v=20261014">
 <link rel="stylesheet" href="./assets/css/custom.css?v=20261014">
-  <link rel="stylesheet" href="./assets/css/theme-toggle.css?v=20261014">
 <script>
   // Terapkan mode gelap lebih awal supaya tidak berkedip saat halaman dimuat
   try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark'); } catch (e) {}
@@ -64,6 +63,19 @@ html.dark .nota-note { color: #b4b9c9; }
 html.dark .nota-deadline { color: #f87171; background: rgba(248,113,113,.1); }
 .nota-barcode { height: 38px; margin: 22px auto 6px; width: 78%; background: repeating-linear-gradient(90deg, #14204f 0 2px, transparent 2px 4px, #14204f 4px 5px, transparent 5px 8px, #14204f 8px 11px, transparent 11px 13px, #14204f 13px 14px, transparent 14px 18px); opacity: .85; }
 html.dark .nota-barcode { background: repeating-linear-gradient(90deg, #f0f0f0 0 2px, transparent 2px 4px, #f0f0f0 4px 5px, transparent 5px 8px, #f0f0f0 8px 11px, transparent 11px 13px, #f0f0f0 13px 14px, transparent 14px 18px); }
+.nota-code { margin: 14px 0 0; padding: 12px 14px; border: 1.5px dashed rgba(91,100,133,.45); border-radius: 12px; background: rgba(163,230,53,.12); }
+.nota-code small { display: block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #5b6485; margin-bottom: 6px; }
+.nota-code-row { display: flex; align-items: center; gap: 10px; }
+.nota-code code { flex: 1; min-width: 0; font: 700 14px/1.3 ui-monospace, Menlo, Consolas, monospace; color: #14204f; word-break: break-all; }
+.nota-code button { flex-shrink: 0; border: 0; cursor: pointer; font: 700 12px/1 inherit; padding: 8px 12px; border-radius: 8px; background: #14204f; color: #fff; }
+.nota-code-note { margin: 8px 0 0; font-size: 12px; line-height: 1.5; color: #5b6485; }
+.nota-admin-state { margin: 10px 0 0; font-size: 13px; font-weight: 700; padding: 8px 12px; border-radius: 10px; background: rgba(91,100,133,.1); color: #4a5272; }
+.nota-admin-state.ok { background: rgba(163,230,53,.22); color: #35560a; }
+html.dark .nota-code small, html.dark .nota-code-note { color: #9aa0b4; }
+html.dark .nota-code code { color: #f0f0f0; }
+html.dark .nota-code button { background: #a3e635; color: #14204f; }
+html.dark .nota-admin-state { color: #b4b9c9; background: rgba(255,255,255,.08); }
+html.dark .nota-admin-state.ok { color: #c6f26b; background: rgba(163,230,53,.16); }
 .nota-thanks { text-align: center; font-size: 12px; letter-spacing: .08em; color: #5b6485; }
 html.dark .nota-thanks { color: #9aa0b4; }
 .nota-actions { display: flex; flex-direction: column; gap: 18px; align-items: center; text-align: center; }
@@ -72,6 +84,36 @@ html.dark .nota-thanks { color: #9aa0b4; }
 @media (prefers-reduced-motion: reduce) { .nota-check, .nota-shadow, .nota-chip::before { animation: none; } }
 .pay-accounts { background: #fff; color: #1b2340; border-radius: 16px; padding: 20px; box-shadow: 0 6px 20px rgba(20,32,79,.08); border: 1px dashed rgba(91,100,133,.35); }
 html.dark .pay-accounts { background: #181818; color: #f0f0f0; border-color: rgba(255,255,255,.2); box-shadow: 0 6px 20px rgba(0,0,0,.5); }
+
+/* ===== PRINTER NOTA (terinspirasi CodePen "Receipt Printer") ===== */
+.printer-wrap { width: 100%; display: flex; flex-direction: column; }
+.printer { position: relative; height: 100px; width: 100%; cursor: pointer; z-index: 3; outline: none; -webkit-tap-highlight-color: transparent; }
+.printer::before, .printer::after { content: ""; position: absolute; inset: 0; height: 80px; background: #d0d0d0; }
+.printer::after { border-radius: 12px; z-index: 2; box-shadow: inset 0 10px 5px rgba(0,0,0,.3), inset 0 20px 8px rgba(255,255,255,1), inset 0 40px 20px rgba(0,0,0,.1), 0 1px 1px rgba(0,0,0,.5); }
+.printer::before { border-radius: 15px 15px 10px 10px; height: 96px; z-index: 0; box-shadow: inset 5px 0 5px rgba(0,0,0,.3), inset -5px 0 5px rgba(0,0,0,.3), 10px 20px 20px rgba(0,0,0,.35); }
+html.dark .printer::before, html.dark .printer::after { background: #3b3b3e; }
+html.dark .printer::after { box-shadow: inset 0 10px 5px rgba(0,0,0,.5), inset 0 20px 8px rgba(255,255,255,.12), inset 0 40px 20px rgba(0,0,0,.2), 0 1px 1px rgba(0,0,0,.8); }
+html.dark .printer::before { box-shadow: inset 5px 0 5px rgba(0,0,0,.5), inset -5px 0 5px rgba(0,0,0,.5), 10px 20px 20px rgba(0,0,0,.6); }
+.printer-name, .printer-lcd, .printer-led { position: absolute; z-index: 4; }
+.printer-name { left: 20px; top: 26px; font-size: 10px; font-weight: 700; letter-spacing: .2em; color: rgba(0,0,0,.5); }
+html.dark .printer-name { color: rgba(255,255,255,.55); }
+.printer-lcd { right: 18px; top: 20px; font: 700 11px/1 ui-monospace, Menlo, Consolas, monospace; letter-spacing: .08em; color: #7cfc00; background: #0d1f0d; padding: 6px 9px; border-radius: 4px; box-shadow: inset 0 0 6px rgba(0,0,0,.8); }
+.printer-led { left: 20px; top: 52px; width: 6px; height: 6px; border-radius: 50%; background: #7cfc00; box-shadow: 0 0 6px #7cfc00; }
+.printer.is-printing .printer-led { animation: printer-blink 1s linear infinite; }
+@keyframes printer-blink { 0%, 80% { background: #222; box-shadow: none; } 81%, 100% { background: #7cfc00; box-shadow: 0 0 6px #7cfc00; } }
+.printer-slot { position: absolute; z-index: 4; left: 26px; right: 26px; top: 82px; height: 9px; background: #111; border-radius: 0 0 6px 6px; box-shadow: inset 0 3px 3px rgba(0,0,0,.8); }
+
+/* kertas: tinggi melebar dari 0 sambil nota meluncur turun dari bawah printer */
+.paper-out { position: relative; z-index: 1; margin: -12px 26px 0; display: grid; grid-template-rows: 0fr; transition: grid-template-rows 2.6s cubic-bezier(.4,0,.3,1); }
+.paper-out.is-out { grid-template-rows: 1fr; }
+.paper-slide { min-height: 0; overflow: hidden; padding-bottom: 28px; }
+.paper-slide .nota-shadow { animation: none; transform: translateY(-100%); transition: transform 2.6s cubic-bezier(.4,0,.3,1); }
+.paper-out.is-out .paper-slide .nota-shadow { transform: translateY(0); }
+.paper-slide .nota { padding-top: 40px; }
+.printer-hint { text-align: center; font-size: 12px; color: #5b6485; margin: 4px 0 0; }
+html.dark .printer-hint { color: #9aa0b4; }
+@media (max-width: 480px) { .paper-out { margin-inline: 18px; } .printer-lcd { font-size: 10px; } }
+@media (prefers-reduced-motion: reduce) { .paper-out, .paper-slide .nota-shadow { transition: none; } .printer.is-printing .printer-led { animation: none; } }
 </style>
 </head>
 <body class="bg-surface font-sans text-on-surface antialiased">
@@ -101,6 +143,16 @@ html.dark .pay-accounts { background: #181818; color: #f0f0f0; border-color: rgb
       <h1>Pesanan Berhasil Dibuat!</h1>
     </div>
 
+    <!-- PRINTER NOTA: nota keluar dari printer (CSS & JS ada di bawah). Klik printer untuk mencetak ulang. -->
+    <div class="printer-wrap">
+      <div class="printer" id="printer" role="button" tabindex="0" aria-label="Cetak ulang nota">
+        <span class="printer-name">WEBINYUU PRINT</span>
+        <span class="printer-lcd" id="printer-lcd">MENCETAK...</span>
+        <span class="printer-led" aria-hidden="true"></span>
+        <span class="printer-slot" aria-hidden="true"></span>
+      </div>
+      <div class="paper-out" id="paper-out">
+        <div class="paper-slide">
     <!-- NOTA -->
     <div class="nota-shadow">
       <div class="nota">
@@ -117,9 +169,19 @@ html.dark .pay-accounts { background: #181818; color: #f0f0f0; border-color: rgb
         <hr class="nota-sep">
         <p class="nota-note">Silakan lakukan pembayaran DP, lalu kirim bukti transfer melalui WhatsApp ke admin yang menangani pesananmu<span id="r-admin-wrap" class="hidden"> (<span id="r-admin" style="font-weight:700"></span>)</span>. Admin akan memverifikasi dan pengerjaan langsung dimulai.</p>
         <p id="r-deadline" class="nota-deadline hidden"></p>
+        <div class="nota-code">
+          <small>Kode Lacak Pesanan</small>
+          <div class="nota-code-row"><code id="r-token">-</code><button type="button" id="copy-token">Salin</button></div>
+          <p class="nota-code-note">Simpan kode ini. Masukkan di menu <b>Cek Status Order</b> untuk melihat status dan admin pesananmu.</p>
+        </div>
+        <p id="r-admin-state" class="nota-admin-state">Mengecek admin yang menangani...</p>
         <div class="nota-barcode" aria-hidden="true"></div>
         <div class="nota-thanks">TERIMA KASIH TELAH MEMESAN DI WEBINYUU</div>
       </div>
+    </div>
+        </div>
+      </div>
+      <p class="printer-hint" id="printer-hint">Klik printer untuk mencetak ulang</p>
     </div>
 
     <!-- REKENING PEMBAYARAN (diisi oleh js/shared/paymentAccounts.js) -->
@@ -136,6 +198,30 @@ html.dark .pay-accounts { background: #181818; color: #f0f0f0; border-color: rgb
   </div>
 </main>
 
+<script>
+// Printer nota: nota keluar otomatis saat halaman dibuka; klik printer untuk mencetak ulang.
+(function () {
+  var printer = document.getElementById('printer'), paper = document.getElementById('paper-out');
+  var lcd = document.getElementById('printer-lcd'), hint = document.getElementById('printer-hint');
+  if (!printer || !paper) return;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DUR = reduce ? 0 : 2600, timer = null;
+  function print() {
+    clearTimeout(timer);
+    paper.classList.remove('is-out'); printer.classList.remove('is-printing');
+    void paper.offsetHeight;                       // paksa reflow supaya animasi mulai dari awal
+    lcd.textContent = 'MENCETAK...'; if (hint) hint.style.visibility = 'hidden';
+    printer.classList.add('is-printing'); paper.classList.add('is-out');
+    timer = setTimeout(function () {
+      printer.classList.remove('is-printing'); lcd.textContent = 'NOTA SELESAI';
+      if (hint) hint.style.visibility = 'visible';
+    }, DUR + 100);
+  }
+  printer.addEventListener('click', print);
+  printer.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); print(); } });
+  setTimeout(print, 350);
+})();
+</script>
 <script src="./js/pesan.js"></script>
 <script type="module">
   import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from './config/env.js';
@@ -154,6 +240,21 @@ html.dark .pay-accounts { background: #181818; color: #f0f0f0; border-color: rgb
     const t = Number(params.get('total') || 0), d = Number(params.get('dp') || 0);
     if (t > d && d > 0) { $('r-sisa').textContent = 'Rp' + (t - d).toLocaleString('id-ID'); $('r-sisa-row').classList.remove('hidden'); }
   })();
+  $('r-token').textContent = token || '-';
+  $('copy-token').addEventListener('click', async () => {
+    const btn = $('copy-token');
+    try { await navigator.clipboard.writeText(token || ''); }
+    catch { const t = document.createElement('textarea'); t.value = token || ''; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch {} t.remove(); }
+    btn.textContent = 'Tersalin'; setTimeout(() => { btn.textContent = 'Salin'; }, 1600);
+  });
+  // Simpan pesanan ini di perangkat supaya muncul di menu Cek Status Order.
+  if (token) {
+    try {
+      const list = JSON.parse(localStorage.getItem('webinyuu_orders') || '[]').filter(o => o.token !== token);
+      list.unshift({ token, order_number: orderNumber || '', paket: params.get('paket') || '', at: Date.now() });
+      localStorage.setItem('webinyuu_orders', JSON.stringify(list.slice(0, 10)));
+    } catch (e) { /* abaikan */ }
+  }
   $('tracking-link').href = `/pesanan/lacak?token=${token}`;
   // Nomor WA admin diambil dari server (admin yang otomatis ditugaskan ke order ini).
   async function loadAdmin() {
@@ -169,6 +270,8 @@ html.dark .pay-accounts { background: #181818; color: #f0f0f0; border-color: rgb
       const msg = encodeURIComponent(`Halo ${order.admin_name || 'Admin Webinyuu'}, saya sudah transfer DP untuk order ${orderNumber}. Berikut saya kirimkan bukti transfer.`);
       $('wa-link').href = `https://wa.me/${order.admin_phone}?text=${msg}`;
       $('wa-link').classList.remove('hidden');
+      $('r-admin-state').textContent = 'Admin yang menangani: ' + (order.admin_name || 'Admin Webinyuu');
+      $('r-admin-state').classList.add('ok');
       if (order.admin_name) { $('r-admin').textContent = order.admin_name; $('r-admin-wrap').classList.remove('hidden'); }
 
       if (order.payment_deadline) {
@@ -178,6 +281,7 @@ html.dark .pay-accounts { background: #181818; color: #f0f0f0; border-color: rgb
       }
     } catch (err) {
       console.error(err);
+      $('r-admin-state').textContent = 'Admin belum ditugaskan. Cek lagi nanti di menu Cek Status Order dengan kode di atas.';
       $('wa-fallback').classList.remove('hidden');
     }
   }
