@@ -20,6 +20,7 @@
 
   var navItems = [
     { key: 'produk', href: '/super-admin/produk.html', icon: 'inventory_2', label: 'Produk &amp; Paket' },
+    { key: 'contoh', href: '/super-admin/contoh.html', icon: 'web', label: 'Contoh Produk' },
     { key: 'kategori', href: '/super-admin/kategori.html', icon: 'category', label: 'Kategori' },
     { key: 'rekap', href: '/super-admin/rekap.html', icon: 'bar_chart', label: 'Rekap Penjualan' },
     { key: 'orders', href: '/super-admin/orders.html', icon: 'assignment_ind', label: 'Order &amp; Penugasan' },
