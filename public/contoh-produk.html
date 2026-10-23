@@ -100,14 +100,15 @@ html.dark .cpx-note { color: #9aa0b4; }
 
 <script src="./js/pesan.js"></script>
 <script>
-// Daftar contoh (samakan dengan daftar SITES di index.html). Tambah contoh baru: cukup tambah satu baris.
+// Daftar contoh diambil dari Super Admin (tabel example_sites). Kalau gagal dimuat, dipakai daftar bawaan di bawah.
 (function () {
-  var SITES = [
+  var DEFAULT_SITES = [
   { key: 'kafelink', title: 'Kafe Link', subtitle: 'Kafe \u00b7 link in bio', url: 'https://kafelink.vercel.app/' },
   { key: 'hall-unilam', title: 'Hall Unilam', subtitle: 'Landing page hall', url: 'https://landing-page-hall-unilam-odq4.vercel.app/index.html' },
   { key: 'kopi-soda-paaji', title: 'Kopi Soda Paaji', subtitle: 'Kopi \u00b7 link in bio', url: 'https://kopisodapaaji.netlify.app/' }
 ];
   var $ = function (id) { return document.getElementById(id); };
+  function start(SITES) {
   var key = new URLSearchParams(location.search).get('site');
   var cur = SITES.findIndex(function (s) { return s.key === key; }); if (cur < 0) cur = 0;
 
@@ -128,6 +129,19 @@ html.dark .cpx-note { color: #9aa0b4; }
     if (push && history.replaceState) history.replaceState(null, '', '?site=' + encodeURIComponent(s.key));
   }
   show(cur, false);
+  }
+
+  var started = false;
+  function go(list) { if (started) return; started = true; start(list); }
+  setTimeout(function () { go(DEFAULT_SITES); }, 3500);
+  import('./config/env.js').then(function (m) {
+    return fetch(m.SUPABASE_URL + '/rest/v1/example_sites?select=slug,title,subtitle,url&is_active=eq.true&order=sort_order.asc', {
+      headers: { apikey: m.SUPABASE_PUBLISHABLE_KEY, Authorization: 'Bearer ' + m.SUPABASE_PUBLISHABLE_KEY }
+    });
+  }).then(function (r) { return r.ok ? r.json() : null; }).then(function (rows) {
+    var list = rows && rows.length ? rows.map(function (x) { return { key: x.slug, title: x.title, subtitle: x.subtitle || '', url: x.url }; }) : null;
+    go((list || DEFAULT_SITES).filter(function (x) { return /^https?:\/\//i.test(x.url || ''); }));
+  }).catch(function () { go(DEFAULT_SITES); });
 })();
 </script>
 </body>

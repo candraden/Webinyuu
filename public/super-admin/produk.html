@@ -10,7 +10,68 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../assets/js/tailwind.config.js"></script>
-<style>#produk-tbody td:last-child { text-align: left; }</style>
+<link rel="stylesheet" href="../assets/css/pacman.css?v=20261014">
+<style>
+/* ===== Daftar paket ===== */
+.pk-stats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+.pk-stat { background: #fff; border-radius: 16px; padding: 14px 16px; box-shadow: 0 1px 2px rgba(20,32,79,.06); border: 1px solid rgba(91,100,133,.14); }
+.pk-stat b { display: block; font-size: 26px; line-height: 1.1; font-weight: 800; color: #14204f; }
+.pk-stat span { font-size: 12px; font-weight: 600; letter-spacing: .03em; color: #5b6485; }
+.pk-stat.ok b { color: #4d7a0f; }
+.pk-wrap { background: #fff; border-radius: 18px; border: 1px solid rgba(91,100,133,.14); box-shadow: 0 6px 20px rgba(20,32,79,.06); overflow: hidden; }
+.pk-table { width: 100%; border-collapse: collapse; }
+.pk-table thead th { text-align: left; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #5b6485; background: #f6f8fb; padding: 12px 18px; border-bottom: 1px solid rgba(91,100,133,.16); }
+.pk-row { transition: background .15s; }
+.pk-row:hover { background: #f8fbf0; }
+.pk-row + .pk-row .pk-cell { border-top: 1px solid rgba(91,100,133,.12); }
+.pk-row.is-off .pk-title, .pk-row.is-off .pk-price { color: #8a91a8; }
+.pk-cell { padding: 14px 18px; vertical-align: middle; font-size: 14px; }
+.pk-name { display: flex; align-items: center; gap: 12px; min-width: 220px; }
+.pk-ava { width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #14204f; color: #a3e635; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 17px; }
+.pk-title { margin: 0; font-weight: 700; color: #14204f; line-height: 1.25; }
+.pk-slug { margin: 2px 0 0; font-size: 12px; color: #8a91a8; font-family: ui-monospace, Menlo, Consolas, monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pk-chip { display: inline-block; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: #eef1fb; color: #3b4a8a; }
+.pk-muted { color: #5b6485; }
+.pk-price { font-weight: 800; color: #14204f; }
+.pk-old { display: block; font-size: 12px; color: #8a91a8; text-decoration: line-through; }
+.pk-status { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px; border: 0; cursor: pointer; transition: filter .15s, transform .1s; }
+.pk-status i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.pk-status.on { background: #e6f7c3; color: #3f6a0a; }
+.pk-status.off { background: #eceef4; color: #6b7390; }
+.pk-status:hover { filter: brightness(.96); } .pk-status:active { transform: scale(.97); }
+.pk-actions { white-space: nowrap; }
+.pk-icon { width: 36px; height: 36px; border: 0; border-radius: 10px; background: #f1f3f8; color: #14204f; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; margin-right: 6px; transition: background .15s, color .15s; }
+.pk-icon .material-symbols-outlined { font-size: 20px; }
+.pk-icon:hover { background: #14204f; color: #fff; }
+.pk-icon.danger { color: #b3261e; } .pk-icon.danger:hover { background: #b3261e; color: #fff; }
+@media (max-width: 767px) {
+  .pk-wrap { background: transparent; border: 0; box-shadow: none; overflow: visible; border-radius: 0; }
+  .pk-table, .pk-table tbody { display: block; }
+  .pk-table thead { display: none; }
+  .pk-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; background: #fff; border: 1px solid rgba(91,100,133,.14); border-radius: 16px; padding: 14px; margin-bottom: 12px; box-shadow: 0 1px 2px rgba(20,32,79,.06); }
+  .pk-row + .pk-row .pk-cell { border-top: 0; }
+  .pk-cell { padding: 0; }
+  .pk-name { grid-column: 1 / -1; min-width: 0; }
+  .pk-cell[data-label]:not(.pk-name):not(.pk-actions)::before { content: attr(data-label); display: block; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #8a91a8; margin-bottom: 3px; }
+  .pk-actions { grid-column: 1 / -1; display: flex; gap: 8px; padding-top: 10px; border-top: 1px dashed rgba(91,100,133,.25); }
+  .pk-actions::before { content: none; }
+  .pk-icon { flex: 1; width: auto; height: 42px; margin: 0; }
+}
+.pk-loading { text-align: center; padding: 48px 0; color: #5b6485; font-size: 14px; }
+
+/* ===== Formulir paket ===== */
+#form-produk { border: 1px solid rgba(91,100,133,.16); }
+#form-produk > section { background: #f8f9fc; border: 1px solid rgba(91,100,133,.14); border-radius: 16px; padding: 18px; }
+#form-produk > section > h3 { display: flex; align-items: center; gap: 8px; margin: 0; }
+#form-produk > section > h3::before { content: ""; width: 4px; height: 16px; border-radius: 2px; background: #a3e635; }
+#form-produk input:not([type=checkbox]), #form-produk textarea, #form-produk select { background: #fff; border-color: rgba(91,100,133,.35); transition: border-color .2s, box-shadow .2s; }
+#form-produk input:focus, #form-produk textarea:focus, #form-produk select:focus { border-color: #86c722; box-shadow: 0 0 0 3px rgba(163,230,53,.35); outline: none; }
+#form-produk input[type=checkbox] { accent-color: #6fae12; }
+#btn-save-produk { font-weight: 700; box-shadow: 0 4px 0 #6fae12; transition: transform .1s, box-shadow .1s; }
+#btn-save-produk:active { transform: translateY(3px); box-shadow: 0 1px 0 #6fae12; }
+#btn-add-produk { font-weight: 700; box-shadow: 0 3px 0 #6fae12; transition: transform .1s, box-shadow .1s; }
+#btn-add-produk:active { transform: translateY(2px); box-shadow: 0 1px 0 #6fae12; }
+</style>
 </head>
 <body class="bg-surface font-sans text-on-surface antialiased">
 
@@ -37,20 +98,28 @@
     <script src="../partials/header.js"></script>
 
     <div class="p-margin flex flex-col gap-space-md">
-      <div id="state-loading" class="text-center text-body-md text-on-surface-variant py-space-xl">Memuat produk...</div>
+      <div class="pk-stats" aria-label="Ringkasan paket">
+        <div class="pk-stat"><b id="stat-total">0</b><span>Total paket</span></div>
+        <div class="pk-stat ok"><b id="stat-active">0</b><span>Aktif</span></div>
+        <div class="pk-stat"><b id="stat-off">0</b><span>Nonaktif</span></div>
+      </div>
+      <div id="state-loading" class="pk-loading">
+        <div class="pacman-loader" aria-hidden="true"><div class="chomper"></div></div>
+        Memuat produk...
+      </div>
       <div id="state-empty" class="hidden text-center text-body-md text-on-surface-variant py-space-xl">Belum ada paket. Klik "Tambah Paket" untuk membuat yang pertama.</div>
       <div id="state-error" class="hidden text-center text-body-md text-error py-space-xl"></div>
 
-      <div id="produk-table-wrap" class="hidden bg-surface-container-lowest rounded-2xl shadow-sm overflow-x-auto -mx-margin sm:mx-0">
-        <table class="w-full text-body-md min-w-[720px]">
+      <div id="produk-table-wrap" class="hidden pk-wrap">
+        <table class="pk-table">
           <thead>
-            <tr class="text-left text-label-md text-on-surface-variant border-b border-outline-variant/30">
-              <th class="px-space-md py-space-sm">Paket</th>
-              <th class="px-space-md py-space-sm">Kategori</th>
-              <th class="px-space-md py-space-sm">Harga</th>
-              <th class="px-space-md py-space-sm">Revisi</th>
-              <th class="px-space-md py-space-sm">Status</th>
-              <th class="px-space-md py-space-sm text-left">Aksi</th>
+            <tr>
+              <th>Paket</th>
+              <th>Kategori</th>
+              <th>Harga</th>
+              <th>Revisi</th>
+              <th>Status</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody id="produk-tbody"></tbody>

@@ -1,0 +1,61 @@
+/* ============================================================
+   Tampilan rapi untuk halaman Super Admin (kategori, rekap, orders, admin, rekening).
+   Hanya CSS: tidak mengubah isi/logika halaman. JS pendampingnya: js/sa-polish.js
+   ============================================================ */
+
+/* ---- Daftar (tabel) ---- */
+main .sa-wrap { background: #fff; border-radius: 18px; border: 1px solid rgba(91,100,133,.14); box-shadow: 0 6px 20px rgba(20,32,79,.06); overflow-x: auto; margin-inline: 0; }
+.sa-table { border-collapse: collapse; width: 100%; }
+.sa-table thead th { text-align: left; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #5b6485; background: #f6f8fb; padding: 12px 18px; border-bottom: 1px solid rgba(91,100,133,.16); white-space: nowrap; }
+.sa-table thead th.text-right { text-align: right; }
+.sa-table tbody tr { transition: background .15s; border-bottom: 0 !important; }
+.sa-table tbody tr:hover { background: #f8fbf0; }
+.sa-table tbody tr + tr td { border-top: 1px solid rgba(91,100,133,.12); }
+.sa-table td { padding: 14px 18px !important; vertical-align: middle; font-size: 14px; }
+.sa-table td.font-semibold, .sa-table td .font-bold { color: #14204f; }
+
+/* label status (Aktif / Nonaktif / status order) */
+.sa-table td .rounded-full { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px !important; font-size: 12px !important; font-weight: 700 !important; line-height: 1.2; }
+.sa-table td .rounded-full::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.sa-table td .rounded-full.bg-secondary-container { background: #e6f7c3 !important; color: #3f6a0a !important; }
+
+/* tombol aksi di dalam tabel */
+.sa-table td button { border: 0; cursor: pointer; background: #f1f3f8; color: #14204f; border-radius: 10px; padding: 7px 14px; font-size: 13px; font-weight: 600; text-decoration: none !important; margin-right: 4px; white-space: nowrap; transition: background .15s, color .15s; }
+.sa-table td button:hover { background: #14204f; color: #fff; }
+.sa-table td button[class*="text-error"], .sa-table td button[data-act="delete"], .sa-table td button[data-delete] { color: #b3261e; }
+.sa-table td button[class*="text-error"]:hover, .sa-table td button[data-act="delete"]:hover, .sa-table td button[data-delete]:hover { background: #b3261e; color: #fff; }
+.sa-table td select { min-width: 190px; border-radius: 12px; background: #fff; border: 1.5px solid rgba(91,100,133,.35); padding: 8px 12px; transition: border-color .2s, box-shadow .2s; }
+
+/* ---- Kartu ringkasan / filter ---- */
+main .sa-card { border: 1px solid rgba(91,100,133,.14); border-radius: 16px; box-shadow: 0 1px 2px rgba(20,32,79,.06); background: #fff; }
+main .sa-card > span.text-headline-md, main .sa-card > span.text-headline-sm { font-weight: 800; }
+
+/* ---- Input, tombol, formulir ---- */
+main input:not([type=checkbox]):focus, main select:focus, main textarea:focus,
+[id^="form-"] input:not([type=checkbox]):focus, [id^="form-"] select:focus, [id^="form-"] textarea:focus { outline: none !important; border-color: #86c722 !important; box-shadow: 0 0 0 3px rgba(163,230,53,.35) !important; }
+main input:not([type=checkbox]), main select, [id^="form-"] input:not([type=checkbox]), [id^="form-"] select, [id^="form-"] textarea { border-color: rgba(91,100,133,.35); background-color: #fff; transition: border-color .2s, box-shadow .2s; }
+[id^="form-"] { border: 1px solid rgba(91,100,133,.16); }
+[id^="form-"] input[type=checkbox], main input[type=checkbox] { accent-color: #6fae12; }
+[id^="form-"] h2 { font-weight: 800; }
+[id^="btn-save-"], [id^="btn-add-"], #btn-apply-filter { font-weight: 700; box-shadow: 0 3px 0 #6fae12; transition: transform .1s, box-shadow .1s; }
+[id^="btn-save-"]:active, [id^="btn-add-"]:active, #btn-apply-filter:active { transform: translateY(2px); box-shadow: 0 1px 0 #6fae12; }
+[id^="btn-save-"] { box-shadow: 0 4px 0 #6fae12; }
+
+/* ---- Loading ---- */
+.sa-loading { text-align: center; padding: 48px 0 !important; color: #5b6485; font-size: 14px; }
+
+/* ---- HP: tabel jadi kartu ---- */
+@media (max-width: 767px) {
+  main .sa-wrap { background: transparent; border: 0; box-shadow: none; border-radius: 0; overflow: visible; }
+  .sa-table { min-width: 0 !important; }
+  .sa-table, .sa-table tbody { display: block; }
+  .sa-table thead { display: none; }
+  .sa-table tbody tr { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; background: #fff; border: 1px solid rgba(91,100,133,.14); border-radius: 16px; padding: 14px; margin-bottom: 12px; box-shadow: 0 1px 2px rgba(20,32,79,.06); }
+  .sa-table tbody tr + tr td { border-top: 0; }
+  .sa-table td { padding: 0 !important; min-width: 0; word-break: break-word; text-align: left !important; }
+  .sa-table td[data-label]::before { content: attr(data-label); display: block; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #8a91a8; margin-bottom: 3px; }
+  .sa-table td:last-child { grid-column: 1 / -1; padding-top: 10px !important; border-top: 1px dashed rgba(91,100,133,.25) !important; }
+  .sa-table td:last-child > div { flex-wrap: wrap; }
+  .sa-table td button { margin: 0 6px 6px 0; }
+  .sa-table td select { width: 100%; }
+}
